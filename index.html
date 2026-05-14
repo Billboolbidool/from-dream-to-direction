@@ -605,6 +605,7 @@
                 <p class="text-[10px] font-black uppercase opacity-40 mb-4">The Social Force</p>
                 <div class="w-full bg-gray-200 h-2 border-2 border-black mb-1"><div class="h-full bg-green-500" style="width: 100%"></div></div>
                 <span class="text-[10px] font-bold tracking-tighter">WILL: 100% // EQ: 100%</span>
+                <a href="#persona-luis" class="print-link" style="margin-top:0.75rem;font-family:'Syne',sans-serif;font-weight:800;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:#16a34a;text-decoration:none;border-top:2px solid rgba(0,0,0,0.12);padding-top:0.5rem;">→ VIEW PROFILE</a>
             </div>
         </div>
         <p class="mt-10 text-sm italic opacity-40 font-bold">Click any archetype to explore their profile.</p>
@@ -988,19 +989,71 @@
     </div>
 
     <!-- SLIDE 13: LEVEL 3 - THE MAGIC HMW FORMULA -->
-    <div class="slide" id="slide-13">
-        <div class="max-w-4xl w-full">
-            <h2 class="font-brutal text-5xl mb-12 text-center text-cyan-500">LEVEL 3: THE MAGIC PROMPT</h2>
-            <div class="brutal-card p-12 bg-yellow-100 shadow-[15px_15px_0px_black] border-black">
-                <div class="sticker mb-6">THE FORMULA</div>
-                <h3 class="font-brutal text-3xl mb-8 underline italic">How Might We (HMW)</h3>
-                <p class="text-4xl font-black mb-10 leading-tight">
-                    "How Might We <span class="bg-white px-2">[Action]</span> for <span class="bg-white px-2">[Player]</span> so that <span class="bg-white px-2">[Outcome]</span> despite <span class="bg-white px-2">[Gap]</span>?"
-                </p>
-                <div class="border-t-4 border-black pt-6">
-                    <p class="text-sm font-bold opacity-70 italic">Example for Anya:</p>
-                    <p class="text-lg font-bold">"How might we build a professional brand for Anya so that she stands out to global firms despite her lack of corporate experience?"</p>
+    <div class="slide" id="slide-13" style="justify-content:flex-start;">
+        <div class="w-full max-w-6xl flex flex-col" style="gap:1.25rem; height:calc(100vh - 13rem);">
+
+            <!-- Header: compact one-line -->
+            <div class="flex items-center gap-4 flex-shrink-0">
+                <div>
+                    <h2 class="font-brutal" style="font-size:1.75rem;line-height:1.1;color:var(--cyan);">LEVEL 3: THE MAGIC PROMPT</h2>
+                    <p class="font-brutal" style="font-size:1.1rem;line-height:1.2;color:var(--pink);">HOW MIGHT WE (HMW)</p>
                 </div>
+                <span class="sticker" style="font-size:0.7rem;transform:rotate(2deg);white-space:nowrap;background:var(--cyan);color:black;flex-shrink:0;">7 MIN EXERCISE</span>
+            </div>
+
+            <!-- Body: 2 columns -->
+            <div class="grid grid-cols-5 flex-1 min-h-0" style="gap:1.25rem;">
+
+                <!-- Left: explanation + formula + note -->
+                <div class="col-span-3 flex flex-col" style="gap:1rem;">
+
+                    <!-- Explanation -->
+                    <div class="brutal-card p-5 flex-shrink-0" style="background:var(--black);">
+                        <p class="font-brutal text-xs mb-2 tracking-widest" style="color:var(--cyan);">WHAT IS IT? &#8594;</p>
+                        <p class="font-bold text-white leading-relaxed" style="font-size:0.9rem;">
+                            The 'How Might We' method turns your mapped gaps and resources into an actionable challenge, framing the problem for creative ideation.
+                        </p>
+                    </div>
+
+                    <!-- Formula + Note combined -->
+                    <div class="brutal-card flex-1 flex flex-col" style="background:var(--yellow);padding:1.75rem 2.25rem;">
+                        <div class="sticker mb-5" style="font-size:0.7rem;">THE FORMULA</div>
+
+                        <!-- Structured rows with breathing room -->
+                        <div class="flex flex-col flex-1 justify-center" style="gap:1.4rem;">
+                            <div class="flex items-center gap-3">
+                                <span class="font-brutal" style="font-size:1.05rem;white-space:nowrap;">HOW MIGHT WE ACHIEVE</span>
+                                <span style="background:white;padding:6px 16px;border:3px solid black;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;white-space:nowrap;">[GOAL X]</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="font-brutal" style="font-size:1.05rem;white-space:nowrap;">USING</span>
+                                <span style="background:white;padding:6px 16px;border:3px solid black;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;white-space:nowrap;">[RESOURCES Y]</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="font-brutal" style="font-size:1.05rem;white-space:nowrap;">DESPITE</span>
+                                <span style="background:white;padding:6px 16px;border:3px solid black;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;white-space:nowrap;">[GAPS Z]</span>
+                                <span class="font-brutal" style="font-size:1.05rem;">?</span>
+                            </div>
+                        </div>
+
+                        <!-- Note inside the card -->
+                        <div class="mt-5 pt-4" style="border-top:3px dashed rgba(0,0,0,0.2);">
+                            <p class="font-bold" style="font-size:0.8rem;line-height:1.5;">&#128161; You can write more than one HMW question — explore different combinations of gaps and resources!</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right: timer -->
+                <div class="col-span-2 flex flex-col">
+                    <div class="brutal-card flex-1 flex flex-col items-center justify-center" style="background:var(--yellow);gap:1rem;">
+                        <p class="font-brutal text-xs tracking-widest opacity-60">COUNTDOWN</p>
+                        <div id="hmw-timer-display" class="font-brutal" style="font-size:4.5rem;line-height:1;letter-spacing:-2px;">07:00</div>
+                        <button class="brutal-btn" id="hmw-timer-btn" onclick="toggleHmwTimer()">&#9654; PLAY</button>
+                        <button onclick="resetHmw()" style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.65rem;text-transform:uppercase;background:none;border:none;cursor:pointer;opacity:0.45;letter-spacing:0.1em;">&#8635; RESET</button>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -1441,6 +1494,43 @@
                     const m = Math.floor(aiTimeLeft / 60);
                     const s = aiTimeLeft % 60;
                     const d = document.getElementById('ai-timer-display');
+                    if (d) d.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                }, 1000);
+            }
+        }
+        // ── HMW TIMER ────────────────────────────────────────────────
+        let hmwTimerInt = null, hmwRunning = false, hmwTimeLeft = 420;
+
+        function resetHmw() {
+            clearInterval(hmwTimerInt); hmwTimerInt = null;
+            hmwRunning = false; hmwTimeLeft = 420;
+            const disp = document.getElementById('hmw-timer-display');
+            const btn  = document.getElementById('hmw-timer-btn');
+            if (disp) disp.textContent = '07:00';
+            if (btn)  btn.innerHTML = '&#9654; PLAY';
+        }
+
+        function toggleHmwTimer() {
+            const btn = document.getElementById('hmw-timer-btn');
+            if (hmwRunning) {
+                clearInterval(hmwTimerInt); hmwTimerInt = null; hmwRunning = false;
+                if (btn) btn.innerHTML = '&#9654; RESUME';
+            } else {
+                hmwRunning = true;
+                if (btn) btn.innerHTML = '&#9646;&#9646; PAUSE';
+                hmwTimerInt = setInterval(() => {
+                    if (hmwTimeLeft <= 0) {
+                        clearInterval(hmwTimerInt); hmwTimerInt = null; hmwRunning = false;
+                        const b = document.getElementById('hmw-timer-btn');
+                        const d = document.getElementById('hmw-timer-display');
+                        if (b) b.innerHTML = '&#10003; DONE!';
+                        if (d) d.textContent = '00:00';
+                        return;
+                    }
+                    hmwTimeLeft--;
+                    const m = Math.floor(hmwTimeLeft / 60);
+                    const s = hmwTimeLeft % 60;
+                    const d = document.getElementById('hmw-timer-display');
                     if (d) d.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
                 }, 1000);
             }
