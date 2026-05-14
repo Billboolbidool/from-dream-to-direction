@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Quest: From Dream to Action</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --pink: #FF007F;
+            --yellow: #F7F22C;
+            --cyan: #00E5FF;
+            --black: #000000;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            overflow: hidden;
+        }
+
+        .font-brutal { font-family: 'Syne', sans-serif; font-weight: 800; text-transform: uppercase; }
+
+        /* Neo-Brutalist Styles */
+        .brutal-card {
+            background: var(--white);
+            border: 4px solid var(--black);
+            box-shadow: 10px 10px 0px var(--black);
+            transition: all 0.2s ease;
+        }
+
+        .brutal-btn {
+            background: var(--pink);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border: 4px solid var(--black);
+            box-shadow: 6px 6px 0px var(--black);
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.1s;
+        }
+        .brutal-btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px var(--black);
+        }
+
+        .sticker {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--yellow);
+            border: 3px solid var(--black);
+            font-weight: 800;
+            transform: rotate(-2deg);
+            font-size: 0.85rem;
+        }
+
+        /* Quest Elements */
+        .xp-bar {
+            height: 15px;
+            background: #eee;
+            border: 3px solid var(--black);
+            width: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        .xp-fill {
+            height: 100%;
+            background: var(--cyan);
+            transition: width 0.4s ease;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: none;
+            padding: 6rem 2rem 7rem;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .slide.active { display: flex; }
+
+        /* Crazy 8 Grid */
+        .crazy-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+            max-width: 900px;
+            height: 350px;
+        }
+        .crazy-cell {
+            background: var(--white);
+            border: 3px solid var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #eee;
+        }
+
+        /* Persona Tooltip/Modal */
+        #modal {
+            backdrop-filter: blur(5px);
+        }
+
+        /* Mind Dump */
+        @keyframes mdFadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes mdFadeOut { from { opacity:1; transform:translateY(0); } to { opacity:0; transform:translateY(-8px); } }
+        .md-fade-in { animation: mdFadeIn 0.6s ease forwards; }
+        .md-fade-out { animation: mdFadeOut 0.45s ease forwards; }
+        .md-dot {
+            display: inline-block;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.4);
+            background: transparent;
+            transition: background 0.3s;
+        }
+
+        /* Association Map */
+        @keyframes amPopIn {
+            0%   { opacity: 0; transform: scale(0) rotate(-8deg); }
+            75%  { transform: scale(1.1) rotate(2deg); opacity: 1; }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+        @keyframes amFloat {
+            0%, 100% { transform: scale(1) translateY(0px); }
+            50%       { transform: scale(1) translateY(-9px); }
+        }
+        .am-bubble {
+            opacity: 0;
+            transform: scale(0);
+        }
+        .am-bubble.am-visible {
+            animation:
+                amPopIn 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+                amFloat 3s ease-in-out 0.55s infinite;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Chosen Palette: Neo-Brutalist Quest (Pink, Yellow, Cyan, Black) -->
+    <!-- Application Structure Plan:
+         - SPA structure focusing on a high-energy workshop flow.
+         - Slide 0: Cover.
+         - Slide 1: Mission Context (VUCA).
+         - Slide 2: Persona Classes (Interactive Selection).
+         - Slide 3: Level 1 - Mind Dump (Inventory Flush).
+         - Slide 4: Level 2 - Gaps & Resources (Reality Map).
+         - Slide 5: Level 3 - The Magic HMW Formula (Problem Framing).
+         - Slide 6: Level 4 - Speed Run (Crazy 8).
+         - Slide 7: Level 5 - Loot Sorting (Matrix).
+         - Slide 8: Level 6 - Final Move (No Biggie).
+         Navigation: Fully functional Prev/Next and Keyboard arrows. -->
+    <!-- Visualization & Content Choices:
+         - HMW Formula: High-contrast yellow card with a specific structural layout.
+         - Gaps vs Resources: Red vs Green layout for easy visual distinction.
+         - Crazy 8: A responsive 4x2 grid to aid physical workshop execution.
+         - Persona Modal: Deep-dive data from uploaded files (Anya, Yoav, etc.) displayed on interaction.
+         NO SVG used. NO Mermaid JS used. -->
+
+    <!-- HMU 13th IW: Cover layout — logo top-left + minimal bottom band (slide 0 only) -->
+    <div id="iw-cover">
+        <img src="Chania 2026 -13.png" style="position:fixed;top:76px;left:16px;width:150px;height:auto;z-index:600;pointer-events:none;">
+    </div>
+
+    <!-- HMU 13th IW: Content layout — thin side strips (slides 1+) -->
+    <div id="iw-content" style="display:none;">
+        <div style="position:fixed;top:0;left:0;bottom:0;width:8px;background:#f39c81;z-index:500;pointer-events:none;"></div>
+        <div style="position:fixed;top:0;right:0;bottom:0;width:8px;background:#793d57;z-index:500;pointer-events:none;"></div>
+    </div>
+
+    <!-- HMU 13th IW: Footer bar — logo centered, nav buttons right, always visible -->
+    <div id="iw-footer" style="display:flex;position:fixed;bottom:0;left:0;right:0;height:72px;background:#fff;border-top:3px solid #000;z-index:1001;align-items:center;justify-content:space-between;padding:0 20px;">
+        <div style="flex:1;"></div>
+        <img id="iw-footer-logo" src="LOGO CHANIA 2026 -PNG-NO SPACE.png" style="height:52px;width:auto;pointer-events:none;">
+        <div style="flex:1;display:flex;justify-content:flex-end;gap:12px;">
+            <button onclick="prevSlide()" id="prevBtn" class="brutal-btn" style="background:#333;display:none;padding:0.55rem 1.25rem;font-size:0.75rem;">BACK</button>
+            <button onclick="nextSlide()" id="nextBtn" class="brutal-btn" style="padding:0.55rem 1.25rem;font-size:0.75rem;">NEXT</button>
+        </div>
+    </div>
+
+    <!-- HUD Overlay -->
+    <div class="fixed top-0 left-0 w-full z-[1000] p-4 bg-white border-b-4 border-black flex items-center justify-between">
+        <div class="flex items-center gap-6">
+            <div class="sticker">QUEST XP</div>
+            <div class="xp-bar">
+                <div id="xpFill" class="xp-fill" style="width: 0%;"></div>
+            </div>
+        </div>
+        <div class="font-brutal text-sm" id="hudStatus">LVL 01 // INITIALIZING</div>
+    </div>
+
+    <!-- SLIDE 0: TITLE -->
+    <div class="slide active" id="slide-0">
+        <div class="max-w-6xl w-full text-center">
+            <div class="sticker mb-10 text-xl">ERASMUS WEEK // CRETE 2026</div>
+            <h1 class="font-brutal text-[10vw] leading-[0.85] mb-10 text-white" style="-webkit-text-stroke: 4px black; paint-order: stroke fill; fill: var(--pink);">
+                FROM DREAM <br> TO ACTION
+            </h1>
+            <div class="inline-block bg-[#00E5FF] p-4 border-4 border-black shadow-[10px_10px_0px_black] mb-12">
+                <p class="font-bold text-xl md:text-2xl">Bridging the gap between who you are and who you intend to become.</p>
+            </div>
+            <p class="text-xs uppercase font-black tracking-widest opacity-30">Press Space or Click Next to Start</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 1: THE GAME - VUCA -->
+    <div class="slide" id="slide-1">
+        <div class="max-w-6xl w-full text-center">
+            <!-- Title -->
+            <div class="mb-6">
+                <h2 class="font-brutal text-[6vw] leading-none" style="-webkit-text-stroke: 3px black; color: var(--pink);">THE GAME</h2>
+                <p class="font-bold text-base tracking-[0.3em] uppercase mt-2 opacity-60">Navigating your way in a VUCA world</p>
+            </div>
+
+            <!-- Top disruption stickers -->
+            <div class="flex justify-center flex-wrap gap-3 mb-6">
+                <div class="sticker text-xs" style="transform:rotate(-3deg)">🤖 AI &amp; Automation</div>
+                <div class="sticker text-xs" style="transform:rotate(2deg); background:var(--cyan)">🌍 Geopolitical Turbulence</div>
+                <div class="sticker text-xs" style="transform:rotate(-1deg); background:var(--pink); color:white">📉 Economic Volatility</div>
+                <div class="sticker text-xs" style="transform:rotate(3deg)">🌊 Climate Disruption</div>
+            </div>
+
+            <!-- VUCA Cards -->
+            <div class="flex justify-center gap-5">
+                <!-- V -->
+                <div class="brutal-card text-center overflow-hidden" style="width:160px; background:var(--pink);">
+                    <div class="font-brutal leading-none text-white py-3" style="font-size:5.5rem;">V</div>
+                    <div class="bg-white border-t-4 border-black p-3">
+                        <p class="font-brutal text-xs tracking-wider">VOLATILITY</p>
+                        <p class="text-[10px] font-bold opacity-60 mt-1 leading-snug">Rapid, unexpected changes in speed &amp; scale</p>
+                    </div>
+                </div>
+                <!-- U -->
+                <div class="brutal-card text-center overflow-hidden" style="width:160px; background:var(--yellow);">
+                    <div class="font-brutal leading-none py-3" style="font-size:5.5rem;">U</div>
+                    <div class="bg-white border-t-4 border-black p-3">
+                        <p class="font-brutal text-xs tracking-wider">UNCERTAINTY</p>
+                        <p class="text-[10px] font-bold opacity-60 mt-1 leading-snug">Lack of predictability in events &amp; outcomes</p>
+                    </div>
+                </div>
+                <!-- C -->
+                <div class="brutal-card text-center overflow-hidden" style="width:160px; background:var(--cyan);">
+                    <div class="font-brutal leading-none py-3" style="font-size:5.5rem;">C</div>
+                    <div class="bg-white border-t-4 border-black p-3">
+                        <p class="font-brutal text-xs tracking-wider">COMPLEXITY</p>
+                        <p class="text-[10px] font-bold opacity-60 mt-1 leading-snug">Multiple intertwined forces &amp; factors at play</p>
+                    </div>
+                </div>
+                <!-- A -->
+                <div class="brutal-card text-center overflow-hidden" style="width:160px; background:#000;">
+                    <div class="font-brutal leading-none text-white py-3" style="font-size:5.5rem;">A</div>
+                    <div class="bg-white border-t-4 border-black p-3">
+                        <p class="font-brutal text-xs tracking-wider">AMBIGUITY</p>
+                        <p class="text-[10px] font-bold opacity-60 mt-1 leading-snug">Haziness of reality &amp; potential for misreads</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom disruption stickers -->
+            <div class="flex justify-center flex-wrap gap-3 mt-6">
+                <div class="sticker text-xs" style="transform:rotate(-2deg); background:#a855f7; color:white">👥 Social Movements</div>
+                <div class="sticker text-xs" style="transform:rotate(1deg); background:var(--cyan)">💡 Digital Transformation</div>
+                <div class="sticker text-xs" style="transform:rotate(-4deg)">🦠 Health Crises</div>
+                <div class="sticker text-xs" style="transform:rotate(3deg); background:var(--pink); color:white">⚡ Energy Transition</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: YOUR MISSION -->
+    <div class="slide" id="slide-2">
+        <div class="max-w-5xl w-full">
+
+            <!-- Title -->
+            <div class="text-center mb-10">
+                <h2 class="font-brutal leading-none" style="font-size: clamp(2rem, 4.5vw, 3.5rem);">
+                    YOUR MISSION:<br>
+                    BECOME A <span style="color:var(--pink);">TALENT</span>
+                </h2>
+                <p class="font-bold text-xs tracking-[0.3em] uppercase mt-3 opacity-40">Differentiate · Develop · Direct</p>
+            </div>
+
+            <!-- Two-column layout -->
+            <div class="grid grid-cols-2 gap-8 items-center">
+
+                <!-- Left column -->
+                <div class="flex flex-col gap-7">
+
+                    <!-- Definition -->
+                    <div style="border-left: 8px solid var(--cyan); padding-left: 1.5rem;">
+                        <p class="text-xl font-bold leading-snug">
+                            A <em>Talent</em> is a <span style="color:var(--pink);">differentiated, unique brand</span> in the world of work.
+                        </p>
+                    </div>
+
+                    <!-- Formula card -->
+                    <div class="brutal-card p-8" style="background: var(--yellow);">
+                        <p class="font-brutal text-xs mb-4 opacity-60">DIFFERENTIATION =</p>
+                        <p class="text-lg font-bold leading-relaxed">
+                            The mix between
+                            <span class="inline-block bg-white px-2 border-2 border-black mb-1">what you choose to do differently</span>
+                            and
+                            <span class="inline-block bg-white px-2 border-2 border-black">where you choose to excel.</span>
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Right column: Neumeier quote -->
+                <div class="brutal-card p-10 shadow-[12px_12px_0px_black]" style="background: var(--black);">
+                    <p class="font-brutal text-xl text-white italic leading-snug mb-7">
+                        "A brand is what people think and feel when they hear your name."
+                    </p>
+                    <p class="font-brutal text-sm tracking-widest uppercase" style="color: var(--cyan);">— Marty Neumeier</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: STRATEGY + TACTICS -->
+    <div class="slide" id="slide-3">
+        <div class="max-w-5xl w-full">
+
+            <!-- Title -->
+            <div class="text-center mb-8">
+                <p class="font-brutal text-xs tracking-[0.3em] mb-2 opacity-40">TO BECOME A TALENT, YOU NEED</p>
+                <h2 class="font-brutal leading-none" style="font-size: clamp(2rem, 4vw, 3.25rem);">
+                    STRATEGY <span style="color:var(--pink);">+</span> TACTICS
+                </h2>
+            </div>
+
+            <!-- Two columns -->
+            <div class="grid grid-cols-2 gap-6 mb-7">
+
+                <!-- Strategy -->
+                <div class="brutal-card p-8" style="border-color: var(--cyan); box-shadow: 10px 10px 0px var(--cyan);">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="font-brutal leading-none" style="font-size:3rem; color:var(--cyan);">S</div>
+                        <p class="font-brutal text-xl">STRATEGY</p>
+                    </div>
+                    <p class="text-sm font-bold italic opacity-60 mb-5 pl-4" style="border-left: 4px solid var(--cyan);">
+                        "A plan defining long-term goals, and the principles of action to achieve them, making optimal use of resources under conditions of uncertainty."
+                    </p>
+                    <ul class="space-y-2 text-sm font-bold mb-5">
+                        <li class="flex items-start gap-2"><span style="color:var(--cyan);">→</span> Bird's-eye view</li>
+                        <li class="flex items-start gap-2"><span style="color:var(--cyan);">→</span> Long-term perspective</li>
+                        <li class="flex items-start gap-2"><span style="color:var(--cyan);">→</span> The Compass directing the way</li>
+                    </ul>
+                    <div class="pt-4 border-t-2 border-black">
+                        <span class="font-brutal text-xs opacity-40">WHERE &amp; WHY</span>
+                    </div>
+                </div>
+
+                <!-- Tactics -->
+                <div class="brutal-card p-8" style="border-color: var(--pink); box-shadow: 10px 10px 0px var(--pink);">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="font-brutal leading-none" style="font-size:3rem; color:var(--pink);">T</div>
+                        <p class="font-brutal text-xl">TACTICS</p>
+                    </div>
+                    <p class="text-sm font-bold italic opacity-60 mb-5 pl-4" style="border-left: 4px solid var(--pink);">
+                        "The specific moves, tools, and immediate responses required to progress along the chosen path."
+                    </p>
+                    <ul class="space-y-2 text-sm font-bold mb-5">
+                        <li class="flex items-start gap-2"><span style="color:var(--pink);">→</span> Occurring here and now</li>
+                        <li class="flex items-start gap-2"><span style="color:var(--pink);">→</span> Rowing through the water</li>
+                        <li class="flex items-start gap-2"><span style="color:var(--pink);">→</span> Executing the plan</li>
+                    </ul>
+                    <div class="pt-4 border-t-2 border-black">
+                        <span class="font-brutal text-xs opacity-40">WHAT &amp; HOW</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom quote -->
+            <div class="text-center">
+                <p class="font-brutal text-sm md:text-base leading-relaxed">
+                    Strategy without tactics is a dream. &nbsp;<span style="color:var(--pink);">Tactics without strategy is just noise.</span>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SLIDE 2: GEN Z SWOT -->
+    <div class="slide" id="slide-4">
+        <div class="max-w-5xl w-full">
+            <!-- Title -->
+            <div class="text-center mb-6">
+                <span class="font-brutal text-[1.1vw] tracking-[0.4em] opacity-40 block">YOU ARE</span>
+                <h2 class="font-brutal leading-none" style="font-size:4.5vw; color:var(--pink)">GEN Z.</h2>
+                <p class="font-bold text-xs tracking-[0.3em] uppercase mt-2 opacity-40">The most wired — and powerful — generation in history</p>
+            </div>
+
+            <!-- 2x2 SWOT Grid -->
+            <div class="grid grid-cols-2 gap-5">
+
+                <!-- STRENGTHS -->
+                <div class="brutal-card p-7" style="background:#d1fae5;">
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="font-brutal text-5xl leading-none" style="color:#16a34a;">S</div>
+                        <div>
+                            <p class="font-brutal text-base text-green-800">STRENGTHS</p>
+                            <p class="text-[10px] font-bold uppercase opacity-40">Internal · Positive</p>
+                        </div>
+                        <div class="ml-auto text-2xl">💪</div>
+                    </div>
+                    <ul class="space-y-3 text-sm font-bold text-gray-800">
+                        <li>Most educated generation ever</li>
+                        <li>Digital natives — tech-fluent by default</li>
+                        <li>Values-driven &amp; purpose-oriented</li>
+                    </ul>
+                </div>
+
+                <!-- WEAKNESSES -->
+                <div class="brutal-card p-7" style="background:#fee2e2;">
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="font-brutal text-5xl leading-none" style="color:#dc2626;">W</div>
+                        <div>
+                            <p class="font-brutal text-base text-red-800">WEAKNESSES</p>
+                            <p class="text-[10px] font-bold uppercase opacity-40">Internal · Negative</p>
+                        </div>
+                        <div class="ml-auto text-2xl">🧠</div>
+                    </div>
+                    <ul class="space-y-3 text-sm font-bold text-gray-800">
+                        <li>Fractured attention &amp; scroll addiction</li>
+                        <li>Anxiety, burnout &amp; comparison culture</li>
+                        <li>Analysis paralysis — too many options</li>
+                    </ul>
+                </div>
+
+                <!-- OPPORTUNITIES -->
+                <div class="brutal-card p-7" style="background:#cffafe;">
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="font-brutal text-5xl leading-none" style="color:#0891b2;">O</div>
+                        <div>
+                            <p class="font-brutal text-base text-cyan-800">OPPORTUNITIES</p>
+                            <p class="text-[10px] font-bold uppercase opacity-40">External · Positive</p>
+                        </div>
+                        <div class="ml-auto text-2xl">🚀</div>
+                    </div>
+                    <ul class="space-y-3 text-sm font-bold text-gray-800">
+                        <li>AI as a superpower, not just a threat</li>
+                        <li>Global careers &amp; creator economy</li>
+                        <li>Roles that didn't exist 5 years ago</li>
+                    </ul>
+                </div>
+
+                <!-- THREATS -->
+                <div class="brutal-card p-7" style="background:#fef9c3;">
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="font-brutal text-5xl leading-none" style="color:#b45309;">T</div>
+                        <div>
+                            <p class="font-brutal text-base" style="color:#92400e;">THREATS</p>
+                            <p class="text-[10px] font-bold uppercase opacity-40">External · Negative</p>
+                        </div>
+                        <div class="ml-auto text-2xl">⚠️</div>
+                    </div>
+                    <ul class="space-y-3 text-sm font-bold text-gray-800">
+                        <li>AI replacing entry-level jobs fast</li>
+                        <li>Economic instability &amp; credential inflation</li>
+                        <li>Attention economy hijacking focus</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: QUEST ROADMAP -->
+    <div class="slide" id="slide-5">
+        <div class="max-w-6xl w-full">
+
+            <!-- Title -->
+            <div class="text-center mb-6">
+                <div class="sticker mb-4" style="transform:rotate(-1deg); background:var(--cyan);">8 LEVELS // ONE SESSION</div>
+                <h2 class="font-brutal leading-none" style="font-size: clamp(2.5rem, 5vw, 4rem);">
+                    LET'S GO ON A <span style="color:var(--pink);">QUEST.</span>
+                </h2>
+            </div>
+
+            <!-- Quest steps: top row -->
+            <div class="grid grid-cols-4 gap-4 mb-4">
+                <div class="brutal-card p-5" style="border-top: 6px solid var(--pink);">
+                    <div class="font-brutal text-4xl leading-none mb-2" style="color:var(--pink);">01</div>
+                    <div class="text-2xl mb-2">💭</div>
+                    <p class="font-brutal text-xs tracking-wider">MIND DUMP</p>
+                    <p class="text-[10px] font-bold opacity-40 mt-1">Empty the brain</p>
+                </div>
+                <div class="brutal-card p-5" style="border-top: 6px solid var(--yellow);">
+                    <div class="font-brutal text-4xl leading-none mb-2" style="color:#a09000;">02</div>
+                    <div class="text-2xl mb-2">🔭</div>
+                    <p class="font-brutal text-xs tracking-wider">VISUALIZATION</p>
+                    <p class="text-[10px] font-bold opacity-40 mt-1">See your future self</p>
+                </div>
+                <div class="brutal-card p-5" style="border-top: 6px solid var(--cyan);">
+                    <div class="font-brutal text-4xl leading-none mb-2" style="color:#00b8cc;">03</div>
+                    <div class="text-2xl mb-2">🕳️</div>
+                    <p class="font-brutal text-xs tracking-wider">MY GAP</p>
+                    <p class="text-[10px] font-bold opacity-40 mt-1">What's missing</p>
+                </div>
+                <div class="brutal-card p-5" style="border-top: 6px solid #000; background:#000;">
+                    <div class="font-brutal text-4xl leading-none mb-2 text-white">04</div>
+                    <div class="text-2xl mb-2">🎒</div>
+                    <p class="font-brutal text-xs tracking-wider text-white">MY RESOURCES</p>
+                    <p class="text-[10px] font-bold opacity-40 mt-1 text-white">What you have</p>
+                </div>
+            </div>
+
+            <!-- Flow divider -->
+            <div class="flex items-center gap-4 mb-4 px-2">
+                <div style="flex:1; height:3px; background:#000;"></div>
+                <span class="font-brutal text-xs opacity-30 tracking-widest">THEN</span>
+                <div style="flex:1; height:3px; background:#000;"></div>
+            </div>
+
+            <!-- Quest steps: bottom row -->
+            <div class="grid grid-cols-4 gap-4">
+                <div class="brutal-card p-5" style="border-top: 6px solid var(--pink);">
+                    <div class="font-brutal text-4xl leading-none mb-2" style="color:var(--pink);">05</div>
+                    <div class="text-2xl mb-2">💡</div>
+                    <p class="font-brutal text-xs tracking-wider">FRAMING — HMW</p>
+                    <p class="text-[10px] font-bold opacity-40 mt-1">Ask the right question</p>
+                </div>
+                <div class="brutal-card p-5" style="border-top: 6px solid var(--yellow);">
+                    <div class="font-brutal text-4xl leading-none mb-2" style="color:#a09000;">06</div>
+                    <div class="text-2xl mb-2">⚡</div>
+                    <p class="font-brutal text-xs tracking-wider">CRAZY 8</p>
+                    <p class="text-[10px] font-bold opacity-40 mt-1">Explode with ideas</p>
+                </div>
+                <div class="brutal-card p-5" style="border-top: 6px solid var(--cyan);">
+                    <div class="font-brutal text-4xl leading-none mb-2" style="color:#00b8cc;">07</div>
+                    <div class="text-2xl mb-2">🗺️</div>
+                    <p class="font-brutal text-xs tracking-wider">THE MATRIX</p>
+                    <p class="text-[10px] font-bold opacity-40 mt-1">Sort the loot</p>
+                </div>
+                <div class="brutal-card p-5" style="border-top: 6px solid #32CD32; box-shadow: 10px 10px 0 #32CD32;">
+                    <div class="font-brutal text-4xl leading-none mb-2" style="color:#32CD32;">08</div>
+                    <div class="text-2xl mb-2">🚀</div>
+                    <p class="font-brutal text-xs tracking-wider" style="color:#32CD32;">NO BIGGIE</p>
+                    <p class="text-[10px] font-bold opacity-40 mt-1">Take the first step</p>
+                </div>
+            </div>
+
+            <!-- Tagline -->
+            <div class="text-center mt-6">
+                <p class="font-bold text-xs opacity-40 uppercase tracking-widest">From clarity to action — in one focused session.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SLIDE 6: PERSONA SELECTION -->
+    <div class="slide" id="slide-11">
+        <div class="text-center mb-10">
+            <h2 class="font-brutal text-4xl leading-none">RECOGNIZE A PLAYER?</h2>
+            <p class="font-bold text-sm tracking-[0.2em] uppercase mt-3 opacity-50">Four archetypes. Study their gaps &amp; resources — then turn the lens on yourself.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 w-full max-w-7xl">
+            <div class="brutal-card p-6 text-center cursor-pointer hover:bg-purple-50" onclick="showModal('anya')">
+                <div class="text-5xl mb-4">👑</div>
+                <h3 class="font-brutal text-xl">ANYA</h3>
+                <p class="text-[10px] font-black uppercase opacity-40 mb-4">The Strategist</p>
+                <div class="w-full bg-gray-200 h-2 border-2 border-black mb-1"><div class="h-full bg-purple-500" style="width: 85%"></div></div>
+                <span class="text-[10px] font-bold tracking-tighter">DRIVE: 85% // IMPACT: 90%</span>
+            </div>
+            <div class="brutal-card p-6 text-center cursor-pointer hover:bg-cyan-50" onclick="showModal('yoav')">
+                <div class="text-5xl mb-4">⚡</div>
+                <h3 class="font-brutal text-xl">YOAV</h3>
+                <p class="text-[10px] font-black uppercase opacity-40 mb-4">The Tech Creative</p>
+                <div class="w-full bg-gray-200 h-2 border-2 border-black mb-1"><div class="h-full bg-cyan-500" style="width: 95%"></div></div>
+                <span class="text-[10px] font-bold tracking-tighter">AGILITY: 95% // FOCUS: 40%</span>
+            </div>
+            <div class="brutal-card p-6 text-center cursor-pointer hover:bg-yellow-50" onclick="showModal('sophia')">
+                <div class="text-5xl mb-4">🛡️</div>
+                <h3 class="font-brutal text-xl">SOPHIA</h3>
+                <p class="text-[10px] font-black uppercase opacity-40 mb-4">The Lead</p>
+                <div class="w-full bg-gray-200 h-2 border-2 border-black mb-1"><div class="h-full bg-yellow-500" style="width: 90%"></div></div>
+                <span class="text-[10px] font-bold tracking-tighter">STAMINA: 90% // CONFIDENCE: 50%</span>
+            </div>
+            <div class="brutal-card p-6 text-center cursor-pointer hover:bg-green-50" onclick="showModal('luis')">
+                <div class="text-5xl mb-4">🌿</div>
+                <h3 class="font-brutal text-xl">LUIS</h3>
+                <p class="text-[10px] font-black uppercase opacity-40 mb-4">The Social Force</p>
+                <div class="w-full bg-gray-200 h-2 border-2 border-black mb-1"><div class="h-full bg-green-500" style="width: 100%"></div></div>
+                <span class="text-[10px] font-bold tracking-tighter">WILL: 100% // EQ: 100%</span>
+                <a href="#persona-luis" class="print-link" style="margin-top:0.75rem;font-family:'Syne',sans-serif;font-weight:800;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:#16a34a;text-decoration:none;border-top:2px solid rgba(0,0,0,0.12);padding-top:0.5rem;">→ VIEW PROFILE</a>
+            </div>
+        </div>
+        <p class="mt-10 text-sm italic opacity-40 font-bold">Click any archetype to explore their profile.</p>
+    </div>
+
+    <!-- SLIDE 7: REALITY CHECK - GAPS & RESOURCES -->
+    <div class="slide" id="slide-10">
+        <h2 class="font-brutal text-5xl mb-12" style="margin-top:3rem;">LEVEL 2: THE REALITY CHECK</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-5xl">
+            <!-- Gaps -->
+            <div class="brutal-card p-10 bg-red-50 border-red-600">
+                <h3 class="font-brutal text-3xl mb-6 text-red-600">THE GAPS (Z) 📉</h3>
+                <p class="text-xs font-bold mb-6 opacity-60">Obstacles in your path:</p>
+                <ul class="space-y-4 font-bold text-gray-800 list-disc list-inside">
+                    <li>Missing Skills & Knowledge</li>
+                    <li>Networking Friction (Who do you need?)</li>
+                    <li>Confidence & Internal Barriers</li>
+                    <li>Time & Financial Constraints</li>
+                </ul>
+            </div>
+            <!-- Resources -->
+            <div class="brutal-card p-10 bg-green-50 border-green-600">
+                <h3 class="font-brutal text-3xl mb-6 text-green-600">THE RESOURCES (Y) 🔋</h3>
+                <p class="text-xs font-bold mb-6 opacity-60">Gear in your backpack:</p>
+                <ul class="space-y-4 font-bold text-gray-800 list-disc list-inside">
+                    <li>Current Talents & Superpowers</li>
+                    <li>Existing Connections</li>
+                    <li>Your Unique Story & Background</li>
+                    <li>Available Energy & Motivation</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: LEVEL 1 - MIND DUMP -->
+    <div class="slide" id="slide-6">
+        <div class="w-full max-w-6xl flex flex-col" style="gap:1.25rem;">
+
+            <!-- Header -->
+            <div class="flex items-center gap-4">
+                <h2 class="font-brutal text-5xl" style="color:var(--pink)">LEVEL 1: MIND DUMP</h2>
+                <span class="sticker" style="font-size:0.7rem;transform:rotate(2deg);white-space:nowrap;">5 MIN EXERCISE</span>
+            </div>
+
+            <!-- Body: 2 cols -->
+            <div class="grid grid-cols-5" style="gap:1.25rem;flex:1;">
+
+                <!-- Left col: prompt + rotating question -->
+                <div class="col-span-3 flex flex-col" style="gap:1.25rem;">
+
+                    <!-- Prompt -->
+                    <div class="brutal-card p-7" style="background:var(--cyan)">
+                        <p class="text-lg font-bold leading-relaxed">
+                            <strong>Imagine 7 years after graduation — you made it.</strong><br>
+                            You're a highly sought-after Talent. Reverse-engineer your success and write down what it looks like.
+                        </p>
+                    </div>
+
+                    <!-- Rotating question -->
+                    <div class="brutal-card p-8 flex flex-col justify-between" style="background:#000;flex:1;">
+                        <div>
+                            <p class="font-brutal text-xs mb-4" style="color:var(--yellow);letter-spacing:2px;">ASK YOURSELF →</p>
+                            <div id="md-question-el" class="text-white font-bold leading-snug" style="font-size:1.45rem;min-height:5rem;"></div>
+                        </div>
+                        <!-- Progress dots -->
+                        <div class="flex gap-2 mt-5">
+                            <span id="md-dot-0" class="md-dot"></span>
+                            <span id="md-dot-1" class="md-dot"></span>
+                            <span id="md-dot-2" class="md-dot"></span>
+                            <span id="md-dot-3" class="md-dot"></span>
+                            <span id="md-dot-4" class="md-dot"></span>
+                            <span id="md-dot-5" class="md-dot"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right col: timer + quote -->
+                <div class="col-span-2 flex flex-col" style="gap:1.25rem;">
+
+                    <!-- Timer -->
+                    <div class="brutal-card p-8 text-center flex flex-col items-center" style="background:var(--yellow);gap:1rem;">
+                        <p class="font-brutal text-xs tracking-widest">COUNTDOWN</p>
+                        <div id="md-timer-display" class="font-brutal" style="font-size:4.5rem;line-height:1;">05:00</div>
+                        <button class="brutal-btn" id="md-timer-btn" onclick="toggleMindDumpTimer()">&#9654; START</button>
+                    </div>
+
+                    <!-- Quote -->
+                    <div class="brutal-card p-7 flex flex-col justify-between" style="flex:1;">
+                        <p class="text-base italic leading-relaxed">"Success is liking yourself, liking what you do, and liking how you do it."</p>
+                        <p class="font-brutal text-xs mt-4" style="color:var(--pink);">— MAYA ANGELOU</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 9: LEVEL 2 - ASSOCIATION MAP -->
+    <div class="slide" id="slide-7">
+        <div class="w-full max-w-6xl flex flex-col" style="gap:1.25rem; height:100%;">
+
+            <!-- Header -->
+            <div class="flex items-center gap-4 flex-shrink-0">
+                <h2 class="font-brutal text-4xl" style="color:var(--cyan)">LVL 2: MIND WANDERING</h2>
+                <span class="sticker" style="font-size:0.7rem;transform:rotate(-2deg);white-space:nowrap;background:var(--cyan);">3 MIN EXERCISE</span>
+            </div>
+
+            <!-- Body: mind map + right panel -->
+            <div class="grid grid-cols-5 flex-1 min-h-0" style="gap:1.25rem;">
+
+                <!-- Mind Map canvas (3 cols) -->
+                <div class="col-span-3 relative" id="am-map-container"
+                     style="background:#0a0a0a; border:4px solid #000; box-shadow:10px 10px 0px #000; overflow:hidden;">
+
+                    <!-- Central prompt -->
+                    <div class="brutal-card text-center"
+                         style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:210px;background:var(--pink);z-index:3;padding:1.25rem;">
+                        <p class="font-brutal text-white" style="font-size:0.72rem;letter-spacing:0.5px;line-height:1.4;">LOOK AT YOUR MIND DUMP &amp; LET YOUR MIND WANDER...</p>
+                    </div>
+
+                    <!-- Bubble 1 – top left -->
+                    <div style="position:absolute;top:7%;left:4%;">
+                        <div class="am-bubble brutal-card p-4" style="width:165px;background:var(--yellow);">
+                            <p class="font-bold leading-tight" style="font-size:0.85rem;">What colors &amp; shapes do you see?</p>
+                        </div>
+                    </div>
+
+                    <!-- Bubble 2 – top right -->
+                    <div style="position:absolute;top:7%;right:4%;">
+                        <div class="am-bubble brutal-card p-4" style="width:165px;background:var(--cyan);">
+                            <p class="font-bold leading-tight" style="font-size:0.85rem;">Where are you located?</p>
+                        </div>
+                    </div>
+
+                    <!-- Bubble 3 – mid left -->
+                    <div style="position:absolute;top:39%;left:2%;">
+                        <div class="am-bubble brutal-card p-4" style="width:175px;background:#fff;">
+                            <p class="font-bold leading-tight" style="font-size:0.85rem;">Who is there with you?</p>
+                        </div>
+                    </div>
+
+                    <!-- Bubble 4 – mid right -->
+                    <div style="position:absolute;top:39%;right:2%;">
+                        <div class="am-bubble brutal-card p-4" style="width:185px;background:var(--pink);">
+                            <p class="font-bold leading-tight text-white" style="font-size:0.8rem;">What is the ultimate symbol of your &#x27;Talent&#x27; status?</p>
+                        </div>
+                    </div>
+
+                    <!-- Bubble 5 – bottom center -->
+                    <div style="position:absolute;bottom:7%;left:50%;transform:translateX(-50%);">
+                        <div class="am-bubble brutal-card p-4" style="width:180px;background:#fff;">
+                            <p class="font-bold leading-tight" style="font-size:0.85rem;">What does success look like?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right col: timer + instruction (2 cols) -->
+                <div class="col-span-2 flex flex-col" style="gap:1.25rem;">
+
+                    <!-- Timer -->
+                    <div class="brutal-card p-8 text-center flex flex-col items-center" style="background:var(--yellow);gap:1rem;">
+                        <p class="font-brutal text-xs tracking-widest">COUNTDOWN</p>
+                        <div id="am-timer-display" class="font-brutal" style="font-size:4.5rem;line-height:1;">03:00</div>
+                        <button class="brutal-btn" id="am-timer-btn" onclick="toggleAssocTimer()">&#9654; PLAY</button>
+                    </div>
+
+                    <!-- Instruction card -->
+                    <div class="brutal-card p-7 flex flex-col justify-between flex-1" style="padding-bottom:5rem;">
+                        <div>
+                            <p class="font-brutal text-xs mb-3" style="color:var(--pink);letter-spacing:2px;">BUILD YOUR MAP →</p>
+                            <p class="font-bold leading-relaxed" style="font-size:0.95rem;">Look at the answers you just wrote. Let your mind wander associatively. What images come to mind?</p>
+                        </div>
+                        <p class="font-brutal text-xs mt-4" style="color:var(--cyan);">— DRAW IT. SKETCH IT. CONNECT IT.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 10: LEVEL 2C - AI VISION GENERATOR -->
+    <div class="slide" id="slide-8" style="justify-content:flex-start;">
+        <div class="w-full max-w-6xl flex flex-col" style="gap:1rem; height:calc(100vh - 14rem);">
+
+            <!-- Header -->
+            <div class="flex items-center gap-4 flex-shrink-0">
+                <h2 class="font-brutal text-4xl" style="color:var(--pink);">YOUR VICTORY PICTURE</h2>
+                <span class="sticker" style="font-size:0.7rem;transform:rotate(2deg);white-space:nowrap;background:var(--pink);color:white;">7 MIN EXERCISE</span>
+            </div>
+
+            <!-- Body: 2 cols -->
+            <div class="grid grid-cols-5 flex-1 min-h-0" style="gap:1rem;">
+
+                <!-- Left col: instructions + timer -->
+                <div class="col-span-2 flex flex-col" style="gap:1.25rem;">
+
+                    <!-- Instructions -->
+                    <div class="brutal-card p-7 flex-1" style="background:var(--black);">
+                        <p class="font-brutal text-xs mb-4" style="color:var(--cyan);letter-spacing:2px;">YOUR MISSION →</p>
+                        <p class="text-white font-bold leading-relaxed" style="font-size:0.95rem;">
+                            Translate your Association Map into an AI prompt. Use ChatGPT, Midjourney, or any AI image generator to create a visual collage of your <span style="color:var(--yellow);">Victory Picture</span> — the Talent you have become.
+                        </p>
+                        <div class="mt-5 p-4" style="border-left:4px solid var(--pink);">
+                            <p class="font-brutal text-xs mb-2" style="color:var(--pink);">💡 PRO TIP</p>
+                            <p class="text-white font-bold text-xs leading-relaxed">Upload a photo of yourself and ask the AI to integrate you into the scene! <span style="opacity:0.5;">(Optional)</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Timer -->
+                    <div class="brutal-card p-4 text-center flex flex-col items-center flex-shrink-0" style="background:var(--yellow);gap:0.4rem;">
+                        <p class="font-brutal text-xs tracking-widest">COUNTDOWN</p>
+                        <div id="ai-timer-display" class="font-brutal" style="font-size:2.5rem;line-height:1;">07:00</div>
+                        <div class="flex gap-2">
+                            <button class="brutal-btn" id="ai-timer-btn" onclick="toggleAiVisionTimer()">&#9654; START</button>
+                            <button class="brutal-btn" id="ai-restart-btn" onclick="resetAiVision()" style="background:#fff;">&#8635; RESET</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right col: AI Prompt Template window -->
+                <div class="col-span-3 flex flex-col">
+                    <div class="flex flex-col flex-1" style="border:4px solid var(--black);box-shadow:10px 10px 0px var(--black);">
+
+                        <!-- Fake OS window title bar -->
+                        <div class="flex items-center gap-2 px-4 py-3" style="background:#1a1a1a;border-bottom:3px solid var(--black);">
+                            <div style="width:12px;height:12px;border-radius:50%;background:#ff5f57;border:2px solid #000;"></div>
+                            <div style="width:12px;height:12px;border-radius:50%;background:#febc2e;border:2px solid #000;"></div>
+                            <div style="width:12px;height:12px;border-radius:50%;background:#28c840;border:2px solid #000;"></div>
+                            <span class="font-brutal text-xs ml-3" style="color:#888;letter-spacing:2px;">AI PROMPT TEMPLATE — FILL IN THE BLANKS</span>
+                        </div>
+
+                        <!-- Prompt body -->
+                        <div class="flex-1 p-8" style="background:#0f0f0f;">
+                            <p class="font-bold leading-relaxed" style="color:#e0e0e0;font-size:0.95rem;">
+                                Create an inspiring visual collage representing my future professional success.
+                            </p>
+                            <p class="font-bold leading-relaxed mt-4" style="color:#e0e0e0;font-size:0.95rem;">
+                                I have become a highly sought-after
+                                <span class="font-brutal" style="color:var(--pink);background:rgba(255,0,127,0.15);padding:2px 8px;border:1px solid var(--pink);">[Your Talent / Role]</span>.
+                            </p>
+                            <p class="font-bold mt-5 mb-3" style="color:#e0e0e0;font-size:0.95rem;">Please include:</p>
+                            <ul class="space-y-3" style="font-size:0.9rem;font-weight:bold;color:#e0e0e0;">
+                                <li>→ Symbols: <span class="font-brutal" style="color:var(--cyan);background:rgba(0,229,255,0.12);padding:2px 8px;border:1px solid var(--cyan);">[Symbols of Success from your map]</span></li>
+                                <li>→ Visuals: <span class="font-brutal" style="color:var(--yellow);background:rgba(247,242,44,0.12);padding:2px 8px;border:1px solid var(--yellow);">[Colors &amp; Shapes you saw]</span></li>
+                                <li>→ People: <span class="font-brutal" style="color:var(--pink);background:rgba(255,0,127,0.15);padding:2px 8px;border:1px solid var(--pink);">[Who is in the scene with you]</span></li>
+                                <li>→ Setting: <span class="font-brutal" style="color:var(--cyan);background:rgba(0,229,255,0.12);padding:2px 8px;border:1px solid var(--cyan);">[Location / Environment]</span></li>
+                                <li>→ Mood: <span class="font-brutal" style="color:var(--yellow);background:rgba(247,242,44,0.12);padding:2px 8px;border:1px solid var(--yellow);">[Mood / Vibe]</span></li>
+                            </ul>
+                            <div class="mt-7 pt-5" style="border-top:2px dashed rgba(255,255,255,0.1);">
+                                <p class="font-brutal text-xs" style="color:#555;letter-spacing:1.5px;">COPY → PASTE → REPLACE THE BRACKETS → GENERATE</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 11: INTERMISSION — COFFEE BREAK -->
+    <div class="slide" id="slide-9">
+        <div class="max-w-4xl w-full flex flex-col items-center" style="gap:1.5rem;">
+
+            <!-- Title sticker -->
+            <div class="sticker text-xl" style="transform:rotate(-1deg); background:var(--cyan); font-size:1.1rem;">COFFEE BREAK ☕</div>
+
+            <!-- Humorous prompt -->
+            <div class="brutal-card p-5 text-center w-full" style="background:var(--black); max-width:620px;">
+                <p class="text-white font-bold leading-relaxed" style="font-size:0.95rem;">
+                    Show your AI Victory Pictures to the person next to you. Compare futures.
+                </p>
+                <p class="font-bold mt-2" style="color:var(--yellow); font-size:0.85rem;">
+                    Back in 15 — we're turning visions into plans.
+                </p>
+            </div>
+
+            <!-- Large timer -->
+            <div class="brutal-card p-6 text-center flex flex-col items-center" style="background:var(--yellow); gap:0.5rem; min-width:260px;">
+                <p class="font-brutal text-xs tracking-widest opacity-60">BACK IN</p>
+                <div id="break-timer-display" class="font-brutal" style="font-size:5rem; line-height:1; letter-spacing:-3px;">15:00</div>
+                <button class="brutal-btn" id="break-timer-btn" onclick="toggleBreakTimer()">&#9654; START</button>
+            </div>
+
+            <!-- Rotating quote -->
+            <div class="brutal-card p-6 text-center w-full" style="max-width:620px;">
+                <p class="font-brutal text-xs mb-3 opacity-35 tracking-widest">WHILE YOU WAIT →</p>
+                <p id="break-quote-text" class="font-bold italic leading-relaxed" style="font-size:1.05rem; min-height:3.5rem; color:#111;"></p>
+                <p id="break-quote-author" class="font-brutal text-xs mt-3" style="color:var(--pink); letter-spacing:2px;"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 12: YOUR REALITY CHECK — PERSONAL EXERCISE -->
+    <div class="slide" id="slide-12">
+        <div class="w-full max-w-6xl flex flex-col" style="gap:1.25rem;">
+
+            <!-- Header -->
+            <div class="flex-shrink-0">
+                <h2 class="font-brutal text-5xl mb-4" style="color:var(--pink)">YOUR REALITY CHECK</h2>
+                <div class="flex items-center gap-3 flex-wrap mb-3">
+                    <span class="sticker" style="font-size:0.7rem;transform:rotate(-2deg);white-space:nowrap;background:var(--pink);color:white;">7 MIN EXERCISE</span>
+                    <span class="sticker" style="font-size:0.65rem;transform:rotate(1deg);white-space:nowrap;background:var(--black);color:var(--cyan);">&#8592; USE THE ARCHETYPES AS YOUR MIRROR</span>
+                </div>
+                <p class="font-bold text-sm" style="opacity:0.5;">Same framework as the archetypes &mdash; now map <em>your own</em> gaps &amp; resources. Write. Don&rsquo;t filter.</p>
+            </div>
+
+            <!-- Body: 5-col -->
+            <div class="grid grid-cols-5" style="gap:1.25rem;flex:1;">
+
+                <!-- GAPS (left, 2 cols) -->
+                <div class="col-span-2 brutal-card p-8 flex flex-col" style="background:#fff5f5;border-color:#ef4444;">
+                    <div class="flex items-center gap-3 mb-4">
+                        <h3 class="font-brutal text-2xl" style="color:#dc2626;">MY GAPS</h3>
+                        <span style="font-size:1.3rem;">&#128201;</span>
+                    </div>
+                    <p class="text-[11px] font-bold mb-5 uppercase tracking-wider" style="color:#dc2626;opacity:0.65;">What stands between me and my vision?</p>
+                    <ul class="space-y-5 flex-1">
+                        <li class="flex flex-col gap-1">
+                            <span class="font-brutal text-[10px] uppercase tracking-wide" style="color:#dc2626;">Knowledge &amp; Skills</span>
+                            <span class="font-bold text-sm leading-snug" style="opacity:0.65;">What do I still need to learn or build?</span>
+                        </li>
+                        <li class="flex flex-col gap-1">
+                            <span class="font-brutal text-[10px] uppercase tracking-wide" style="color:#dc2626;">Mindset</span>
+                            <span class="font-bold text-sm leading-snug" style="opacity:0.65;">What fear or belief is secretly running the show?</span>
+                        </li>
+                        <li class="flex flex-col gap-1">
+                            <span class="font-brutal text-[10px] uppercase tracking-wide" style="color:#dc2626;">Connections</span>
+                            <span class="font-bold text-sm leading-snug" style="opacity:0.65;">Who do I need but don&rsquo;t have in my circle yet?</span>
+                        </li>
+                    </ul>
+                    <div class="mt-5 pt-4" style="border-top:2px dashed rgba(220,38,38,0.25);">
+                        <p class="font-brutal text-[9px] uppercase tracking-widest mb-1" style="color:#dc2626;opacity:0.45;">Also consider</p>
+                        <p class="font-bold text-xs" style="opacity:0.45;">Money constraints &middot; Time limitations</p>
+                    </div>
+                </div>
+
+                <!-- CENTER: timer + nudge -->
+                <div class="col-span-1 flex flex-col justify-between" style="gap:1.25rem;">
+
+                    <!-- Timer -->
+                    <div class="brutal-card p-6 text-center flex flex-col items-center justify-center" style="background:var(--yellow);gap:0.75rem;flex:1;">
+                        <p class="font-brutal text-[11px] tracking-widest opacity-60">COUNTDOWN</p>
+                        <div id="rc-timer-display" class="font-brutal" style="font-size:2.4rem;line-height:1;letter-spacing:0.04em;">07:00</div>
+                        <button class="brutal-btn" id="rc-timer-btn" onclick="toggleRealityTimer()" style="padding:0.6rem 1.25rem;font-size:0.8rem;">&#9654; START</button>
+                        <button onclick="resetReality()" style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.65rem;text-transform:uppercase;background:none;border:none;cursor:pointer;opacity:0.45;letter-spacing:0.1em;">&#8635; RESET</button>
+                    </div>
+
+                    <!-- Nudge card -->
+                    <div class="brutal-card p-6 text-center" style="background:#000;">
+                        <p class="font-brutal text-[10px] mb-3 tracking-widest" style="color:var(--cyan);">REMEMBER &#8594;</p>
+                        <p class="font-bold text-xs leading-relaxed" style="color:white;opacity:0.85;">Your gaps are not your weakness.<br>They are your personal <span style="color:var(--yellow);">roadmap.</span></p>
+                    </div>
+                </div>
+
+                <!-- RESOURCES (right, 2 cols) -->
+                <div class="col-span-2 brutal-card p-8 flex flex-col" style="background:#f0fff4;border-color:#16a34a;">
+                    <div class="flex items-center gap-3 mb-4">
+                        <h3 class="font-brutal text-2xl" style="color:#16a34a;">MY RESOURCES</h3>
+                        <span style="font-size:1.3rem;">&#128267;</span>
+                    </div>
+                    <p class="text-[11px] font-bold mb-5 uppercase tracking-wider" style="color:#16a34a;opacity:0.65;">What gear is already in my backpack?</p>
+                    <ul class="space-y-5 flex-1">
+                        <li class="flex flex-col gap-1">
+                            <span class="font-brutal text-[10px] uppercase tracking-wide" style="color:#16a34a;">Knowledge &amp; Skills</span>
+                            <span class="font-bold text-sm leading-snug" style="opacity:0.65;">What am I genuinely great at right now?</span>
+                        </li>
+                        <li class="flex flex-col gap-1">
+                            <span class="font-brutal text-[10px] uppercase tracking-wide" style="color:#16a34a;">Mindset</span>
+                            <span class="font-bold text-sm leading-snug" style="opacity:0.65;">What attitude or drive do I bring every day?</span>
+                        </li>
+                        <li class="flex flex-col gap-1">
+                            <span class="font-brutal text-[10px] uppercase tracking-wide" style="color:#16a34a;">Connections</span>
+                            <span class="font-bold text-sm leading-snug" style="opacity:0.65;">Who is already in my corner and believes in me?</span>
+                        </li>
+                    </ul>
+                    <div class="mt-5 pt-4" style="border-top:2px dashed rgba(22,163,74,0.25);">
+                        <p class="font-brutal text-[9px] uppercase tracking-widest mb-1" style="color:#16a34a;opacity:0.45;">Also consider</p>
+                        <p class="font-bold text-xs" style="opacity:0.45;">Time you can protect &middot; Financial resources</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 13: LEVEL 3 - THE MAGIC HMW FORMULA -->
+    <div class="slide" id="slide-13" style="justify-content:flex-start;">
+        <div class="w-full max-w-6xl flex flex-col" style="gap:1.25rem; height:calc(100vh - 13rem);">
+
+            <!-- Header: compact one-line -->
+            <div class="flex items-center gap-4 flex-shrink-0">
+                <div>
+                    <h2 class="font-brutal" style="font-size:1.75rem;line-height:1.1;color:var(--cyan);">LEVEL 3: THE MAGIC PROMPT</h2>
+                    <p class="font-brutal" style="font-size:1.1rem;line-height:1.2;color:var(--pink);">HOW MIGHT WE (HMW)</p>
+                </div>
+                <span class="sticker" style="font-size:0.7rem;transform:rotate(2deg);white-space:nowrap;background:var(--cyan);color:black;flex-shrink:0;">7 MIN EXERCISE</span>
+            </div>
+
+            <!-- Body: 2 columns -->
+            <div class="grid grid-cols-5 flex-1 min-h-0" style="gap:1.25rem;">
+
+                <!-- Left: explanation + formula + note -->
+                <div class="col-span-3 flex flex-col" style="gap:1rem;">
+
+                    <!-- Explanation -->
+                    <div class="brutal-card p-5 flex-shrink-0" style="background:var(--black);">
+                        <p class="font-brutal text-xs mb-2 tracking-widest" style="color:var(--cyan);">WHAT IS IT? &#8594;</p>
+                        <p class="font-bold text-white leading-relaxed" style="font-size:0.9rem;">
+                            The 'How Might We' method turns your mapped gaps and resources into an actionable challenge, framing the problem for creative ideation.
+                        </p>
+                    </div>
+
+                    <!-- Formula + Note combined -->
+                    <div class="brutal-card flex-1 flex flex-col" style="background:var(--yellow);padding:1.75rem 2.25rem;">
+                        <div class="sticker mb-5" style="font-size:0.7rem;">THE FORMULA</div>
+
+                        <!-- Structured rows with breathing room -->
+                        <div class="flex flex-col flex-1 justify-center" style="gap:1.4rem;">
+                            <div class="flex items-center gap-3">
+                                <span class="font-brutal" style="font-size:1.05rem;white-space:nowrap;">HOW MIGHT WE ACHIEVE</span>
+                                <span style="background:white;padding:6px 16px;border:3px solid black;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;white-space:nowrap;">[GOAL X]</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="font-brutal" style="font-size:1.05rem;white-space:nowrap;">USING</span>
+                                <span style="background:white;padding:6px 16px;border:3px solid black;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;white-space:nowrap;">[RESOURCES Y]</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="font-brutal" style="font-size:1.05rem;white-space:nowrap;">DESPITE</span>
+                                <span style="background:white;padding:6px 16px;border:3px solid black;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;white-space:nowrap;">[GAPS Z]</span>
+                                <span class="font-brutal" style="font-size:1.05rem;">?</span>
+                            </div>
+                        </div>
+
+                        <!-- Note inside the card -->
+                        <div class="mt-5 pt-4" style="border-top:3px dashed rgba(0,0,0,0.2);">
+                            <p class="font-bold" style="font-size:0.8rem;line-height:1.5;">&#128161; You can write more than one HMW question — explore different combinations of gaps and resources!</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right: timer -->
+                <div class="col-span-2 flex flex-col">
+                    <div class="brutal-card flex-1 flex flex-col items-center justify-center" style="background:var(--yellow);gap:1rem;">
+                        <p class="font-brutal text-xs tracking-widest opacity-60">COUNTDOWN</p>
+                        <div id="hmw-timer-display" class="font-brutal" style="font-size:4.5rem;line-height:1;letter-spacing:-2px;">07:00</div>
+                        <button class="brutal-btn" id="hmw-timer-btn" onclick="toggleHmwTimer()">&#9654; PLAY</button>
+                        <button onclick="resetHmw()" style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.65rem;text-transform:uppercase;background:none;border:none;cursor:pointer;opacity:0.45;letter-spacing:0.1em;">&#8635; RESET</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 13: LEVEL 4 - CRAZY 8 -->
+    <div class="slide" id="slide-14">
+        <h2 class="font-brutal text-5xl mb-10 text-orange-600">LEVEL 4: SPEED RUN (CRAZY 8)</h2>
+        <p class="text-xl font-bold mb-10 text-center">One HMW question. 8 wild ideas. 8 minutes. No judgement. GO!</p>
+        <div class="crazy-grid">
+            <div class="crazy-cell">1</div><div class="crazy-cell">2</div><div class="crazy-cell">3</div><div class="crazy-cell">4</div>
+            <div class="crazy-cell">5</div><div class="crazy-cell">6</div><div class="crazy-cell">7</div><div class="crazy-cell">8</div>
+        </div>
+        <div class="mt-10 flex gap-10 items-center">
+            <span class="font-brutal text-pink-500 animate-pulse text-2xl">QUANTITY > QUALITY</span>
+            <div class="h-4 w-48 bg-gray-200 border-2 border-black overflow-hidden"><div class="h-full bg-orange-500 w-1/4 animate-pulse"></div></div>
+        </div>
+    </div>
+
+    <!-- SLIDE 14: LEVEL 5 - IMPACT MATRIX -->
+    <div class="slide" id="slide-15">
+        <h2 class="font-brutal text-4xl mb-12">LEVEL 5: LOOT SORTING</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full max-w-7xl">
+            <div class="brutal-card p-10 flex flex-col justify-center">
+                <h3 class="font-brutal text-3xl mb-6">THE IMPACT MATRIX</h3>
+                <p class="font-bold mb-8">Sort your "Crazy 8" loot by XP gain (Impact) and Stamina used (Effort).</p>
+                <div class="space-y-6">
+                    <div class="flex items-center gap-4"><div class="w-8 h-8 bg-green-500 border-2 border-black"></div> <div><p class="font-bold">XP GRIND (Low Hanging Fruit)</p><p class="text-xs opacity-60">High Impact / Easy to do</p></div></div>
+                    <div class="flex items-center gap-4"><div class="w-8 h-8 bg-pink-500 border-2 border-black"></div> <div><p class="font-bold">BOSS FIGHTS (Strategic Projects)</p><p class="text-xs opacity-60">High Impact / Hard to do</p></div></div>
+                </div>
+            </div>
+            <div class="brutal-card p-4 h-[450px]">
+                <canvas id="matrixChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 15: LEVEL 6 - NO BIGGIE -->
+    <div class="slide" id="slide-16">
+        <div class="brutal-card p-16 max-w-2xl bg-white text-center shadow-[20px_20px_0px_#32CD32]">
+            <h2 class="font-brutal text-6xl mb-10 text-[#32CD32]">FINAL BOSS: ACTION</h2>
+            <div class="text-9xl mb-10">🎯</div>
+            <p class="text-3xl font-bold mb-10">Convert one "XP Grind" into a micro-action.</p>
+            <div class="bg-black text-cyan-400 p-8 text-5xl font-brutal border-4 border-black">NO BIGGIE.</div>
+            <p class="mt-10 font-bold opacity-50 uppercase tracking-widest italic text-sm">Victory Awaits. Put it in your calendar right now.</p>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div id="modal" class="fixed inset-0 bg-black/90 z-[2000] hidden flex items-center justify-center p-6">
+        <div class="brutal-card max-w-2xl w-full bg-white relative" style="max-height:90vh; overflow-y:auto;">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-2xl font-brutal z-10 hover:opacity-60">✕</button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 17;
+
+        function nextSlide() { goToSlide(currentSlide + 1); }
+        function prevSlide() { goToSlide(currentSlide - 1); }
+
+        function goToSlide(index) {
+            if (index < 0 || index >= totalSlides) return;
+            if (currentSlide === 6) resetMindDump();
+            if (currentSlide === 7) resetAssocMap();
+            if (currentSlide === 8) resetAiVision();
+            if (currentSlide === 9) resetBreak();
+            if (currentSlide === 12) resetReality();
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.getElementById(`slide-${index}`).classList.add('active');
+            currentSlide = index;
+
+            // HUD
+            const xp = (currentSlide / (totalSlides - 1)) * 100;
+            document.getElementById('xpFill').style.width = `${xp}%`;
+            
+            const titles = ["START", "THE GAME", "MISSION", "STRATEGY", "GEN Z", "QUEST", "PURGE", "MAP", "VISION", "BREAK", "REALITY", "PLAYERS", "YOURS", "MAGIC", "SPEED-RUN", "SORTING", "ACTION"];
+            document.getElementById('hudStatus').innerText = `LVL ${String(currentSlide + 1).padStart(2, '0')} // ${titles[currentSlide]}`;
+
+            // Buttons
+            document.getElementById('prevBtn').style.display = currentSlide === 0 ? 'none' : 'block';
+            document.getElementById('nextBtn').style.display = currentSlide === totalSlides - 1 ? 'none' : 'block';
+
+            if (index === 6) startMdRotation();
+            if (index === 7) startAssocMap();
+            if (index === 9) startBreakQuotes();
+            if (index === 15) initMatrixChart();
+
+            // IW template: cover layout on slide 0, content layout + footer on all others
+            document.getElementById('iw-cover').style.display = index === 0 ? 'block' : 'none';
+            document.getElementById('iw-content').style.display = index === 0 ? 'none' : 'block';
+            const iwFooter = document.getElementById('iw-footer');
+            iwFooter.style.display = 'flex';
+            document.getElementById('iw-footer-logo').style.visibility = index === 0 ? 'hidden' : 'visible';
+            if (index === 0) {
+                iwFooter.style.background = '#793d57';
+                iwFooter.style.borderTop = '8px solid #f39c81';
+            } else {
+                iwFooter.style.background = '#fff';
+                iwFooter.style.borderTop = '3px solid #000';
+            }
+        }
+
+        function showModal(id) {
+            const m = document.getElementById('modal');
+            const c = document.getElementById('modalContent');
+            const personas = {
+                anya: {
+                    icon: "👑", flag: "🇭🇷", name: "ANYA HORVAT",
+                    title: "The Ambitious & Pragmatic Manager",
+                    field: "International Hospitality Mgmt", country: "Croatia · Univ. of Rijeka",
+                    headerBg: "#FF007F", headerText: "#fff",
+                    quote: "Degree alone isn't enough — I need to speak the language of business results.",
+                    aspires: "I am leading international product launches, turning cross-cultural skills into business results, and mentoring my team with absolute confidence.",
+                    gaps: [
+                        { category: "Connections / Networking", description: "I have no executive network or corporate sponsors in my target industry" },
+                        { category: "Knowledge", description: "I have zero formal corporate experience to translate to employers" },
+                        { category: "Mindset", description: "Imposter syndrome secretly undermines my confidence in high-stakes rooms" }
+                    ],
+                    resources: [
+                        { category: "Skills / Abilities", description: "I'm fluent in 3 languages with natural cross-cultural communication" },
+                        { category: "Mindset", description: "I have extreme self-discipline and a relentless results-first attitude" },
+                        { category: "Skills / Abilities", description: "I have high-level organizational and complex logistical planning skills" }
+                    ]
+                },
+                yoav: {
+                    icon: "⚡", flag: "🇮🇱", name: "YOAV LEVI",
+                    title: "The Life Hacker & Creative Technologist",
+                    field: "Interactive Digital Media", country: "Israel · Holon Institute of Technology",
+                    headerBg: "#00E5FF", headerText: "#000",
+                    quote: "I'm everywhere — tech, art, community — but nowhere at once.",
+                    aspires: "I've built a profitable portfolio career as a Creative Technologist, combining AI and video to launch viral products entirely on my own terms.",
+                    gaps: [
+                        { category: "Mindset", description: "My extreme FOMO makes me get bored and jump ship before finishing" },
+                        { category: "Time", description: "My scattered focus prevents me from completing long-term projects" },
+                        { category: "Connections / Networking", description: "I lack deep, stable relationships with premium corporate clients" }
+                    ],
+                    resources: [
+                        { category: "Skills / Abilities", description: "I rapidly master AI tools and prompt engineering" },
+                        { category: "Knowledge", description: "I have a deep, intuitive feel for online communities and digital trends" },
+                        { category: "Skills / Abilities", description: "I do high-end video editing and creative storytelling" }
+                    ]
+                },
+                sophia: {
+                    icon: "🛡️", flag: "🇩🇪", name: "SOFIA BECKER",
+                    title: "The Quiet Leader & Analytical Engineer",
+                    field: "Data Science & AI", country: "Germany · Hochschule Mittweida",
+                    headerBg: "#F7F22C", headerText: "#000",
+                    quote: "I write the code everyone relies on — but no one knows my name.",
+                    aspires: "I am a confident Tech Lead architecting complex systems, proving I can drive strategy and mentor engineers through quiet, active leadership.",
+                    gaps: [
+                        { category: "Mindset", description: "I have a paralyzing fear of presentations and networking events" },
+                        { category: "Skills / Abilities", description: "I'm extremely uncomfortable with conflict resolution and self-promotion" },
+                        { category: "Connections / Networking", description: "I have no female role models for quiet tech leadership around me" }
+                    ],
+                    resources: [
+                        { category: "Skills / Abilities", description: "I have extraordinary abstract thinking and bug-finding capabilities" },
+                        { category: "Knowledge", description: "I have deep, systematic engineering and coding expertise" },
+                        { category: "Mindset", description: "I have immense loyalty to my team and outstanding active listening skills" },
+                        { category: "Time", description: "I have a protected 2-hour campus break each week — focused, distraction-free time I use for deep skill building" }
+                    ]
+                },
+                luis: {
+                    icon: "🌿", flag: "🇦🇷", name: "LUIS MARTINEZ",
+                    title: "The Practical Social Idealist",
+                    field: "Environmental Psychology", country: "Argentina · UBA",
+                    headerBg: "#32CD32", headerText: "#000",
+                    quote: "I want to change the world — but I can't pay the rent.",
+                    aspires: "I am leading global impact initiatives, bridging social idealism with corporate financial power to create sustainable change without burning out.",
+                    gaps: [
+                        { category: "Money", description: "I have constant financial anxiety and no knowledge of how to secure funding" },
+                        { category: "Connections / Networking", description: "I'm completely disconnected from business executives and investors" },
+                        { category: "Time", description: "I struggle to translate my big ideals into daily, actionable tasks" }
+                    ],
+                    resources: [
+                        { category: "Skills / Abilities", description: "I have mesmerizing storytelling skills and extremely high emotional intelligence (EQ)" },
+                        { category: "Mindset", description: "I have deep empathy and a burning drive to create social impact" },
+                        { category: "Connections / Networking", description: "I can mobilize grassroots volunteers purely through passion and purpose" }
+                    ]
+                }
+            }[id];
+
+            c.innerHTML = `
+                <!-- Header band -->
+                <div class="p-7 pb-5" style="background:${personas.headerBg}; color:${personas.headerText};">
+                    <div class="flex items-center gap-4">
+                        <div style="font-size:3rem; line-height:1;">${personas.icon}</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3">
+                                <h2 class="font-brutal text-2xl leading-none">${personas.name}</h2>
+                                <span style="font-size:1.4rem;">${personas.flag}</span>
+                            </div>
+                            <p class="font-bold text-xs uppercase tracking-widest mt-2 opacity-70">${personas.title}</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4" style="border-top:2px solid rgba(${personas.headerText==='#fff'?'255,255,255':'0,0,0'},0.2);">
+                        <p class="text-[11px] font-black uppercase tracking-wider opacity-60">${personas.field} · ${personas.country}</p>
+                    </div>
+                </div>
+
+                <!-- Body -->
+                <div class="p-7">
+                    <!-- Quote -->
+                    <p class="text-sm font-bold italic opacity-60 mb-6 border-l-4 border-black pl-4">"${personas.quote}"</p>
+
+                    <!-- Aspires -->
+                    <div class="mb-6">
+                        <p class="text-[10px] font-black uppercase tracking-widest opacity-35 mb-1">🎯 Aspires To</p>
+                        <p class="font-bold text-sm leading-snug">${personas.aspires}</p>
+                    </div>
+
+                    <!-- Gaps + Resources -->
+                    <div class="grid grid-cols-2 gap-5 mb-6">
+                        <div>
+                            <p class="text-[10px] font-black uppercase tracking-widest opacity-35 mb-3">📉 Key Gaps</p>
+                            <ul class="space-y-3">
+                                ${personas.gaps.map(g => `<li class="text-xs font-bold text-gray-700 flex items-start gap-2"><span class="text-red-400 mt-px flex-shrink-0">▶</span><span><span class="font-brutal text-[10px] uppercase tracking-wide text-red-500">${g.category}:</span> ${g.description}</span></li>`).join('')}
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-black uppercase tracking-widest opacity-35 mb-3">⚡ Key Resources</p>
+                            <ul class="space-y-3">
+                                ${personas.resources.map(r => `<li class="text-xs font-bold text-gray-700 flex items-start gap-2"><span class="text-green-500 mt-px flex-shrink-0">▶</span><span><span class="font-brutal text-[10px] uppercase tracking-wide text-green-600">${r.category}:</span> ${r.description}</span></li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                </div>`;
+            m.classList.remove('hidden');
+        }
+
+        function closeModal() { document.getElementById('modal').classList.add('hidden'); }
+
+        // ── MIND DUMP ──────────────────────────────────────────────
+        const mdQuestions = [
+            "What does your typical workday look like?",
+            "What core abilities and skills are you expressing?",
+            "Who do you work with — and how do they complement you?",
+            "What kind of projects are you working on?",
+            "What agenda or mission are you advancing?",
+            "What kind of person have you grown to be?"
+        ];
+        let mdQIdx = 0, mdRotateInt = null, mdTimerInt = null, mdTimeLeft = 300, mdRunning = false;
+
+        function mdSetDots(active) {
+            for (let i = 0; i < 6; i++) {
+                const d = document.getElementById(`md-dot-${i}`);
+                if (d) d.style.background = i === active ? 'var(--pink)' : 'transparent';
+            }
+        }
+
+        function mdShowQuestion(idx) {
+            const el = document.getElementById('md-question-el');
+            if (!el) return;
+            el.className = 'text-white font-bold leading-snug md-fade-out';
+            el.style.fontSize = '1.45rem';
+            el.style.minHeight = '5rem';
+            setTimeout(() => {
+                el.textContent = mdQuestions[idx];
+                el.className = 'text-white font-bold leading-snug md-fade-in';
+                el.style.fontSize = '1.45rem';
+                el.style.minHeight = '5rem';
+                mdSetDots(idx);
+            }, 480);
+        }
+
+        function startMdRotation() {
+            if (mdRotateInt) return;
+            const el = document.getElementById('md-question-el');
+            if (el) {
+                el.textContent = mdQuestions[mdQIdx];
+                el.className = 'text-white font-bold leading-snug md-fade-in';
+                el.style.fontSize = '1.45rem';
+                el.style.minHeight = '5rem';
+                mdSetDots(mdQIdx);
+            }
+            mdRotateInt = setInterval(() => {
+                mdQIdx = (mdQIdx + 1) % mdQuestions.length;
+                mdShowQuestion(mdQIdx);
+            }, 10000);
+        }
+
+        function resetMindDump() {
+            clearInterval(mdRotateInt); mdRotateInt = null;
+            clearInterval(mdTimerInt);  mdTimerInt = null;
+            mdRunning = false; mdTimeLeft = 300; mdQIdx = 0;
+            const disp = document.getElementById('md-timer-display');
+            const btn  = document.getElementById('md-timer-btn');
+            const el   = document.getElementById('md-question-el');
+            if (disp) disp.textContent = '05:00';
+            if (btn)  btn.textContent  = '▶ START';
+            if (el)   { el.textContent = ''; el.className = ''; }
+            mdSetDots(0);
+        }
+
+        function toggleMindDumpTimer() {
+            const btn = document.getElementById('md-timer-btn');
+            if (mdRunning) {
+                clearInterval(mdTimerInt); mdTimerInt = null; mdRunning = false;
+                if (btn) btn.textContent = '▶ RESUME';
+            } else {
+                mdRunning = true;
+                if (btn) btn.textContent = '⏸ PAUSE';
+                mdTimerInt = setInterval(() => {
+                    if (mdTimeLeft <= 0) {
+                        clearInterval(mdTimerInt); mdTimerInt = null; mdRunning = false;
+                        const b = document.getElementById('md-timer-btn');
+                        const d = document.getElementById('md-timer-display');
+                        if (b) b.textContent = '✓ DONE!';
+                        if (d) d.textContent = '00:00';
+                        clearInterval(mdRotateInt); mdRotateInt = null;
+                        return;
+                    }
+                    mdTimeLeft--;
+                    const m = Math.floor(mdTimeLeft / 60);
+                    const s = mdTimeLeft % 60;
+                    const d = document.getElementById('md-timer-display');
+                    if (d) d.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                }, 1000);
+            }
+        }
+        // ── ASSOCIATION MAP ────────────────────────────────────────────
+        let amTimerInt = null, amRunning = false, amTimeLeft = 180;
+
+        function startAssocMap() {
+            const bubbles = document.querySelectorAll('#slide-7 .am-bubble');
+            bubbles.forEach(b => {
+                b.classList.remove('am-visible');
+                void b.offsetWidth; // force reflow to restart animation
+            });
+            bubbles.forEach((b, i) => {
+                setTimeout(() => b.classList.add('am-visible'), i * 800);
+            });
+        }
+
+        function resetAssocMap() {
+            clearInterval(amTimerInt); amTimerInt = null;
+            amRunning = false; amTimeLeft = 180;
+            const disp = document.getElementById('am-timer-display');
+            const btn  = document.getElementById('am-timer-btn');
+            if (disp) disp.textContent = '03:00';
+            if (btn)  btn.textContent  = '▶ PLAY';
+            document.querySelectorAll('#slide-7 .am-bubble').forEach(b => b.classList.remove('am-visible'));
+        }
+
+        function toggleAssocTimer() {
+            const btn = document.getElementById('am-timer-btn');
+            if (amRunning) {
+                clearInterval(amTimerInt); amTimerInt = null; amRunning = false;
+                if (btn) btn.textContent = '▶ RESUME';
+            } else {
+                amRunning = true;
+                if (btn) btn.textContent = '⏸ PAUSE';
+                amTimerInt = setInterval(() => {
+                    if (amTimeLeft <= 0) {
+                        clearInterval(amTimerInt); amTimerInt = null; amRunning = false;
+                        const b = document.getElementById('am-timer-btn');
+                        const d = document.getElementById('am-timer-display');
+                        if (b) b.textContent = '✓ DONE!';
+                        if (d) d.textContent = '00:00';
+                        return;
+                    }
+                    amTimeLeft--;
+                    const m = Math.floor(amTimeLeft / 60);
+                    const s = amTimeLeft % 60;
+                    const d = document.getElementById('am-timer-display');
+                    if (d) d.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                }, 1000);
+            }
+        }
+        // ── REALITY CHECK TIMER ─────────────────────────────────────────
+        let rcTimerInt = null, rcRunning = false, rcTimeLeft = 420;
+
+        function resetReality() {
+            clearInterval(rcTimerInt); rcTimerInt = null;
+            rcRunning = false; rcTimeLeft = 420;
+            const disp = document.getElementById('rc-timer-display');
+            const btn  = document.getElementById('rc-timer-btn');
+            if (disp) disp.textContent = '07:00';
+            if (btn)  btn.innerHTML = '&#9654; START';
+        }
+
+        function toggleRealityTimer() {
+            const btn = document.getElementById('rc-timer-btn');
+            if (rcRunning) {
+                clearInterval(rcTimerInt); rcTimerInt = null; rcRunning = false;
+                if (btn) btn.innerHTML = '&#9654; RESUME';
+            } else {
+                rcRunning = true;
+                if (btn) btn.innerHTML = '&#9646;&#9646; PAUSE';
+                rcTimerInt = setInterval(() => {
+                    if (rcTimeLeft <= 0) {
+                        clearInterval(rcTimerInt); rcTimerInt = null; rcRunning = false;
+                        const b = document.getElementById('rc-timer-btn');
+                        const d = document.getElementById('rc-timer-display');
+                        if (b) b.innerHTML = '&#10003; DONE!';
+                        if (d) d.textContent = '00:00';
+                        return;
+                    }
+                    rcTimeLeft--;
+                    const m = Math.floor(rcTimeLeft / 60);
+                    const s = rcTimeLeft % 60;
+                    const d = document.getElementById('rc-timer-display');
+                    if (d) d.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                }, 1000);
+            }
+        }
+                // ── AI VISION TIMER ─────────────────────────────────────────────
+        let aiTimerInt = null, aiRunning = false, aiTimeLeft = 420;
+
+        function resetAiVision() {
+            clearInterval(aiTimerInt); aiTimerInt = null;
+            aiRunning = false; aiTimeLeft = 420;
+            const disp = document.getElementById('ai-timer-display');
+            const btn  = document.getElementById('ai-timer-btn');
+            if (disp) disp.textContent = '07:00';
+            if (btn)  { btn.innerHTML = '&#9654; START'; }
+        }
+
+        function toggleAiVisionTimer() {
+            const btn = document.getElementById('ai-timer-btn');
+            if (aiRunning) {
+                clearInterval(aiTimerInt); aiTimerInt = null; aiRunning = false;
+                if (btn) btn.textContent = '▶ RESUME';
+            } else {
+                aiRunning = true;
+                if (btn) btn.textContent = '⏸ PAUSE';
+                aiTimerInt = setInterval(() => {
+                    if (aiTimeLeft <= 0) {
+                        clearInterval(aiTimerInt); aiTimerInt = null; aiRunning = false;
+                        const b = document.getElementById('ai-timer-btn');
+                        const d = document.getElementById('ai-timer-display');
+                        if (b) b.textContent = '✓ DONE!';
+                        if (d) d.textContent = '00:00';
+                        return;
+                    }
+                    aiTimeLeft--;
+                    const m = Math.floor(aiTimeLeft / 60);
+                    const s = aiTimeLeft % 60;
+                    const d = document.getElementById('ai-timer-display');
+                    if (d) d.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                }, 1000);
+            }
+        }
+        // ── HMW TIMER ────────────────────────────────────────────────
+        let hmwTimerInt = null, hmwRunning = false, hmwTimeLeft = 420;
+
+        function resetHmw() {
+            clearInterval(hmwTimerInt); hmwTimerInt = null;
+            hmwRunning = false; hmwTimeLeft = 420;
+            const disp = document.getElementById('hmw-timer-display');
+            const btn  = document.getElementById('hmw-timer-btn');
+            if (disp) disp.textContent = '07:00';
+            if (btn)  btn.innerHTML = '&#9654; PLAY';
+        }
+
+        function toggleHmwTimer() {
+            const btn = document.getElementById('hmw-timer-btn');
+            if (hmwRunning) {
+                clearInterval(hmwTimerInt); hmwTimerInt = null; hmwRunning = false;
+                if (btn) btn.innerHTML = '&#9654; RESUME';
+            } else {
+                hmwRunning = true;
+                if (btn) btn.innerHTML = '&#9646;&#9646; PAUSE';
+                hmwTimerInt = setInterval(() => {
+                    if (hmwTimeLeft <= 0) {
+                        clearInterval(hmwTimerInt); hmwTimerInt = null; hmwRunning = false;
+                        const b = document.getElementById('hmw-timer-btn');
+                        const d = document.getElementById('hmw-timer-display');
+                        if (b) b.innerHTML = '&#10003; DONE!';
+                        if (d) d.textContent = '00:00';
+                        return;
+                    }
+                    hmwTimeLeft--;
+                    const m = Math.floor(hmwTimeLeft / 60);
+                    const s = hmwTimeLeft % 60;
+                    const d = document.getElementById('hmw-timer-display');
+                    if (d) d.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                }, 1000);
+            }
+        }
+        // ────────────────────────────────────────────────────────────
+
+        function initMatrixChart() {
+            const ctx = document.getElementById('matrixChart').getContext('2d');
+            if (window.myChart) window.myChart.destroy();
+            window.myChart = new Chart(ctx, {
+                type: 'bubble',
+                data: {
+                    datasets: [{
+                        label: 'Ideas',
+                        data: [{x: 85, y: 80, r: 15, label: 'Email Mentor'}, {x: 20, y: 90, r: 15, label: 'Build Prototype'}, {x: 75, y: 25, r: 15, label: 'Draft LinkedIn Post'}],
+                        backgroundColor: (c) => c.raw?.x > 50 && c.raw?.y > 50 ? '#22C55E' : '#FF007F',
+                        borderColor: '#000', borderWidth: 3
+                    }]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    scales: { 
+                        x: { min: 0, max: 100, title: {display:true, text:'EFFORT ➔', font:{family:'Syne', weight:'bold'}} }, 
+                        y: { min: 0, max: 100, title: {display:true, text:'IMPACT ➔', font:{family:'Syne', weight:'bold'}} } 
+                    }, 
+                    plugins: { legend: { display: false } } 
+                }
+            });
+        }
+
+        // ── COFFEE BREAK ─────────────────────────────────────────────
+        const breakQuotes = [
+            { text: "A vision without a plan is just a dream.", author: "— JOEL A. BARKER" },
+            { text: "A plan is nothing. Planning is everything.", author: "— DWIGHT D. EISENHOWER" },
+            { text: "You are your own biggest asset.", author: "— WARREN BUFFETT" }
+        ];
+        let breakQIdx = 0, breakQuoteInt = null, breakTimerInt = null, breakTimeLeft = 900, breakRunning = false;
+
+        function breakShowQuote(idx) {
+            const qt = document.getElementById('break-quote-text');
+            const qa = document.getElementById('break-quote-author');
+            if (!qt || !qa) return;
+            qt.className = 'font-bold italic leading-relaxed md-fade-out';
+            qa.className = 'font-brutal text-xs mt-3 md-fade-out';
+            setTimeout(() => {
+                qt.textContent = '\u201C' + breakQuotes[idx].text + '\u201D';
+                qa.textContent = breakQuotes[idx].author;
+                qt.className = 'font-bold italic leading-relaxed md-fade-in';
+                qt.style.fontSize = '1.05rem';
+                qt.style.minHeight = '3.5rem';
+                qa.className = 'font-brutal text-xs mt-3 md-fade-in';
+                qa.style.color = 'var(--pink)';
+            }, 480);
+        }
+
+        function startBreakQuotes() {
+            if (breakQuoteInt) return;
+            const qt = document.getElementById('break-quote-text');
+            const qa = document.getElementById('break-quote-author');
+            if (qt) {
+                qt.textContent = '\u201C' + breakQuotes[0].text + '\u201D';
+                qt.className = 'font-bold italic leading-relaxed md-fade-in';
+                qt.style.fontSize = '1.05rem';
+                qt.style.minHeight = '3.5rem';
+            }
+            if (qa) { qa.textContent = breakQuotes[0].author; qa.style.color = 'var(--pink)'; }
+            breakQIdx = 0;
+            breakQuoteInt = setInterval(() => {
+                breakQIdx = (breakQIdx + 1) % breakQuotes.length;
+                breakShowQuote(breakQIdx);
+            }, 15000);
+        }
+
+        function resetBreak() {
+            clearInterval(breakQuoteInt); breakQuoteInt = null;
+            clearInterval(breakTimerInt); breakTimerInt = null;
+            breakRunning = false; breakTimeLeft = 900; breakQIdx = 0;
+            const disp = document.getElementById('break-timer-display');
+            const btn  = document.getElementById('break-timer-btn');
+            const qt   = document.getElementById('break-quote-text');
+            const qa   = document.getElementById('break-quote-author');
+            if (disp) disp.textContent = '15:00';
+            if (btn)  btn.innerHTML = '&#9654; START';
+            if (qt)   { qt.textContent = ''; qt.className = ''; }
+            if (qa)   qa.textContent = '';
+        }
+
+        function toggleBreakTimer() {
+            const btn = document.getElementById('break-timer-btn');
+            if (breakRunning) {
+                clearInterval(breakTimerInt); breakTimerInt = null; breakRunning = false;
+                if (btn) btn.innerHTML = '&#9654; RESUME';
+            } else {
+                breakRunning = true;
+                if (btn) btn.innerHTML = '&#9646;&#9646; PAUSE';
+                breakTimerInt = setInterval(() => {
+                    if (breakTimeLeft <= 0) {
+                        clearInterval(breakTimerInt); breakTimerInt = null; breakRunning = false;
+                        const b = document.getElementById('break-timer-btn');
+                        const d = document.getElementById('break-timer-display');
+                        if (b) b.textContent = '✓ DONE!';
+                        if (d) d.textContent = '00:00';
+                        return;
+                    }
+                    breakTimeLeft--;
+                    const m = Math.floor(breakTimeLeft / 60);
+                    const s = breakTimeLeft % 60;
+                    const d = document.getElementById('break-timer-display');
+                    if (d) d.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                }, 1000);
+            }
+        }
+        // ─────────────────────────────────────────────────────────────
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            else if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        goToSlide(0);
+    </script>
+</body>
+</html>
