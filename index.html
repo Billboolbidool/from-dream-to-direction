@@ -96,25 +96,85 @@
         }
         .slide.active { display: flex; }
 
-        /* Crazy 8 Grid */
-        .crazy-grid {
+        /* Crazy 8 Interactive Grid */
+        .c8-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            gap: 15px;
+            gap: 10px;
             width: 100%;
-            max-width: 900px;
-            height: 350px;
+            max-width: 1040px;
         }
-        .crazy-cell {
-            background: var(--white);
-            border: 3px solid var(--black);
+        .c8-card {
+            background: var(--black);
+            border: 4px solid var(--black);
+            box-shadow: 6px 6px 0 rgba(0,0,0,0.35);
+            min-height: 130px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: #eee;
+            cursor: pointer;
+            padding: 1rem;
+            user-select: none;
+            transition: transform 0.08s, box-shadow 0.08s;
+        }
+        .c8-card:not(.revealed):hover {
+            transform: translate(-3px,-3px);
+            box-shadow: 9px 9px 0 var(--pink);
+        }
+        .c8-card:not(.revealed):active {
+            transform: translate(2px,2px);
+            box-shadow: 2px 2px 0 #000;
+        }
+        .c8-card .c8-num {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 2.2rem;
+            color: var(--yellow);
+            line-height: 1;
+        }
+        .c8-card .c8-tap {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.55rem;
+            font-weight: 800;
+            letter-spacing: 0.2em;
+            color: rgba(255,255,255,0.3);
+            margin-top: 4px;
+        }
+        .c8-card.revealed {
+            background: var(--pink);
+            cursor: default;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+        .c8-card.revealed:hover { transform: none; box-shadow: 6px 6px 0 rgba(0,0,0,0.35); }
+        .c8-card.revealed .c8-num {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 4px;
+        }
+        .c8-card.revealed .c8-tap { display: none; }
+        .c8-card.revealed .c8-text {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.45;
+        }
+
+        /* Confetti */
+        @keyframes c8fall {
+            0%   { transform: translateY(-20px) rotate(0deg);   opacity: 1; }
+            80%  { opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+        .c8-confetti-piece {
+            position: fixed;
+            top: -20px;
+            width: 12px;
+            height: 12px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: c8fall linear forwards;
         }
 
         /* Persona Tooltip/Modal */
@@ -573,42 +633,81 @@
 
     <!-- SLIDE 6: PERSONA SELECTION -->
     <div class="slide" id="slide-11">
-        <div class="text-center mb-10">
-            <h2 class="font-brutal text-4xl leading-none">RECOGNIZE A PLAYER?</h2>
-            <p class="font-bold text-sm tracking-[0.2em] uppercase mt-3 opacity-50">Four archetypes. Study their gaps &amp; resources — then turn the lens on yourself.</p>
+        <div class="text-center mb-8">
+            <h2 class="font-brutal text-4xl leading-none">CHOOSE YOUR PLAYER</h2>
+            <p class="font-bold text-sm tracking-[0.2em] uppercase mt-3 opacity-50">Four archetypes. Recognize yourself — then study the gaps.</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 w-full max-w-7xl">
-            <div class="brutal-card p-6 text-center cursor-pointer hover:bg-purple-50" onclick="showModal('anya')">
-                <div class="text-5xl mb-4">👑</div>
-                <h3 class="font-brutal text-xl">ANYA</h3>
-                <p class="text-[10px] font-black uppercase opacity-40 mb-4">The Strategist</p>
-                <div class="w-full bg-gray-200 h-2 border-2 border-black mb-1"><div class="h-full bg-purple-500" style="width: 85%"></div></div>
-                <span class="text-[10px] font-bold tracking-tighter">DRIVE: 85% // IMPACT: 90%</span>
+        <div class="grid grid-cols-4 gap-5 w-full max-w-5xl">
+            <!-- ANYA -->
+            <div class="brutal-card cursor-pointer" style="overflow:hidden;padding:0;transition:transform 0.15s;" onclick="showModal('anya')" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div style="background:#FF007F;padding:10px 14px;">
+                    <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.2em;color:white;">The Strategist</p>
+                </div>
+                <div style="background:#fff0f6;height:220px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;">
+                    <img src="ANYA HORVAT - no background.png" style="max-height:220px;width:auto;object-fit:contain;object-position:bottom;" alt="Anya Horvat">
+                </div>
+                <div style="padding:12px 14px;border-top:4px solid black;">
+                    <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">
+                        <h3 style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;text-transform:uppercase;line-height:1;">ANYA HORVAT</h3>
+                        <span style="font-size:0.95rem;">🇭🇷</span>
+                    </div>
+                    <p style="font-size:0.58rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;opacity:0.4;">Hospitality Mgmt</p>
+                    <p style="font-size:0.65rem;font-weight:600;font-style:italic;opacity:0.55;margin-top:8px;line-height:1.4;">"Degree alone isn't enough."</p>
+                </div>
             </div>
-            <div class="brutal-card p-6 text-center cursor-pointer hover:bg-cyan-50" onclick="showModal('yoav')">
-                <div class="text-5xl mb-4">⚡</div>
-                <h3 class="font-brutal text-xl">YOAV</h3>
-                <p class="text-[10px] font-black uppercase opacity-40 mb-4">The Tech Creative</p>
-                <div class="w-full bg-gray-200 h-2 border-2 border-black mb-1"><div class="h-full bg-cyan-500" style="width: 95%"></div></div>
-                <span class="text-[10px] font-bold tracking-tighter">AGILITY: 95% // FOCUS: 40%</span>
+            <!-- YOAV -->
+            <div class="brutal-card cursor-pointer" style="overflow:hidden;padding:0;transition:transform 0.15s;" onclick="showModal('yoav')" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div style="background:#00E5FF;padding:10px 14px;">
+                    <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.2em;color:#000;">The Tech Creative</p>
+                </div>
+                <div style="background:#e8fdff;height:220px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;">
+                    <img src="YOAV LEVI - no background.png" style="max-height:220px;width:auto;object-fit:contain;object-position:bottom;" alt="Yoav Levi">
+                </div>
+                <div style="padding:12px 14px;border-top:4px solid black;">
+                    <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">
+                        <h3 style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;text-transform:uppercase;line-height:1;">YOAV LEVI</h3>
+                        <span style="font-size:0.95rem;">🇮🇱</span>
+                    </div>
+                    <p style="font-size:0.58rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;opacity:0.4;">Digital Media</p>
+                    <p style="font-size:0.65rem;font-weight:600;font-style:italic;opacity:0.55;margin-top:8px;line-height:1.4;">"I'm everywhere — but nowhere at once."</p>
+                </div>
             </div>
-            <div class="brutal-card p-6 text-center cursor-pointer hover:bg-yellow-50" onclick="showModal('sophia')">
-                <div class="text-5xl mb-4">🛡️</div>
-                <h3 class="font-brutal text-xl">SOPHIA</h3>
-                <p class="text-[10px] font-black uppercase opacity-40 mb-4">The Lead</p>
-                <div class="w-full bg-gray-200 h-2 border-2 border-black mb-1"><div class="h-full bg-yellow-500" style="width: 90%"></div></div>
-                <span class="text-[10px] font-bold tracking-tighter">STAMINA: 90% // CONFIDENCE: 50%</span>
+            <!-- SOFIA -->
+            <div class="brutal-card cursor-pointer" style="overflow:hidden;padding:0;transition:transform 0.15s;" onclick="showModal('sophia')" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div style="background:#F7F22C;padding:10px 14px;">
+                    <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.2em;color:#000;">The Quiet Leader</p>
+                </div>
+                <div style="background:#fffde8;height:220px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;">
+                    <img src="SOFIA BECKER- no background.png" style="max-height:220px;width:auto;object-fit:contain;object-position:bottom;" alt="Sofia Becker">
+                </div>
+                <div style="padding:12px 14px;border-top:4px solid black;">
+                    <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">
+                        <h3 style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;text-transform:uppercase;line-height:1;">SOFIA BECKER</h3>
+                        <span style="font-size:0.95rem;">🇩🇪</span>
+                    </div>
+                    <p style="font-size:0.58rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;opacity:0.4;">Data Science & AI</p>
+                    <p style="font-size:0.65rem;font-weight:600;font-style:italic;opacity:0.55;margin-top:8px;line-height:1.4;">"I write the code everyone relies on."</p>
+                </div>
             </div>
-            <div class="brutal-card p-6 text-center cursor-pointer hover:bg-green-50" onclick="showModal('luis')">
-                <div class="text-5xl mb-4">🌿</div>
-                <h3 class="font-brutal text-xl">LUIS</h3>
-                <p class="text-[10px] font-black uppercase opacity-40 mb-4">The Social Force</p>
-                <div class="w-full bg-gray-200 h-2 border-2 border-black mb-1"><div class="h-full bg-green-500" style="width: 100%"></div></div>
-                <span class="text-[10px] font-bold tracking-tighter">WILL: 100% // EQ: 100%</span>
-                <a href="#persona-luis" class="print-link" style="margin-top:0.75rem;font-family:'Syne',sans-serif;font-weight:800;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:#16a34a;text-decoration:none;border-top:2px solid rgba(0,0,0,0.12);padding-top:0.5rem;">→ VIEW PROFILE</a>
+            <!-- LUIS -->
+            <div class="brutal-card cursor-pointer" style="overflow:hidden;padding:0;transition:transform 0.15s;" onclick="showModal('luis')" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div style="background:#32CD32;padding:10px 14px;">
+                    <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.2em;color:#000;">The Social Force</p>
+                </div>
+                <div style="background:#edfff0;height:220px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;">
+                    <img src="LUIS MARTINEZ - no background.png" style="max-height:220px;width:auto;object-fit:contain;object-position:bottom;" alt="Luis Martinez">
+                </div>
+                <div style="padding:12px 14px;border-top:4px solid black;">
+                    <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">
+                        <h3 style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;text-transform:uppercase;line-height:1;">LUIS MARTINEZ</h3>
+                        <span style="font-size:0.95rem;">🇦🇷</span>
+                    </div>
+                    <p style="font-size:0.58rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;opacity:0.4;">Environmental Psychology</p>
+                    <p style="font-size:0.65rem;font-weight:600;font-style:italic;opacity:0.55;margin-top:8px;line-height:1.4;">"I want to change the world."</p>
+                </div>
             </div>
         </div>
-        <p class="mt-10 text-sm italic opacity-40 font-bold">Click any archetype to explore their profile.</p>
+        <p class="mt-8 text-sm italic opacity-40 font-bold">Click any player to explore their full profile.</p>
     </div>
 
     <!-- SLIDE 7: REALITY CHECK - GAPS & RESOURCES -->
@@ -1058,40 +1157,269 @@
         </div>
     </div>
 
-    <!-- SLIDE 13: LEVEL 4 - CRAZY 8 -->
+    <!-- SLIDE 14: HMW IN ACTION — CHARACTER EXAMPLES -->
     <div class="slide" id="slide-14">
-        <h2 class="font-brutal text-5xl mb-10 text-orange-600">LEVEL 4: SPEED RUN (CRAZY 8)</h2>
-        <p class="text-xl font-bold mb-10 text-center">One HMW question. 8 wild ideas. 8 minutes. No judgement. GO!</p>
-        <div class="crazy-grid">
-            <div class="crazy-cell">1</div><div class="crazy-cell">2</div><div class="crazy-cell">3</div><div class="crazy-cell">4</div>
-            <div class="crazy-cell">5</div><div class="crazy-cell">6</div><div class="crazy-cell">7</div><div class="crazy-cell">8</div>
+        <div class="text-center mb-8">
+            <h2 class="font-brutal text-4xl leading-none">HMW <span style="color:var(--cyan);">IN ACTION</span></h2>
+            <p class="font-bold text-sm tracking-[0.2em] uppercase mt-3 opacity-50">Click a player to see their How Might We questions.</p>
         </div>
-        <div class="mt-10 flex gap-10 items-center">
-            <span class="font-brutal text-pink-500 animate-pulse text-2xl">QUANTITY > QUALITY</span>
-            <div class="h-4 w-48 bg-gray-200 border-2 border-black overflow-hidden"><div class="h-full bg-orange-500 w-1/4 animate-pulse"></div></div>
-        </div>
-    </div>
-
-    <!-- SLIDE 14: LEVEL 5 - IMPACT MATRIX -->
-    <div class="slide" id="slide-15">
-        <h2 class="font-brutal text-4xl mb-12">LEVEL 5: LOOT SORTING</h2>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full max-w-7xl">
-            <div class="brutal-card p-10 flex flex-col justify-center">
-                <h3 class="font-brutal text-3xl mb-6">THE IMPACT MATRIX</h3>
-                <p class="font-bold mb-8">Sort your "Crazy 8" loot by XP gain (Impact) and Stamina used (Effort).</p>
-                <div class="space-y-6">
-                    <div class="flex items-center gap-4"><div class="w-8 h-8 bg-green-500 border-2 border-black"></div> <div><p class="font-bold">XP GRIND (Low Hanging Fruit)</p><p class="text-xs opacity-60">High Impact / Easy to do</p></div></div>
-                    <div class="flex items-center gap-4"><div class="w-8 h-8 bg-pink-500 border-2 border-black"></div> <div><p class="font-bold">BOSS FIGHTS (Strategic Projects)</p><p class="text-xs opacity-60">High Impact / Hard to do</p></div></div>
+        <div class="grid grid-cols-4 gap-5 w-full max-w-5xl">
+            <!-- ANYA -->
+            <div class="brutal-card cursor-pointer" style="overflow:hidden;padding:0;transition:transform 0.15s;" onclick="showHmwModal('anya')" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div style="background:#FF007F;padding:10px 14px;">
+                    <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.2em;color:white;">The Strategist</p>
+                </div>
+                <div style="background:#fff0f6;height:220px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;">
+                    <img src="ANYA HORVAT - no background.png" style="max-height:220px;width:auto;object-fit:contain;object-position:bottom;" alt="Anya Horvat">
+                </div>
+                <div style="padding:12px 14px;border-top:4px solid black;">
+                    <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">
+                        <h3 style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;text-transform:uppercase;line-height:1;">ANYA HORVAT</h3>
+                        <span style="font-size:0.95rem;">🇭🇷</span>
+                    </div>
+                    <p style="font-size:0.58rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;opacity:0.4;">Hospitality Mgmt</p>
+                    <p style="font-size:0.65rem;font-weight:600;font-style:italic;opacity:0.55;margin-top:8px;line-height:1.4;">"Degree alone isn't enough."</p>
                 </div>
             </div>
-            <div class="brutal-card p-4 h-[450px]">
-                <canvas id="matrixChart"></canvas>
+            <!-- YOAV -->
+            <div class="brutal-card cursor-pointer" style="overflow:hidden;padding:0;transition:transform 0.15s;" onclick="showHmwModal('yoav')" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div style="background:#00E5FF;padding:10px 14px;">
+                    <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.2em;color:#000;">The Tech Creative</p>
+                </div>
+                <div style="background:#e8fdff;height:220px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;">
+                    <img src="YOAV LEVI - no background.png" style="max-height:220px;width:auto;object-fit:contain;object-position:bottom;" alt="Yoav Levi">
+                </div>
+                <div style="padding:12px 14px;border-top:4px solid black;">
+                    <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">
+                        <h3 style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;text-transform:uppercase;line-height:1;">YOAV LEVI</h3>
+                        <span style="font-size:0.95rem;">🇮🇱</span>
+                    </div>
+                    <p style="font-size:0.58rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;opacity:0.4;">Digital Media</p>
+                    <p style="font-size:0.65rem;font-weight:600;font-style:italic;opacity:0.55;margin-top:8px;line-height:1.4;">"I'm everywhere — but nowhere at once."</p>
+                </div>
+            </div>
+            <!-- SOFIA -->
+            <div class="brutal-card cursor-pointer" style="overflow:hidden;padding:0;transition:transform 0.15s;" onclick="showHmwModal('sophia')" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div style="background:#F7F22C;padding:10px 14px;">
+                    <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.2em;color:#000;">The Quiet Leader</p>
+                </div>
+                <div style="background:#fffde8;height:220px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;">
+                    <img src="SOFIA BECKER- no background.png" style="max-height:220px;width:auto;object-fit:contain;object-position:bottom;" alt="Sofia Becker">
+                </div>
+                <div style="padding:12px 14px;border-top:4px solid black;">
+                    <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">
+                        <h3 style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;text-transform:uppercase;line-height:1;">SOFIA BECKER</h3>
+                        <span style="font-size:0.95rem;">🇩🇪</span>
+                    </div>
+                    <p style="font-size:0.58rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;opacity:0.4;">Data Science & AI</p>
+                    <p style="font-size:0.65rem;font-weight:600;font-style:italic;opacity:0.55;margin-top:8px;line-height:1.4;">"I write the code everyone relies on."</p>
+                </div>
+            </div>
+            <!-- LUIS -->
+            <div class="brutal-card cursor-pointer" style="overflow:hidden;padding:0;transition:transform 0.15s;" onclick="showHmwModal('luis')" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div style="background:#32CD32;padding:10px 14px;">
+                    <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.2em;color:#000;">The Social Force</p>
+                </div>
+                <div style="background:#edfff0;height:220px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;">
+                    <img src="LUIS MARTINEZ - no background.png" style="max-height:220px;width:auto;object-fit:contain;object-position:bottom;" alt="Luis Martinez">
+                </div>
+                <div style="padding:12px 14px;border-top:4px solid black;">
+                    <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">
+                        <h3 style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;text-transform:uppercase;line-height:1;">LUIS MARTINEZ</h3>
+                        <span style="font-size:0.95rem;">🇦🇷</span>
+                    </div>
+                    <p style="font-size:0.58rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;opacity:0.4;">Environmental Psychology</p>
+                    <p style="font-size:0.65rem;font-weight:600;font-style:italic;opacity:0.55;margin-top:8px;line-height:1.4;">"I want to change the world."</p>
+                </div>
+            </div>
+        </div>
+        <p class="mt-8 text-sm italic opacity-40 font-bold">Click any player to explore their HMW questions.</p>
+    </div>
+
+    <!-- SLIDE 15: LEVEL 4 - CRAZY 8 (INTERACTIVE) -->
+    <div class="slide" id="slide-15" style="background: var(--yellow);">
+        <div class="w-full flex flex-col items-center" style="max-width:1060px; gap:0.65rem;">
+
+            <!-- TOP ROW: Title + Timer -->
+            <div class="w-full flex justify-between items-end" style="gap:1rem;">
+                <div>
+                    <h2 class="font-brutal leading-none" style="font-size:2.4rem; color:#000;">LEVEL 4: SPEED RUN</h2>
+                    <p class="font-brutal" style="font-size:1rem; color: var(--pink); letter-spacing:0.05em;">CRAZY 8 — 1 HMW · 8 PROMPTS · 8 MINUTES</p>
+                </div>
+                <!-- Timer block -->
+                <div style="display:flex; align-items:center; gap:0.6rem; flex-shrink:0;">
+                    <div id="c8-timer" class="font-brutal" style="font-size:2.8rem; background:#000; color: var(--yellow); border:4px solid #000; padding:0.3rem 1rem; box-shadow:6px 6px 0 var(--pink); letter-spacing:0.05em;">08:00</div>
+                    <button id="c8-play-btn" onclick="toggleC8Timer()" class="font-brutal" style="font-size:0.85rem; background: var(--pink); color:#fff; border:4px solid #000; padding:0.55rem 1rem; box-shadow:5px 5px 0 #000; cursor:pointer; white-space:nowrap;">&#9654; PLAY</button>
+                </div>
+            </div>
+
+            <!-- PROGRESS BAR -->
+            <div class="w-full">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                    <span class="font-brutal" style="font-size:0.6rem; letter-spacing:0.2em; color:#000;">PROMPTS REVEALED</span>
+                    <span id="c8-count" class="font-brutal" style="font-size:0.6rem; color:#000;">0 / 8</span>
+                </div>
+                <div style="width:100%; height:18px; border:4px solid #000; background:#fff; overflow:hidden; box-shadow:4px 4px 0 #000;">
+                    <div id="c8-progress" style="height:100%; width:0%; background:var(--pink); transition: width 0.4s ease;"></div>
+                </div>
+            </div>
+
+            <!-- 8-CARD GRID -->
+            <div class="c8-grid w-full">
+
+                <div class="c8-card" onclick="revealC8Card(this)">
+                    <div class="c8-num">01</div>
+                    <div class="c8-tap">CLICK TO REVEAL</div>
+                    <div class="c8-text" style="display:none;">With a budget of $0 and only 1 hour next week, what is the very first thing you can do to advance your solution?</div>
+                </div>
+
+                <div class="c8-card" onclick="revealC8Card(this)">
+                    <div class="c8-num">02</div>
+                    <div class="c8-tap">CLICK TO REVEAL</div>
+                    <div class="c8-text" style="display:none;">What is the worst action you could take tomorrow to guarantee you NEVER reach your goal? Write it, then write the exact opposite.</div>
+                </div>
+
+                <div class="c8-card" onclick="revealC8Card(this)">
+                    <div class="c8-num">03</div>
+                    <div class="c8-tap">CLICK TO REVEAL</div>
+                    <div class="c8-text" style="display:none;">How can you combine two completely different skills or resources of yours into one new, unique side project?</div>
+                </div>
+
+                <div class="c8-card" onclick="revealC8Card(this)">
+                    <div class="c8-num">04</div>
+                    <div class="c8-tap">CLICK TO REVEAL</div>
+                    <div class="c8-text" style="display:none;">If you had to build your professional brand using only one social media platform starting tomorrow, what would be your very first post or action?</div>
+                </div>
+
+                <div class="c8-card" onclick="revealC8Card(this)">
+                    <div class="c8-num">05</div>
+                    <div class="c8-tap">CLICK TO REVEAL</div>
+                    <div class="c8-text" style="display:none;">Look at your biggest mapped gap. How can your strongest existing resource completely compensate for it?</div>
+                </div>
+
+                <div class="c8-card" onclick="revealC8Card(this)">
+                    <div class="c8-num">06</div>
+                    <div class="c8-tap">CLICK TO REVEAL</div>
+                    <div class="c8-text" style="display:none;">If the internet disappeared for a month, what completely OFFLINE, face-to-face action could you take right now to advance your goal?</div>
+                </div>
+
+                <div class="c8-card" onclick="revealC8Card(this)">
+                    <div class="c8-num">07</div>
+                    <div class="c8-tap">CLICK TO REVEAL</div>
+                    <div class="c8-text" style="display:none;">If all opportunities in your dream field close in exactly 3 months, who would you ask for help tomorrow and what would you ask?</div>
+                </div>
+
+                <div class="c8-card" onclick="revealC8Card(this)">
+                    <div class="c8-num">08</div>
+                    <div class="c8-tap">CLICK TO REVEAL</div>
+                    <div class="c8-text" style="display:none;">Your future self &#8212; already living your dream career &#8212; sends you a voice memo right now. What single sentence of advice does it contain? Write it down. Then do exactly that today.</div>
+                </div>
+
+            </div>
+
+            <p id="c8-hint" class="font-brutal" style="font-size:0.75rem; letter-spacing:0.18em; color:#000; opacity:0.75; transition: opacity 0.4s ease; min-height:1em; margin-top:0.5rem;"></p>
+        </div>
+    </div>
+
+    <!-- SLIDE 16: LEVEL 5 - IMPACT / FEASIBILITY + PASSION MATRIX -->
+    <div class="slide" id="slide-16">
+        <div style="display:flex;flex-direction:column;width:100%;max-width:1200px;height:calc(100vh - 13rem);gap:0.6rem;">
+
+            <!-- Title -->
+            <h2 class="font-brutal" style="font-size:1.55rem;letter-spacing:0.05em;text-align:center;flex-shrink:0;">LEVEL 5: IMPACT / FEASIBILITY — PASSION MATRIX</h2>
+
+            <!-- Matrix row: Y-label + grid (flex:1 fills all remaining height) -->
+            <div style="display:flex;gap:0.4rem;flex:1;min-height:0;">
+
+                <!-- Y-axis label -->
+                <div style="display:flex;align-items:center;justify-content:center;flex-shrink:0;width:1.5rem;">
+                    <span class="font-brutal" style="writing-mode:vertical-lr;transform:rotate(180deg);font-size:0.6rem;letter-spacing:0.22em;white-space:nowrap;opacity:0.7;">↑ IMPACT ↑</span>
+                </div>
+
+                <!-- Matrix grid (position:relative for idea overlays) -->
+                <div style="flex:1;position:relative;border:4px solid black;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;">
+
+                    <!-- Q1: top-left — STRATEGIC PROJECTS (High Impact, Low Feasibility) -->
+                    <div style="border-right:2px solid #555;border-bottom:2px solid #555;background:#FFE4F2;padding:1.1rem 1.2rem;position:relative;">
+                        <span class="font-brutal" style="font-size:0.48rem;opacity:0.28;position:absolute;top:0.45rem;left:0.7rem;letter-spacing:0.07em;">HIGH IMPACT · LOW FEASIBILITY</span>
+                        <p class="font-brutal" style="font-size:1.05rem;margin-top:1.6rem;line-height:1.2;">STRATEGIC<br>PROJECTS</p>
+                        <p style="font-size:0.7rem;font-weight:900;color:var(--pink);margin-top:0.35rem;">→ PLAN CAREFULLY</p>
+                    </div>
+
+                    <!-- Q2: top-right — LOW HANGING FRUIT (High Impact, High Feasibility) -->
+                    <div style="border-bottom:2px solid #555;background:#D1FAE5;padding:1.1rem 1.2rem;position:relative;">
+                        <span class="font-brutal" style="font-size:0.48rem;opacity:0.28;position:absolute;top:0.45rem;left:0.7rem;letter-spacing:0.07em;">HIGH IMPACT · HIGH FEASIBILITY</span>
+                        <p class="font-brutal" style="font-size:1.05rem;margin-top:1.6rem;line-height:1.2;">LOW HANGING<br>FRUIT</p>
+                        <p style="font-size:0.7rem;font-weight:900;color:#059669;margin-top:0.35rem;">✓ DO FIRST!</p>
+                    </div>
+
+                    <!-- Q3: bottom-left — TRAPS (Low Impact, Low Feasibility) -->
+                    <div style="border-right:2px solid #555;background:#FFE5E5;padding:1.1rem 1.2rem;position:relative;">
+                        <p class="font-brutal" style="font-size:1.05rem;margin-top:1.6rem;line-height:1.2;">TRAPS</p>
+                        <p style="font-size:0.7rem;font-weight:900;color:#EF4444;margin-top:0.35rem;">✗ AVOID</p>
+                        <span class="font-brutal" style="font-size:0.48rem;opacity:0.28;position:absolute;bottom:0.45rem;left:0.7rem;letter-spacing:0.07em;">LOW IMPACT · LOW FEASIBILITY</span>
+                    </div>
+
+                    <!-- Q4: bottom-right — FILL-INS (Low Impact, High Feasibility) -->
+                    <div style="background:#F0F0F0;padding:1.1rem 1.2rem;position:relative;">
+                        <p class="font-brutal" style="font-size:1.05rem;margin-top:1.6rem;line-height:1.2;">FILL-INS</p>
+                        <p style="font-size:0.7rem;font-weight:900;color:#9CA3AF;margin-top:0.35rem;">IF TIME PERMITS</p>
+                        <span class="font-brutal" style="font-size:0.48rem;opacity:0.28;position:absolute;bottom:0.45rem;left:0.7rem;letter-spacing:0.07em;">LOW IMPACT · HIGH FEASIBILITY</span>
+                    </div>
+
+                    <!-- IDEA A: LOW HANGING FRUIT (top-right Q) — medium passion circle -->
+                    <div style="position:absolute;top:28%;left:72%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;">
+                        <div id="pcircle-A" style="position:absolute;top:50%;left:50%;width:90px;height:90px;border:2.5px dashed #059669;border-radius:50%;background:rgba(5,150,105,0.08);transform:translate(-50%,-50%) scale(0);opacity:0;transition:none;pointer-events:none;"></div>
+                        <div style="position:relative;z-index:2;background:white;border:2px solid black;padding:0.22rem 0.55rem;font-size:0.6rem;font-weight:900;text-transform:uppercase;white-space:nowrap;box-shadow:2px 2px 0 black;">Email Mentor</div>
+                    </div>
+
+                    <!-- IDEA B: STRATEGIC PROJECTS (top-left Q) — large passion circle -->
+                    <div style="position:absolute;top:30%;left:28%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;">
+                        <div id="pcircle-B" style="position:absolute;top:50%;left:50%;width:155px;height:155px;border:2.5px dashed var(--pink);border-radius:50%;background:rgba(255,0,127,0.06);transform:translate(-50%,-50%) scale(0);opacity:0;transition:none;pointer-events:none;"></div>
+                        <div style="position:relative;z-index:2;background:white;border:2px solid black;padding:0.22rem 0.55rem;font-size:0.6rem;font-weight:900;text-transform:uppercase;white-space:nowrap;box-shadow:2px 2px 0 black;">Build Portfolio</div>
+                    </div>
+
+                    <!-- IDEA C: FILL-INS (bottom-right Q) — small passion circle -->
+                    <div style="position:absolute;top:73%;left:72%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;">
+                        <div id="pcircle-C" style="position:absolute;top:50%;left:50%;width:50px;height:50px;border:2.5px dashed #9CA3AF;border-radius:50%;background:rgba(156,163,175,0.1);transform:translate(-50%,-50%) scale(0);opacity:0;transition:none;pointer-events:none;"></div>
+                        <div style="position:relative;z-index:2;background:white;border:2px solid black;padding:0.22rem 0.55rem;font-size:0.6rem;font-weight:900;text-transform:uppercase;white-space:nowrap;box-shadow:2px 2px 0 black;">Update CV</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- X-axis label -->
+            <div style="display:flex;padding-left:1.9rem;flex-shrink:0;">
+                <div class="font-brutal" style="flex:1;text-align:center;font-size:0.62rem;letter-spacing:0.18em;border-top:3px solid black;padding-top:0.28rem;opacity:0.7;">LOW FEASIBILITY ←———————————————————→ HIGH FEASIBILITY</div>
+            </div>
+
+            <!-- Bottom control strip -->
+            <div style="display:flex;gap:0.75rem;flex-shrink:0;">
+
+                <!-- Step 1 -->
+                <div class="brutal-card" style="flex:1;padding:0.65rem 0.9rem;">
+                    <p class="font-brutal" style="font-size:0.58rem;color:var(--pink);letter-spacing:0.15em;margin-bottom:0.25rem;">STEP 1</p>
+                    <p style="font-size:0.75rem;font-weight:700;line-height:1.45;">Place each Crazy 8 idea in the quadrant that best matches its Impact vs. Feasibility.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="brutal-card" style="flex:1;padding:0.65rem 0.9rem;background:var(--yellow);">
+                    <p class="font-brutal" style="font-size:0.58rem;letter-spacing:0.15em;margin-bottom:0.25rem;">STEP 2</p>
+                    <p style="font-size:0.75rem;font-weight:700;line-height:1.4;margin-bottom:0.5rem;">Draw a circle around each idea. <span style="color:var(--pink);">Circle size = your passion to execute it.</span></p>
+                    <button onclick="animatePassionCircles()" class="brutal-btn" style="font-size:0.62rem;padding:0.32rem 0.75rem;">▶ DEMO PASSION CIRCLES</button>
+                </div>
+
+                <!-- Timer -->
+                <div class="brutal-card" style="flex:0 0 175px;padding:0.65rem 0.9rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.35rem;">
+                    <p class="font-brutal" style="font-size:0.55rem;letter-spacing:0.15em;opacity:0.4;">SORTING TIME</p>
+                    <div id="matrix-timer-display" class="font-brutal" style="font-size:2.1rem;letter-spacing:0.08em;line-height:1;">03:00</div>
+                    <button id="matrix-timer-btn" onclick="toggleMatrixTimer()" class="brutal-btn" style="font-size:0.6rem;padding:0.3rem 1rem;background:var(--cyan);">▶ PLAY</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 15: LEVEL 6 - NO BIGGIE -->
-    <div class="slide" id="slide-16">
+    <!-- SLIDE 17: LEVEL 6 - NO BIGGIE -->
+    <div class="slide" id="slide-17">
         <div class="brutal-card p-16 max-w-2xl bg-white text-center shadow-[20px_20px_0px_#32CD32]">
             <h2 class="font-brutal text-6xl mb-10 text-[#32CD32]">FINAL BOSS: ACTION</h2>
             <div class="text-9xl mb-10">🎯</div>
@@ -1103,15 +1431,15 @@
 
     <!-- MODAL -->
     <div id="modal" class="fixed inset-0 bg-black/90 z-[2000] hidden flex items-center justify-center p-6">
-        <div class="brutal-card max-w-2xl w-full bg-white relative" style="max-height:90vh; overflow-y:auto;">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-2xl font-brutal z-10 hover:opacity-60">✕</button>
+        <div class="brutal-card w-full bg-white relative" style="max-width:1140px;">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-2xl font-brutal hover:opacity-60" style="z-index:10;">✕</button>
             <div id="modalContent"></div>
         </div>
     </div>
 
     <script>
         let currentSlide = 0;
-        const totalSlides = 17;
+        const totalSlides = 18;
 
         function nextSlide() { goToSlide(currentSlide + 1); }
         function prevSlide() { goToSlide(currentSlide - 1); }
@@ -1123,6 +1451,8 @@
             if (currentSlide === 8) resetAiVision();
             if (currentSlide === 9) resetBreak();
             if (currentSlide === 12) resetReality();
+            if (currentSlide === 15) resetC8();
+            if (currentSlide === 16) resetMatrixState();
             document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
             document.getElementById(`slide-${index}`).classList.add('active');
             currentSlide = index;
@@ -1131,7 +1461,7 @@
             const xp = (currentSlide / (totalSlides - 1)) * 100;
             document.getElementById('xpFill').style.width = `${xp}%`;
             
-            const titles = ["START", "THE GAME", "MISSION", "STRATEGY", "GEN Z", "QUEST", "PURGE", "MAP", "VISION", "BREAK", "REALITY", "PLAYERS", "YOURS", "MAGIC", "SPEED-RUN", "SORTING", "ACTION"];
+            const titles = ["START", "THE GAME", "MISSION", "STRATEGY", "GEN Z", "QUEST", "PURGE", "MAP", "VISION", "BREAK", "REALITY", "PLAYERS", "YOURS", "MAGIC", "HMW EX", "SPEED-RUN", "SORTING", "ACTION"];
             document.getElementById('hudStatus').innerText = `LVL ${String(currentSlide + 1).padStart(2, '0')} // ${titles[currentSlide]}`;
 
             // Buttons
@@ -1141,7 +1471,8 @@
             if (index === 6) startMdRotation();
             if (index === 7) startAssocMap();
             if (index === 9) startBreakQuotes();
-            if (index === 15) initMatrixChart();
+            if (index === 15) { clearInterval(c8HintInt); c8HintInt = setInterval(c8CycleHint, 5000); }
+            if (index === 16) resetMatrixState();
 
             // IW template: cover layout on slide 0, content layout + footer on all others
             document.getElementById('iw-cover').style.display = index === 0 ? 'block' : 'none';
@@ -1163,7 +1494,8 @@
             const c = document.getElementById('modalContent');
             const personas = {
                 anya: {
-                    icon: "👑", flag: "🇭🇷", name: "ANYA HORVAT",
+                    image: "ANYA HORVAT - no background.png", imageBg: "#fff0f6",
+                    flag: "🇭🇷", name: "ANYA HORVAT",
                     title: "The Ambitious & Pragmatic Manager",
                     field: "International Hospitality Mgmt", country: "Croatia · Univ. of Rijeka",
                     headerBg: "#FF007F", headerText: "#fff",
@@ -1181,7 +1513,8 @@
                     ]
                 },
                 yoav: {
-                    icon: "⚡", flag: "🇮🇱", name: "YOAV LEVI",
+                    image: "YOAV LEVI - no background.png", imageBg: "#e8fdff",
+                    flag: "🇮🇱", name: "YOAV LEVI",
                     title: "The Life Hacker & Creative Technologist",
                     field: "Interactive Digital Media", country: "Israel · Holon Institute of Technology",
                     headerBg: "#00E5FF", headerText: "#000",
@@ -1199,7 +1532,8 @@
                     ]
                 },
                 sophia: {
-                    icon: "🛡️", flag: "🇩🇪", name: "SOFIA BECKER",
+                    image: "SOFIA BECKER- no background.png", imageBg: "#fffde8",
+                    flag: "🇩🇪", name: "SOFIA BECKER",
                     title: "The Quiet Leader & Analytical Engineer",
                     field: "Data Science & AI", country: "Germany · Hochschule Mittweida",
                     headerBg: "#F7F22C", headerText: "#000",
@@ -1218,7 +1552,8 @@
                     ]
                 },
                 luis: {
-                    icon: "🌿", flag: "🇦🇷", name: "LUIS MARTINEZ",
+                    image: "LUIS MARTINEZ - no background.png", imageBg: "#edfff0",
+                    flag: "🇦🇷", name: "LUIS MARTINEZ",
                     title: "The Practical Social Idealist",
                     field: "Environmental Psychology", country: "Argentina · UBA",
                     headerBg: "#32CD32", headerText: "#000",
@@ -1237,48 +1572,51 @@
                 }
             }[id];
 
+            const divColor = personas.headerText === '#fff' ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.2)';
             c.innerHTML = `
-                <!-- Header band -->
-                <div class="p-7 pb-5" style="background:${personas.headerBg}; color:${personas.headerText};">
-                    <div class="flex items-center gap-4">
-                        <div style="font-size:3rem; line-height:1;">${personas.icon}</div>
-                        <div class="flex-1">
-                            <div class="flex items-center gap-3">
-                                <h2 class="font-brutal text-2xl leading-none">${personas.name}</h2>
-                                <span style="font-size:1.4rem;">${personas.flag}</span>
+                <div style="display:flex;max-height:92vh;">
+
+                    <!-- LEFT: Character image + identity -->
+                    <div style="width:35%;display:flex;flex-direction:column;background:${personas.headerBg};color:${personas.headerText};overflow:hidden;flex-shrink:0;">
+                        <div style="flex:1;display:flex;align-items:flex-end;justify-content:center;background:${personas.imageBg};overflow:hidden;">
+                            <img src="${personas.image}" style="max-height:320px;width:auto;max-width:100%;object-fit:contain;object-position:bottom;" alt="${personas.name}">
+                        </div>
+                        <div style="padding:1.25rem 1.5rem;border-top:3px solid ${divColor};text-align:center;">
+                            <div style="font-size:1.5rem;margin-bottom:0.3rem;">${personas.flag}</div>
+                            <h2 style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;text-transform:uppercase;line-height:1.1;margin:0 0 0.25rem;">${personas.name}</h2>
+                            <p style="font-weight:700;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;opacity:0.7;margin-bottom:0.35rem;">${personas.title}</p>
+                            <p style="font-weight:700;font-size:0.55rem;text-transform:uppercase;letter-spacing:0.08em;opacity:0.5;">${personas.field}<br>${personas.country}</p>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT: Content -->
+                    <div style="flex:1;padding:2rem 2rem 2rem 2.25rem;overflow-y:auto;display:flex;flex-direction:column;gap:1.25rem;">
+
+                        <!-- Quote -->
+                        <blockquote style="font-weight:700;font-style:italic;font-size:1rem;line-height:1.55;border-left:4px solid black;padding-left:1rem;margin:0;opacity:0.6;">"${personas.quote}"</blockquote>
+
+                        <!-- Aspires To -->
+                        <div>
+                            <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.58rem;text-transform:uppercase;letter-spacing:0.2em;opacity:0.35;margin-bottom:0.4rem;">🎯 Aspires To</p>
+                            <p style="font-weight:700;font-size:0.875rem;line-height:1.55;">${personas.aspires}</p>
+                        </div>
+
+                        <div style="border-top:2px solid rgba(0,0,0,0.1);"></div>
+
+                        <!-- Gaps + Resources side by side -->
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+                            <div>
+                                <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.58rem;text-transform:uppercase;letter-spacing:0.2em;opacity:0.35;margin-bottom:0.75rem;">📉 Key Gaps</p>
+                                <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.7rem;">
+                                    ${personas.gaps.map(g => `<li style="font-size:0.8rem;font-weight:600;color:#374151;display:flex;align-items:flex-start;gap:0.5rem;"><span style="color:#f87171;flex-shrink:0;margin-top:2px;">▶</span><span><span style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.58rem;text-transform:uppercase;color:#ef4444;">${g.category}: </span>${g.description}</span></li>`).join('')}
+                                </ul>
                             </div>
-                            <p class="font-bold text-xs uppercase tracking-widest mt-2 opacity-70">${personas.title}</p>
-                        </div>
-                    </div>
-                    <div class="mt-4 pt-4" style="border-top:2px solid rgba(${personas.headerText==='#fff'?'255,255,255':'0,0,0'},0.2);">
-                        <p class="text-[11px] font-black uppercase tracking-wider opacity-60">${personas.field} · ${personas.country}</p>
-                    </div>
-                </div>
-
-                <!-- Body -->
-                <div class="p-7">
-                    <!-- Quote -->
-                    <p class="text-sm font-bold italic opacity-60 mb-6 border-l-4 border-black pl-4">"${personas.quote}"</p>
-
-                    <!-- Aspires -->
-                    <div class="mb-6">
-                        <p class="text-[10px] font-black uppercase tracking-widest opacity-35 mb-1">🎯 Aspires To</p>
-                        <p class="font-bold text-sm leading-snug">${personas.aspires}</p>
-                    </div>
-
-                    <!-- Gaps + Resources -->
-                    <div class="grid grid-cols-2 gap-5 mb-6">
-                        <div>
-                            <p class="text-[10px] font-black uppercase tracking-widest opacity-35 mb-3">📉 Key Gaps</p>
-                            <ul class="space-y-3">
-                                ${personas.gaps.map(g => `<li class="text-xs font-bold text-gray-700 flex items-start gap-2"><span class="text-red-400 mt-px flex-shrink-0">▶</span><span><span class="font-brutal text-[10px] uppercase tracking-wide text-red-500">${g.category}:</span> ${g.description}</span></li>`).join('')}
-                            </ul>
-                        </div>
-                        <div>
-                            <p class="text-[10px] font-black uppercase tracking-widest opacity-35 mb-3">⚡ Key Resources</p>
-                            <ul class="space-y-3">
-                                ${personas.resources.map(r => `<li class="text-xs font-bold text-gray-700 flex items-start gap-2"><span class="text-green-500 mt-px flex-shrink-0">▶</span><span><span class="font-brutal text-[10px] uppercase tracking-wide text-green-600">${r.category}:</span> ${r.description}</span></li>`).join('')}
-                            </ul>
+                            <div>
+                                <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.58rem;text-transform:uppercase;letter-spacing:0.2em;opacity:0.35;margin-bottom:0.75rem;">⚡ Key Resources</p>
+                                <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.7rem;">
+                                    ${personas.resources.map(r => `<li style="font-size:0.8rem;font-weight:600;color:#374151;display:flex;align-items:flex-start;gap:0.5rem;"><span style="color:#4ade80;flex-shrink:0;margin-top:2px;">▶</span><span><span style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.58rem;text-transform:uppercase;color:#16a34a;">${r.category}: </span>${r.description}</span></li>`).join('')}
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>`;
@@ -1286,6 +1624,127 @@
         }
 
         function closeModal() { document.getElementById('modal').classList.add('hidden'); }
+
+        function showHmwModal(id) {
+            const m = document.getElementById('modal');
+            const c = document.getElementById('modalContent');
+            const data = {
+                anya: {
+                    image: "ANYA HORVAT - no background.png", imageBg: "#fff0f6",
+                    flag: "🇭🇷", name: "ANYA HORVAT",
+                    title: "The Ambitious & Pragmatic Manager",
+                    field: "International Hospitality Mgmt",
+                    headerBg: "#FF007F", headerText: "#fff",
+                    labelColor: "#FF007F", titleColor: "#FF007F",
+                    quote: "Degree alone isn't enough — I need to speak the language of business results.",
+                    aspires: "Leading international product launches, turning cross-cultural skills into business results.",
+                    hmw: [
+                        { q: "How might we use multilingual skills and logistical expertise to build an executive network, despite having no corporate track record?", resource: "Multilingual skills + logistics mastery", gap: "Zero corporate track record" },
+                        { q: "How might we turn extreme self-discipline into a visible confidence signal, despite imposter syndrome in high-stakes rooms?", resource: "Self-discipline + results-first mindset", gap: "Imposter syndrome" }
+                    ]
+                },
+                yoav: {
+                    image: "YOAV LEVI - no background.png", imageBg: "#e8fdff",
+                    flag: "🇮🇱", name: "YOAV LEVI",
+                    title: "The Life Hacker & Creative Technologist",
+                    field: "Interactive Digital Media",
+                    headerBg: "#00E5FF", headerText: "#000",
+                    labelColor: "#00E5FF", titleColor: "#009db3",
+                    quote: "I'm everywhere — tech, art, community — but nowhere at once.",
+                    aspires: "A profitable portfolio career as a Creative Technologist, launching viral products on my own terms.",
+                    hmw: [
+                        { q: "How might we use AI mastery and video storytelling to ship a profitable product, despite scattered focus killing project completion?", resource: "AI tools + video editing + trend intuition", gap: "Scattered focus / FOMO" },
+                        { q: "How might we leverage deep knowledge of digital communities to attract premium clients, despite lacking stable long-term relationships?", resource: "Deep digital trend knowledge", gap: "No premium client network" }
+                    ]
+                },
+                sophia: {
+                    image: "SOFIA BECKER- no background.png", imageBg: "#fffde8",
+                    flag: "🇩🇪", name: "SOFIA BECKER",
+                    title: "The Quiet Leader & Analytical Engineer",
+                    field: "Data Science & AI",
+                    headerBg: "#F7F22C", headerText: "#000",
+                    labelColor: "#F7F22C", titleColor: "#8a8500",
+                    quote: "I write the code everyone relies on — but no one knows my name.",
+                    aspires: "A confident Tech Lead architecting complex systems through quiet, active leadership.",
+                    hmw: [
+                        { q: "How might we use analytical genius and deep team loyalty to grow into a Tech Lead role, despite a paralyzing fear of self-promotion?", resource: "Analytical skills + team loyalty + active listening", gap: "Fear of presentations & self-promotion" },
+                        { q: "How might we build visible leadership presence using deep engineering expertise, despite having no female role models in quiet tech leadership?", resource: "Systematic engineering expertise", gap: "No role models for quiet leadership" }
+                    ]
+                },
+                luis: {
+                    image: "LUIS MARTINEZ - no background.png", imageBg: "#edfff0",
+                    flag: "🇦🇷", name: "LUIS MARTINEZ",
+                    title: "The Practical Social Idealist",
+                    field: "Environmental Psychology",
+                    headerBg: "#32CD32", headerText: "#000",
+                    labelColor: "#32CD32", titleColor: "#1a7a1a",
+                    quote: "I want to change the world — but I can't pay the rent.",
+                    aspires: "Leading global impact initiatives, bridging social idealism with corporate financial power.",
+                    hmw: [
+                        { q: "How might we use storytelling power and high EQ to unlock funding, despite having zero connections to business executives or investors?", resource: "Storytelling + high EQ + grassroots mobilization", gap: "No connections to investors" },
+                        { q: "How might we translate a burning drive for social impact into daily action steps, despite financial anxiety blocking long-term thinking?", resource: "Deep empathy + passion for impact", gap: "Financial anxiety + no funding knowledge" }
+                    ]
+                }
+            }[id];
+
+            const divColor = data.headerText === '#fff' ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.2)';
+            c.innerHTML = `
+                <div style="display:flex;max-height:92vh;">
+
+                    <!-- LEFT: Character image + identity -->
+                    <div style="width:30%;display:flex;flex-direction:column;background:${data.headerBg};color:${data.headerText};overflow:hidden;flex-shrink:0;">
+                        <div style="flex:1;display:flex;align-items:flex-end;justify-content:center;background:${data.imageBg};overflow:hidden;">
+                            <img src="${data.image}" style="max-height:280px;width:auto;max-width:100%;object-fit:contain;object-position:bottom;" alt="${data.name}">
+                        </div>
+                        <div style="padding:1.25rem 1.5rem;border-top:3px solid ${divColor};">
+                            <div style="font-size:1.4rem;margin-bottom:0.3rem;">${data.flag}</div>
+                            <h2 style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;text-transform:uppercase;line-height:1.1;margin:0 0 0.25rem;">${data.name}</h2>
+                            <p style="font-weight:700;font-size:0.58rem;text-transform:uppercase;letter-spacing:0.15em;opacity:0.7;margin-bottom:0.25rem;">${data.title}</p>
+                            <p style="font-weight:700;font-size:0.55rem;text-transform:uppercase;letter-spacing:0.08em;opacity:0.5;">${data.field}</p>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT: HMW focus -->
+                    <div style="flex:1;padding:2rem 2.5rem;overflow-y:auto;display:flex;flex-direction:column;gap:1.5rem;background:#fff;">
+
+                        <!-- Quote + aspiration as context -->
+                        <div>
+                            <blockquote style="font-weight:700;font-style:italic;font-size:0.95rem;line-height:1.55;border-left:4px solid ${data.headerBg};padding-left:1rem;margin:0 0 0.6rem;opacity:0.6;">"${data.quote}"</blockquote>
+                            <p style="font-size:0.78rem;font-weight:600;color:#666;">🎯 <em>${data.aspires}</em></p>
+                        </div>
+
+                        <div style="border-top:3px solid #000;"></div>
+
+                        <!-- HMW header -->
+                        <div>
+                            <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.55rem;text-transform:uppercase;letter-spacing:0.25em;opacity:0.3;margin-bottom:0.35rem;">THE MAGIC PROMPT ↓</p>
+                            <h3 style="font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;text-transform:uppercase;line-height:1;color:${data.titleColor};">HOW MIGHT WE?</h3>
+                        </div>
+
+                        <!-- HMW #1 -->
+                        <div style="background:#0f0f0f;border:4px solid #000;box-shadow:8px 8px 0px #000;padding:1.5rem;">
+                            <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.2em;color:${data.labelColor};margin-bottom:0.75rem;">HMW #1</p>
+                            <p style="font-weight:800;font-size:1.1rem;line-height:1.6;color:#fff;">${data.hmw[0].q}</p>
+                            <div style="margin-top:1rem;padding-top:0.75rem;border-top:1px dashed rgba(255,255,255,0.12);display:flex;gap:2rem;flex-wrap:wrap;">
+                                <span style="font-size:0.65rem;font-weight:700;color:rgba(255,255,255,0.4);">⚡ USING: ${data.hmw[0].resource}</span>
+                                <span style="font-size:0.65rem;font-weight:700;color:rgba(255,255,255,0.4);">📉 DESPITE: ${data.hmw[0].gap}</span>
+                            </div>
+                        </div>
+
+                        <!-- HMW #2 -->
+                        <div style="background:#0f0f0f;border:4px solid #000;box-shadow:8px 8px 0px #000;padding:1.5rem;">
+                            <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.2em;color:${data.labelColor};margin-bottom:0.75rem;">HMW #2</p>
+                            <p style="font-weight:800;font-size:1.1rem;line-height:1.6;color:#fff;">${data.hmw[1].q}</p>
+                            <div style="margin-top:1rem;padding-top:0.75rem;border-top:1px dashed rgba(255,255,255,0.12);display:flex;gap:2rem;flex-wrap:wrap;">
+                                <span style="font-size:0.65rem;font-weight:700;color:rgba(255,255,255,0.4);">⚡ USING: ${data.hmw[1].resource}</span>
+                                <span style="font-size:0.65rem;font-weight:700;color:rgba(255,255,255,0.4);">📉 DESPITE: ${data.hmw[1].gap}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>`;
+            m.classList.remove('hidden');
+        }
 
         // ── MIND DUMP ──────────────────────────────────────────────
         const mdQuestions = [
@@ -1535,30 +1994,176 @@
                 }, 1000);
             }
         }
+        // ── CRAZY 8 TIMER & REVEAL ───────────────────────────────────
+        let c8TimerInt = null, c8Running = false, c8TimeLeft = 480, c8Revealed = 0, c8HintInt = null, c8HintIdx = 0;
+
+        const c8Hints = [
+            "MORE IDEAS PER CARD = MORE XP. GO WILD.",
+            "NO JUDGMENT. BAD IDEAS WELCOME.",
+            "QUANTITY BEATS QUALITY. ALWAYS.",
+            "STUCK? ASK AN AI FOR MORE IDEAS.",
+            "WRITE FAST. THINK LATER.",
+            "ONE CARD CAN HAVE 5 ANSWERS. DO IT.",
+            "THE WEIRDER THE IDEA, THE BETTER.",
+            "USE ChatGPT, CLAUDE, WHATEVER — JUST GO.",
+            "PERFECTIONISM IS THE ENEMY. KEEP MOVING.",
+            "FILL EVERY CARD. EVERY. SINGLE. ONE.",
+            "BORROWED IDEAS COUNT. STEAL LIKE AN ARTIST.",
+        ];
+
+        function c8CycleHint() {
+            const el = document.getElementById('c8-hint');
+            if (!el) return;
+            el.style.opacity = '0';
+            setTimeout(() => {
+                c8HintIdx = (c8HintIdx + 1) % c8Hints.length;
+                el.textContent = c8Hints[c8HintIdx];
+                el.style.opacity = '0.55';
+            }, 400);
+        }
+
+        function resetC8() {
+            clearInterval(c8TimerInt); c8TimerInt = null;
+            clearInterval(c8HintInt); c8HintInt = null;
+            c8Running = false; c8TimeLeft = 480; c8Revealed = 0; c8HintIdx = 0;
+            const disp = document.getElementById('c8-timer');
+            const btn  = document.getElementById('c8-play-btn');
+            const prog = document.getElementById('c8-progress');
+            const cnt  = document.getElementById('c8-count');
+            const hint = document.getElementById('c8-hint');
+            if (disp) { disp.textContent = '08:00'; disp.style.color = 'var(--yellow)'; }
+            if (btn)  btn.innerHTML = '&#9654; PLAY';
+            if (prog) prog.style.width = '0%';
+            if (cnt)  cnt.textContent = '0 / 8';
+            if (hint) { hint.textContent = c8Hints[0]; hint.style.opacity = '0.55'; }
+            document.querySelectorAll('#slide-15 .c8-card').forEach(card => {
+                card.classList.remove('revealed');
+                card.querySelector('.c8-text').style.display = 'none';
+                card.querySelector('.c8-tap').style.display = '';
+            });
+            c8HintInt = setInterval(c8CycleHint, 5000);
+        }
+
+        function revealC8Card(el) {
+            if (el.classList.contains('revealed')) return;
+            el.classList.add('revealed');
+            el.querySelector('.c8-text').style.display = 'block';
+            el.querySelector('.c8-tap').style.display = 'none';
+            c8Revealed++;
+            const cnt  = document.getElementById('c8-count');
+            const prog = document.getElementById('c8-progress');
+            if (cnt)  cnt.textContent = c8Revealed + ' / 8';
+            if (prog) prog.style.width = (c8Revealed * 12.5) + '%';
+        }
+
+        function launchC8Confetti() {
+            const colors = ['#FF007F','#F7F22C','#00E5FF','#000000','#ffffff','#FF007F','#F7F22C'];
+            const shapes = ['12px','10px','8px','14px'];
+            const count = 120;
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const el = document.createElement('div');
+                    el.className = 'c8-confetti-piece';
+                    const size = shapes[Math.floor(Math.random() * shapes.length)];
+                    el.style.left = Math.random() * 100 + 'vw';
+                    el.style.width = size;
+                    el.style.height = Math.random() > 0.4 ? (parseInt(size) * 2) + 'px' : size;
+                    el.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    el.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    el.style.animationDuration = (2.2 + Math.random() * 2.5) + 's';
+                    el.style.animationDelay = (Math.random() * 0.6) + 's';
+                    document.body.appendChild(el);
+                    el.addEventListener('animationend', () => el.remove());
+                }, Math.random() * 800);
+            }
+        }
+
+        function toggleC8Timer() {
+            const btn  = document.getElementById('c8-play-btn');
+            const disp = document.getElementById('c8-timer');
+            if (c8Running) {
+                clearInterval(c8TimerInt); c8TimerInt = null; c8Running = false;
+                if (btn) btn.innerHTML = '&#9654; RESUME';
+            } else {
+                c8Running = true;
+                if (btn) btn.innerHTML = '&#9646;&#9646; PAUSE';
+                c8TimerInt = setInterval(() => {
+                    if (c8TimeLeft <= 0) {
+                        clearInterval(c8TimerInt); c8TimerInt = null; c8Running = false;
+                        if (btn)  btn.innerHTML = '&#10003; DONE!';
+                        if (disp) { disp.textContent = '00:00'; disp.style.color = 'var(--pink)'; }
+                        launchC8Confetti();
+                        return;
+                    }
+                    c8TimeLeft--;
+                    const m = Math.floor(c8TimeLeft / 60);
+                    const s = c8TimeLeft % 60;
+                    if (disp) disp.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                }, 1000);
+            }
+        }
         // ────────────────────────────────────────────────────────────
 
-        function initMatrixChart() {
-            const ctx = document.getElementById('matrixChart').getContext('2d');
-            if (window.myChart) window.myChart.destroy();
-            window.myChart = new Chart(ctx, {
-                type: 'bubble',
-                data: {
-                    datasets: [{
-                        label: 'Ideas',
-                        data: [{x: 85, y: 80, r: 15, label: 'Email Mentor'}, {x: 20, y: 90, r: 15, label: 'Build Prototype'}, {x: 75, y: 25, r: 15, label: 'Draft LinkedIn Post'}],
-                        backgroundColor: (c) => c.raw?.x > 50 && c.raw?.y > 50 ? '#22C55E' : '#FF007F',
-                        borderColor: '#000', borderWidth: 3
-                    }]
-                },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    scales: { 
-                        x: { min: 0, max: 100, title: {display:true, text:'EFFORT ➔', font:{family:'Syne', weight:'bold'}} }, 
-                        y: { min: 0, max: 100, title: {display:true, text:'IMPACT ➔', font:{family:'Syne', weight:'bold'}} } 
-                    }, 
-                    plugins: { legend: { display: false } } 
+        // ── IMPACT & PASSION MATRIX ──────────────────────────────────
+        let matrixTimerInt = null, matrixTimeLeft = 180, matrixRunning = false;
+
+        function animatePassionCircles() {
+            // Reset circles (invisible + collapsed)
+            ['pcircle-A','pcircle-B','pcircle-C'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) { el.style.transition = 'none'; el.style.transform = 'translate(-50%,-50%) scale(0)'; el.style.opacity = '0'; }
+            });
+            // Two rAF frames to flush the reset before transitioning
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                function pop(id, delay) {
+                    setTimeout(() => {
+                        const el = document.getElementById(id);
+                        if (!el) return;
+                        el.style.transition = 'transform 0.65s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s ease';
+                        el.style.opacity = '1';
+                        el.style.transform = 'translate(-50%,-50%) scale(1)';
+                    }, delay);
                 }
+                pop('pcircle-C', 300);   // small — low passion (Fill-In)
+                pop('pcircle-A', 1050);  // medium — mid passion (Low Hanging Fruit)
+                pop('pcircle-B', 1900);  // large — high passion (Strategic Project)
+            }));
+        }
+
+        function toggleMatrixTimer() {
+            if (matrixRunning) {
+                clearInterval(matrixTimerInt); matrixRunning = false;
+                const btn = document.getElementById('matrix-timer-btn');
+                if (btn) btn.textContent = '▶ PLAY';
+            } else {
+                if (matrixTimeLeft <= 0) matrixTimeLeft = 180;
+                matrixRunning = true;
+                const btn = document.getElementById('matrix-timer-btn');
+                if (btn) btn.textContent = '⏸ PAUSE';
+                matrixTimerInt = setInterval(() => {
+                    matrixTimeLeft--;
+                    const m = String(Math.floor(matrixTimeLeft / 60)).padStart(2,'0');
+                    const s = String(matrixTimeLeft % 60).padStart(2,'0');
+                    const d = document.getElementById('matrix-timer-display');
+                    if (d) d.textContent = m + ':' + s;
+                    if (matrixTimeLeft <= 0) {
+                        clearInterval(matrixTimerInt); matrixRunning = false;
+                        const b = document.getElementById('matrix-timer-btn');
+                        if (b) b.textContent = "✓ TIME'S UP";
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetMatrixState() {
+            clearInterval(matrixTimerInt); matrixTimerInt = null; matrixRunning = false; matrixTimeLeft = 180;
+            const d = document.getElementById('matrix-timer-display');
+            if (d) d.textContent = '03:00';
+            const b = document.getElementById('matrix-timer-btn');
+            if (b) b.textContent = '▶ PLAY';
+            ['pcircle-A','pcircle-B','pcircle-C'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) { el.style.transition = 'none'; el.style.transform = 'translate(-50%,-50%) scale(0)'; el.style.opacity = '0'; }
             });
         }
 
