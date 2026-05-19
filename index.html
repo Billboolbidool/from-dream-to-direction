@@ -2256,7 +2256,7 @@
         let amTimerInt = null, amRunning = false, amTimeLeft = 180;
 
         function startAssocMap() {
-            const bubbles = document.querySelectorAll('#slide-8 .am-bubble');
+            const bubbles = document.querySelectorAll('#slide-9 .am-bubble');
             bubbles.forEach(b => {
                 b.classList.remove('am-visible');
                 void b.offsetWidth; // force reflow to restart animation
@@ -2273,7 +2273,7 @@
             const btn  = document.getElementById('am-timer-btn');
             if (disp) disp.textContent = '03:00';
             if (btn)  btn.textContent  = '▶ PLAY';
-            document.querySelectorAll('#slide-8 .am-bubble').forEach(b => b.classList.remove('am-visible'));
+            document.querySelectorAll('#slide-9 .am-bubble').forEach(b => b.classList.remove('am-visible'));
         }
 
         function toggleAssocTimer() {
