@@ -96,69 +96,20 @@
         }
         .slide.active { display: flex; }
 
-        /* Crazy 8 Interactive Grid */
-        .c8-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            width: 100%;
-            max-width: 1040px;
+        /* Crazy 8 — Progress Rail (smooth bar) */
+        .c8-progress-track {
+            height: 22px;
+            border: 4px solid #000;
+            background: rgba(0,0,0,0.12);
+            box-shadow: 4px 4px 0 #000;
+            position: relative;
+            overflow: hidden;
         }
-        .c8-card {
-            background: var(--black);
-            border: 4px solid var(--black);
-            box-shadow: 6px 6px 0 rgba(0,0,0,0.35);
-            min-height: 130px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            padding: 1rem;
-            user-select: none;
-            transition: transform 0.08s, box-shadow 0.08s;
-        }
-        .c8-card:not(.revealed):hover {
-            transform: translate(-3px,-3px);
-            box-shadow: 9px 9px 0 var(--pink);
-        }
-        .c8-card:not(.revealed):active {
-            transform: translate(2px,2px);
-            box-shadow: 2px 2px 0 #000;
-        }
-        .c8-card .c8-num {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: 2.2rem;
-            color: var(--yellow);
-            line-height: 1;
-        }
-        .c8-card .c8-tap {
-            font-family: 'Syne', sans-serif;
-            font-size: 0.55rem;
-            font-weight: 800;
-            letter-spacing: 0.2em;
-            color: rgba(255,255,255,0.3);
-            margin-top: 4px;
-        }
-        .c8-card.revealed {
+        .c8-progress-fill {
+            height: 100%;
             background: var(--pink);
-            cursor: default;
-            align-items: flex-start;
-            justify-content: flex-start;
-        }
-        .c8-card.revealed:hover { transform: none; box-shadow: 6px 6px 0 rgba(0,0,0,0.35); }
-        .c8-card.revealed .c8-num {
-            font-size: 0.6rem;
-            color: rgba(255,255,255,0.6);
-            margin-bottom: 4px;
-        }
-        .c8-card.revealed .c8-tap { display: none; }
-        .c8-card.revealed .c8-text {
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: #fff;
-            line-height: 1.45;
+            width: 0%;
+            transition: width 1s linear;
         }
 
         /* Confetti */
@@ -427,7 +378,7 @@
     </div>
 
     <!-- SLIDE 1: THE GAME - VUCA -->
-    <div class="slide" id="slide-2">
+    <div class="slide" id="slide-3">
         <div class="max-w-6xl w-full text-center">
             <!-- Title -->
             <div class="mb-6">
@@ -490,7 +441,7 @@
     </div>
 
     <!-- SLIDE 2: YOUR MISSION -->
-    <div class="slide" id="slide-3">
+    <div class="slide" id="slide-4">
         <div class="max-w-5xl w-full">
 
             <!-- Title -->
@@ -541,7 +492,7 @@
     </div>
 
     <!-- SLIDE 3: STRATEGY + TACTICS -->
-    <div class="slide" id="slide-4">
+    <div class="slide" id="slide-5">
         <div class="max-w-5xl w-full">
 
             <!-- Title -->
@@ -562,7 +513,7 @@
                         <p class="font-brutal text-xl">STRATEGY</p>
                     </div>
                     <p class="text-sm font-bold italic opacity-60 mb-5 pl-4" style="border-left: 4px solid var(--cyan);">
-                        "A plan defining long-term goals, and the principles of action to achieve them, making optimal use of resources under conditions of uncertainty."
+                        "Strategy is a framework that bridges your vision and your actions through focused choices about what to do and what to let go, while you navigate a reality of uncertainty."
                     </p>
                     <ul class="space-y-2 text-sm font-bold mb-5">
                         <li class="flex items-start gap-2"><span style="color:var(--cyan);">→</span> Bird's-eye view</li>
@@ -606,7 +557,7 @@
     </div>
 
     <!-- SLIDE 2: GEN Z SWOT -->
-    <div class="slide" id="slide-5">
+    <div class="slide" id="slide-6">
         <div class="max-w-5xl w-full">
             <!-- Title -->
             <div class="text-center mb-6">
@@ -689,8 +640,39 @@
         </div>
     </div>
 
+    <!-- SLIDE: LFG — TRANSITION -->
+    <div class="slide" id="slide-7" style="background:#0a0a0a;">
+        <div class="max-w-3xl w-full text-center" style="display:flex;flex-direction:column;align-items:center;gap:2.5rem;">
+
+            <!-- Achievement Unlocked banner -->
+            <div style="display:inline-flex;align-items:center;gap:1.2rem;background:var(--yellow);border:4px solid #fff;padding:0.8rem 2.2rem;box-shadow:8px 8px 0 var(--pink);">
+                <span style="font-size:2rem;">🏆</span>
+                <div style="text-align:left;">
+                    <p class="font-brutal" style="font-size:0.55rem;letter-spacing:0.45em;color:#000;opacity:0.5;margin-bottom:0.15rem;">ACHIEVEMENT UNLOCKED</p>
+                    <p class="font-brutal" style="font-size:1rem;color:#000;">You Showed Up</p>
+                </div>
+            </div>
+
+            <!-- Main headline -->
+            <div>
+                <h1 class="font-brutal" style="font-size:clamp(4rem,11vw,9rem);color:#ffffff;line-height:0.9;margin-bottom:0.15em;">READY?</h1>
+                <h2 class="font-brutal" style="font-size:clamp(3rem,8.5vw,7rem);color:var(--pink);line-height:0.9;">LET'S GO.</h2>
+            </div>
+
+            <!-- Pokémon quote card -->
+            <div style="border:4px solid var(--cyan);padding:1.4rem 2.5rem;background:transparent;">
+                <p style="font-size:1rem;font-weight:700;color:var(--cyan);font-style:italic;">"A world of dreams and adventures awaits!"</p>
+                <p class="font-brutal" style="font-size:0.52rem;letter-spacing:0.4em;color:var(--cyan);opacity:0.5;margin-top:0.6rem;">— PROFESSOR OAK · POKÉMON RED/BLUE, 1996</p>
+            </div>
+
+            <!-- Tagline -->
+            <p class="font-brutal" style="font-size:0.6rem;letter-spacing:0.35em;color:#ffffff;opacity:0.35;">NO RESPAWNS &nbsp;·&nbsp; NO SAVE POINTS &nbsp;·&nbsp; JUST YOU</p>
+
+        </div>
+    </div>
+
     <!-- SLIDE 5: QUEST ROADMAP -->
-    <div class="slide" id="slide-6">
+    <div class="slide" id="slide-2">
         <div class="max-w-6xl w-full">
 
             <!-- Title -->
@@ -747,7 +729,7 @@
                 <div class="brutal-card p-5" style="border-top: 6px solid var(--yellow);">
                     <div class="font-brutal text-4xl leading-none mb-2" style="color:#a09000;">06</div>
                     <div class="text-2xl mb-2">⚡</div>
-                    <p class="font-brutal text-xs tracking-wider">CRAZY 8</p>
+                    <p class="font-brutal text-xs tracking-wider">FIRE ROUND</p>
                     <p class="text-[10px] font-bold opacity-40 mt-1">Explode with ideas</p>
                 </div>
                 <div class="brutal-card p-5" style="border-top: 6px solid var(--cyan);">
@@ -773,7 +755,7 @@
     </div>
 
     <!-- SLIDE 6: PERSONA SELECTION -->
-    <div class="slide" id="slide-12">
+    <div class="slide" id="slide-13">
         <div class="text-center mb-8">
             <h2 class="font-brutal text-4xl leading-none">CHOOSE YOUR PLAYER</h2>
             <p class="font-bold text-sm tracking-[0.2em] uppercase mt-3 opacity-50">Four archetypes. Recognize yourself — then study the gaps.</p>
@@ -852,7 +834,7 @@
     </div>
 
     <!-- SLIDE 7: REALITY CHECK - GAPS & RESOURCES -->
-    <div class="slide" id="slide-11">
+    <div class="slide" id="slide-12">
         <h2 class="font-brutal text-5xl mb-12" style="margin-top:3rem;">LEVEL 2: THE REALITY CHECK</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-5xl">
             <!-- Gaps -->
@@ -881,7 +863,7 @@
     </div>
 
     <!-- SLIDE 8: LEVEL 1 - MIND DUMP -->
-    <div class="slide" id="slide-7">
+    <div class="slide" id="slide-8">
         <div class="w-full max-w-6xl flex flex-col" style="gap:1.25rem;">
 
             <!-- Header -->
@@ -943,7 +925,7 @@
     </div>
 
     <!-- SLIDE 9: LEVEL 2 - ASSOCIATION MAP -->
-    <div class="slide" id="slide-8">
+    <div class="slide" id="slide-9">
         <div class="w-full max-w-6xl flex flex-col" style="gap:1.25rem; height:100%;">
 
             <!-- Header -->
@@ -1025,7 +1007,7 @@
     </div>
 
     <!-- SLIDE 10: LEVEL 2C - AI VISION GENERATOR -->
-    <div class="slide" id="slide-9" style="justify-content:flex-start;">
+    <div class="slide" id="slide-10" style="justify-content:flex-start;">
         <div class="w-full max-w-6xl flex flex-col" style="gap:1rem; height:calc(100vh - 14rem);">
 
             <!-- Header -->
@@ -1103,7 +1085,7 @@
     </div>
 
     <!-- SLIDE 11: INTERMISSION — COFFEE BREAK -->
-    <div class="slide" id="slide-10">
+    <div class="slide" id="slide-11">
         <div class="max-w-4xl w-full flex flex-col items-center" style="gap:1.5rem;">
 
             <!-- Title sticker -->
@@ -1136,7 +1118,7 @@
     </div>
 
     <!-- SLIDE 12: YOUR REALITY CHECK — PERSONAL EXERCISE -->
-    <div class="slide" id="slide-13">
+    <div class="slide" id="slide-14">
         <div class="w-full max-w-6xl flex flex-col" style="gap:1.25rem;">
 
             <!-- Header -->
@@ -1229,7 +1211,7 @@
     </div>
 
     <!-- SLIDE 13: LEVEL 3 - THE MAGIC HMW FORMULA -->
-    <div class="slide" id="slide-14" style="justify-content:flex-start;">
+    <div class="slide" id="slide-15" style="justify-content:flex-start;">
         <div class="w-full max-w-6xl flex flex-col" style="gap:1.25rem; height:calc(100vh - 13rem);">
 
             <!-- Header: compact one-line -->
@@ -1299,7 +1281,7 @@
     </div>
 
     <!-- SLIDE 14: HMW IN ACTION — CHARACTER EXAMPLES -->
-    <div class="slide" id="slide-15">
+    <div class="slide" id="slide-16">
         <div class="text-center mb-8">
             <h2 class="font-brutal text-4xl leading-none">HMW <span style="color:var(--cyan);">IN ACTION</span></h2>
             <p class="font-bold text-sm tracking-[0.2em] uppercase mt-3 opacity-50">Click a player to see their How Might We questions.</p>
@@ -1378,92 +1360,57 @@
     </div>
 
     <!-- SLIDE 15: LEVEL 4 - CRAZY 8 (INTERACTIVE) -->
-    <div class="slide" id="slide-16" style="background: var(--yellow);">
-        <div class="w-full flex flex-col items-center" style="max-width:1060px; gap:0.65rem;">
+    <div class="slide" id="slide-17" style="background: var(--yellow);">
+        <div class="w-full flex flex-col" style="max-width:960px; gap:0.8rem; height:calc(100vh - 12rem);">
 
-            <!-- TOP ROW: Title + Timer -->
-            <div class="w-full flex justify-between items-end" style="gap:1rem;">
+            <!-- TOP ROW: Title + Counter + Timer + Buttons -->
+            <div class="w-full flex justify-between items-end flex-shrink-0" style="gap:1rem;">
                 <div>
-                    <h2 class="font-brutal leading-none" style="font-size:2.4rem; color:#000;">LEVEL 4: SPEED RUN</h2>
-                    <p class="font-brutal" style="font-size:1rem; color: var(--pink); letter-spacing:0.05em;">CRAZY 8 — 1 HMW · 8 PROMPTS · 8 MINUTES</p>
+                    <h2 class="font-brutal leading-none" style="font-size:2.2rem; color:#000;">LEVEL 4: SPEED RUN</h2>
+                    <p class="font-brutal" style="font-size:0.9rem; color:var(--pink); letter-spacing:0.05em;">FIRE ROUND — 1 HMW · 21 PROMPTS · 6 MINUTES · GO FOR 36 IDEAS</p>
                 </div>
-                <!-- Timer block -->
                 <div style="display:flex; align-items:center; gap:0.6rem; flex-shrink:0;">
-                    <div id="c8-timer" class="font-brutal" style="font-size:2.8rem; background:#000; color: var(--yellow); border:4px solid #000; padding:0.3rem 1rem; box-shadow:6px 6px 0 var(--pink); letter-spacing:0.05em;">08:00</div>
-                    <button id="c8-play-btn" onclick="toggleC8Timer()" class="font-brutal" style="font-size:0.85rem; background: var(--pink); color:#fff; border:4px solid #000; padding:0.55rem 1rem; box-shadow:5px 5px 0 #000; cursor:pointer; white-space:nowrap;">&#9654; PLAY</button>
+                    <span id="c8-card-counter" class="font-brutal" style="font-size:0.85rem; color:#000; letter-spacing:0.12em; white-space:nowrap;">— / 21</span>
+                    <div id="c8-timer" class="font-brutal" style="font-size:2.6rem; background:#000; color:var(--yellow); border:4px solid #000; padding:0.3rem 0.9rem; box-shadow:6px 6px 0 var(--pink); letter-spacing:0.05em;">06:00</div>
+                    <button id="c8-play-btn" onclick="toggleC8Timer()" class="font-brutal" style="font-size:0.85rem; background:var(--pink); color:#fff; border:4px solid #000; padding:0.55rem 1rem; box-shadow:5px 5px 0 #000; cursor:pointer; white-space:nowrap;">&#9654; PLAY</button>
+                    <button onclick="c8NextCard()" class="font-brutal" style="font-size:0.85rem; background:#fff; color:#000; border:4px solid #000; padding:0.55rem 1rem; box-shadow:5px 5px 0 #000; cursor:pointer; white-space:nowrap;">NEXT →</button>
+                    <button onclick="resetC8()" class="font-brutal" style="font-size:0.85rem; background:#fff; color:#000; border:4px solid #000; padding:0.55rem 0.8rem; box-shadow:5px 5px 0 #000; cursor:pointer;">&#8635;</button>
                 </div>
             </div>
 
-            <!-- PROGRESS BAR -->
-            <div class="w-full">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                    <span class="font-brutal" style="font-size:0.6rem; letter-spacing:0.2em; color:#000;">PROMPTS REVEALED</span>
-                    <span id="c8-count" class="font-brutal" style="font-size:0.6rem; color:#000;">0 / 8</span>
+            <!-- PROGRESS RAIL: smooth fill bar -->
+            <div class="c8-progress-track flex-shrink-0">
+                <div class="c8-progress-fill" id="c8-progress-fill"></div>
+            </div>
+
+            <!-- HERO CARD STAGE -->
+            <div style="flex:1; position:relative; min-height:0;">
+
+                <!-- Waiting state -->
+                <div id="c8-waiting" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:#000; border:4px solid #000; box-shadow:10px 10px 0 rgba(0,0,0,0.3);">
+                    <div style="text-align:center;">
+                        <div class="font-brutal" style="font-size:7rem; color:var(--yellow); line-height:1;">21</div>
+                        <div class="font-brutal" style="font-size:1rem; color:rgba(255,255,255,0.35); letter-spacing:0.25em; margin-top:0.5rem;">PROMPTS WAITING</div>
+                        <div class="font-brutal" style="font-size:0.85rem; color:var(--pink); letter-spacing:0.2em; margin-top:1rem;">GO FOR 36 IDEAS</div>
+                        <div class="font-brutal" style="font-size:0.7rem; color:rgba(255,255,255,0.2); letter-spacing:0.2em; margin-top:1rem;">PRESS PLAY TO BEGIN</div>
+                    </div>
                 </div>
-                <div style="width:100%; height:18px; border:4px solid #000; background:#fff; overflow:hidden; box-shadow:4px 4px 0 #000;">
-                    <div id="c8-progress" style="height:100%; width:0%; background:var(--pink); transition: width 0.4s ease;"></div>
+
+                <!-- Active card (one at a time) -->
+                <div id="c8-active-card" style="position:absolute; inset:0; display:none; flex-direction:column; justify-content:center; background:#000; border:4px solid #000; box-shadow:10px 10px 0 rgba(0,0,0,0.3); padding:3rem 4rem; opacity:0; transition:opacity 0.4s ease;">
+                    <div id="c8-active-num" class="font-brutal" style="font-size:0.75rem; color:var(--yellow); letter-spacing:0.25em; margin-bottom:0.6rem;"></div>
+                    <div id="c8-active-cat" class="font-brutal" style="font-size:0.65rem; color:var(--pink); letter-spacing:0.2em; margin-bottom:1.5rem;"></div>
+                    <p id="c8-active-text" class="font-bold" style="font-size:1.25rem; color:#fff; line-height:1.7;"></p>
                 </div>
             </div>
 
-            <!-- 8-CARD GRID -->
-            <div class="c8-grid w-full">
-
-                <div class="c8-card" onclick="revealC8Card(this)">
-                    <div class="c8-num">01</div>
-                    <div class="c8-tap">CLICK TO REVEAL</div>
-                    <div class="c8-text" style="display:none;">With a budget of $0 and only 1 hour next week, what is the very first thing you can do to advance your solution?</div>
-                </div>
-
-                <div class="c8-card" onclick="revealC8Card(this)">
-                    <div class="c8-num">02</div>
-                    <div class="c8-tap">CLICK TO REVEAL</div>
-                    <div class="c8-text" style="display:none;">What is the worst action you could take tomorrow to guarantee you NEVER reach your goal? Write it, then write the exact opposite.</div>
-                </div>
-
-                <div class="c8-card" onclick="revealC8Card(this)">
-                    <div class="c8-num">03</div>
-                    <div class="c8-tap">CLICK TO REVEAL</div>
-                    <div class="c8-text" style="display:none;">How can you combine two completely different skills or resources of yours into one new, unique side project?</div>
-                </div>
-
-                <div class="c8-card" onclick="revealC8Card(this)">
-                    <div class="c8-num">04</div>
-                    <div class="c8-tap">CLICK TO REVEAL</div>
-                    <div class="c8-text" style="display:none;">If you had to build your professional brand using only one social media platform starting tomorrow, what would be your very first post or action?</div>
-                </div>
-
-                <div class="c8-card" onclick="revealC8Card(this)">
-                    <div class="c8-num">05</div>
-                    <div class="c8-tap">CLICK TO REVEAL</div>
-                    <div class="c8-text" style="display:none;">Look at your biggest mapped gap. How can your strongest existing resource completely compensate for it?</div>
-                </div>
-
-                <div class="c8-card" onclick="revealC8Card(this)">
-                    <div class="c8-num">06</div>
-                    <div class="c8-tap">CLICK TO REVEAL</div>
-                    <div class="c8-text" style="display:none;">If the internet disappeared for a month, what completely OFFLINE, face-to-face action could you take right now to advance your goal?</div>
-                </div>
-
-                <div class="c8-card" onclick="revealC8Card(this)">
-                    <div class="c8-num">07</div>
-                    <div class="c8-tap">CLICK TO REVEAL</div>
-                    <div class="c8-text" style="display:none;">If all opportunities in your dream field close in exactly 3 months, who would you ask for help tomorrow and what would you ask?</div>
-                </div>
-
-                <div class="c8-card" onclick="revealC8Card(this)">
-                    <div class="c8-num">08</div>
-                    <div class="c8-tap">CLICK TO REVEAL</div>
-                    <div class="c8-text" style="display:none;">Your future self &#8212; already living your dream career &#8212; sends you a voice memo right now. What single sentence of advice does it contain? Write it down. Then do exactly that today.</div>
-                </div>
-
-            </div>
-
-            <p id="c8-hint" class="font-brutal" style="font-size:0.75rem; letter-spacing:0.18em; color:#000; opacity:0.75; transition: opacity 0.4s ease; min-height:1em; margin-top:0.5rem;"></p>
+            <!-- EMPOWERMENT HINT BAR -->
+            <p id="c8-hint" class="font-brutal flex-shrink-0" style="font-size:0.7rem; letter-spacing:0.18em; color:#000; opacity:0; transition:opacity 0.4s ease; text-align:center; min-height:1.2em;"></p>
         </div>
     </div>
 
     <!-- SLIDE 16: LEVEL 5 - IMPACT / FEASIBILITY + PASSION MATRIX -->
-    <div class="slide" id="slide-17">
+    <div class="slide" id="slide-18">
         <div style="display:flex;flex-direction:column;width:100%;max-width:1200px;height:calc(100vh - 13rem);gap:0.6rem;">
 
             <!-- Title -->
@@ -1560,7 +1507,7 @@
     </div>
 
     <!-- SLIDE 17: LEVEL 6 - NO-BIGGIE CONCEPT -->
-    <div class="slide" id="slide-18">
+    <div class="slide" id="slide-19">
         <div class="max-w-4xl w-full flex flex-col items-center" style="gap:0.9rem;max-height:calc(100vh - 14rem);justify-content:center;">
 
             <!-- Level badge + title -->
@@ -1592,7 +1539,7 @@
     </div>
 
     <!-- SLIDE 18: LEVEL 6 - NO-BIGGIE BREAKDOWN -->
-    <div class="slide" id="slide-19">
+    <div class="slide" id="slide-20">
         <div class="max-w-5xl w-full flex flex-col" style="gap:1.1rem;height:calc(100vh - 13rem);justify-content:center;">
 
             <!-- Title -->
@@ -1690,6 +1637,65 @@
         </div>
     </div>
 
+    <!-- SLIDE: FINAL — QUEST COMPLETE -->
+    <div class="slide" id="slide-21" style="background:#0a0a0a;">
+        <div class="max-w-6xl w-full" style="display:grid;grid-template-columns:3fr 2fr;gap:3.5rem;align-items:center;">
+
+            <!-- Left: Victory -->
+            <div style="display:flex;flex-direction:column;gap:2rem;">
+
+                <!-- Quest Complete heading -->
+                <div>
+                    <p class="font-brutal" style="font-size:0.5rem;letter-spacing:0.4em;color:#fff;opacity:0.3;margin-bottom:0.6rem;">★ ★ ★ &nbsp; ALL OBJECTIVES COMPLETE &nbsp; ★ ★ ★</p>
+                    <h1 class="font-brutal" style="font-size:3.5rem;color:var(--yellow);line-height:0.88;">QUEST<br>COMPLETE.</h1>
+                </div>
+
+                <!-- Achievement badge -->
+                <div style="display:inline-flex;align-items:center;gap:0.9rem;background:var(--pink);border:4px solid #fff;padding:0.6rem 1.4rem;box-shadow:8px 8px 0 rgba(255,255,255,0.12);align-self:flex-start;">
+                    <span style="font-size:1.3rem;">🏆</span>
+                    <div>
+                        <p class="font-brutal" style="font-size:0.48rem;letter-spacing:0.38em;color:#fff;opacity:0.7;margin-bottom:0.1rem;">ACHIEVEMENT UNLOCKED</p>
+                        <p class="font-brutal" style="font-size:0.82rem;color:#fff;">Future Talent</p>
+                    </div>
+                </div>
+
+                <!-- Message -->
+                <p style="font-size:0.95rem;font-weight:700;color:#fff;line-height:1.65;">
+                    You showed up. You dug in.<br>Now go build something.
+                </p>
+
+                <!-- Quote — big and prominent -->
+                <div style="border-left:4px solid var(--cyan);padding-left:1.5rem;">
+                    <p style="font-size:1.75rem;font-weight:700;color:var(--cyan);font-style:italic;line-height:1.25;">"May the odds be ever in your favor."</p>
+                    <p class="font-brutal" style="font-size:0.5rem;letter-spacing:0.38em;color:var(--cyan);opacity:0.4;margin-top:0.7rem;">— THE HUNGER GAMES</p>
+                </div>
+
+            </div>
+
+            <!-- Right: Contact card — subtle -->
+            <div style="background:#fff;border:4px solid #fff;box-shadow:8px 8px 0 var(--pink);padding:1.75rem 1.5rem;display:flex;flex-direction:column;gap:1.1rem;">
+
+                <div>
+                    <p class="font-brutal" style="font-size:0.46rem;letter-spacing:0.38em;color:#000;opacity:0.35;margin-bottom:0.45rem;">+ ADD TO YOUR RESOURCES</p>
+                    <h2 class="font-brutal" style="font-size:1.6rem;color:#000;line-height:0.95;">GALIA<br>SHIMRON</h2>
+                </div>
+
+                <p style="font-size:0.65rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#000;opacity:0.4;border-top:2px solid #000;padding-top:0.9rem;">Brand Strategy and Differentiation Expert</p>
+
+                <div style="background:#0a0a0a;border:2px solid #000;padding:0.75rem 1rem;">
+                    <p class="font-brutal" style="font-size:0.44rem;letter-spacing:0.3em;color:#fff;opacity:0.4;margin-bottom:0.3rem;">LINKEDIN</p>
+                    <p style="font-size:0.65rem;font-weight:700;color:var(--cyan);line-height:1.55;">linkedin.com/in/<br>galia-shimron-<br>brand-differentiation</p>
+                </div>
+
+                <div style="background:var(--yellow);border:3px solid #000;box-shadow:4px 4px 0 #000;padding:0.6rem 1rem;text-align:center;">
+                    <p class="font-brutal" style="font-size:0.62rem;color:#000;">SEND A CONTACT REQUEST</p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
     <!-- NO-BIGGIE CELEBRATION OVERLAY -->
     <div id="nb-celebration" onclick="dismissNBCelebration()" style="display:none;position:fixed;inset:0;z-index:8000;background:rgba(0,0,0,0.92);flex-direction:column;align-items:center;justify-content:center;cursor:pointer;">
         <div style="text-align:center;padding:2rem;">
@@ -1716,7 +1722,7 @@
 
     <script>
         let currentSlide = 0;
-        const totalSlides = 20;
+        const totalSlides = 22;
 
         function nextSlide() { goToSlide(currentSlide + 1); }
         function prevSlide() { goToSlide(currentSlide - 1); }
@@ -1724,14 +1730,14 @@
         function goToSlide(index) {
             if (index < 0 || index >= totalSlides) return;
             if (currentSlide === 1) resetGaliaProfile();
-            if (currentSlide === 7) resetMindDump();
-            if (currentSlide === 8) resetAssocMap();
-            if (currentSlide === 9) resetAiVision();
-            if (currentSlide === 10) resetBreak();
-            if (currentSlide === 13) resetReality();
-            if (currentSlide === 16) resetC8();
-            if (currentSlide === 17) resetMatrixState();
-            if (currentSlide === 19) { resetNBTimer(); dismissNBCelebration(); }
+            if (currentSlide === 8) resetMindDump();
+            if (currentSlide === 9) resetAssocMap();
+            if (currentSlide === 10) resetAiVision();
+            if (currentSlide === 11) resetBreak();
+            if (currentSlide === 14) resetReality();
+            if (currentSlide === 17) resetC8();
+            if (currentSlide === 18) resetMatrixState();
+            if (currentSlide === 20) { resetNBTimer(); dismissNBCelebration(); }
             document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
             document.getElementById(`slide-${index}`).classList.add('active');
             currentSlide = index;
@@ -1740,7 +1746,7 @@
             const xp = (currentSlide / (totalSlides - 1)) * 100;
             document.getElementById('xpFill').style.width = `${xp}%`;
             
-            const titles = ["START", "PROFILE", "THE GAME", "MISSION", "STRATEGY", "GEN Z", "QUEST", "PURGE", "MAP", "VISION", "BREAK", "REALITY", "PLAYERS", "YOURS", "MAGIC", "HMW EX", "SPEED-RUN", "SORTING", "NO-BIGGIE", "SHRINK IT"];
+            const titles = ["START", "PROFILE", "QUEST", "THE GAME", "MISSION", "STRATEGY", "GEN Z", "LFG", "PURGE", "MAP", "VISION", "BREAK", "REALITY", "PLAYERS", "YOURS", "MAGIC", "HMW EX", "SPEED-RUN", "SORTING", "NO-BIGGIE", "SHRINK IT", "WIN"];
             document.getElementById('hudStatus').innerText = `LVL ${String(currentSlide + 1).padStart(2, '0')} // ${titles[currentSlide]}`;
 
             // Buttons
@@ -1748,11 +1754,11 @@
             document.getElementById('nextBtn').style.display = currentSlide === totalSlides - 1 ? 'none' : 'block';
 
             if (index === 1) startGaliaProfile();
-            if (index === 7) startMdRotation();
-            if (index === 8) startAssocMap();
-            if (index === 10) startBreakQuotes();
-            if (index === 16) { clearInterval(c8HintInt); c8HintInt = setInterval(c8CycleHint, 5000); }
-            if (index === 17) resetMatrixState();
+            if (index === 8) startMdRotation();
+            if (index === 9) startAssocMap();
+            if (index === 11) startBreakQuotes();
+            if (index === 17) { clearInterval(c8HintInt); c8HintInt = setInterval(c8CycleHint, 5000); }
+            if (index === 18) resetMatrixState();
 
             // IW template: cover layout on slide 0, content layout + footer on all others
             document.getElementById('iw-cover').style.display = index === 0 ? 'block' : 'none';
@@ -2407,7 +2413,54 @@
             }
         }
         // ── CRAZY 8 TIMER & REVEAL ───────────────────────────────────
-        let c8TimerInt = null, c8Running = false, c8TimeLeft = 480, c8Revealed = 0, c8HintInt = null, c8HintIdx = 0;
+        let c8TimerInt = null, c8Running = false, c8TimeLeft = 360;
+        let c8CurrentCard = 0, c8HintInt = null, c8HintIdx = 0;
+
+        const c8Prompts = [
+            "What is one 10-minute-a-day habit that, done every morning consistently, would transform your professional presence in 90 days?",
+            "What is a simple favor you can ask a classmate tomorrow that would save you hours of work? And what would you give in return?",
+            "Name a free tool, app, or resource you can start using tonight to help bypass your biggest gap.",
+            "What is one short, direct message you can send tomorrow to a professional you admire?",
+            "What is the absolute easiest, zero-effort step you can take tomorrow morning to feel productive?",
+            "Think of a 3-month side project you could build that would instantly prove your skills to any employer.",
+            "What kind of digital product, portfolio, or blog could you create to cover up your lack of formal experience?",
+            "What initiative or small community could you start on campus that positions you as a leader?",
+            "Imagine a volunteer project that would give you the exact real-world experience you are currently missing.",
+            "What is a creative service or consulting offer you could launch this year using only the skills you already have?",
+            "Think of a creative, out-of-the-box way to bypass HR and reach a hiring manager directly.",
+            "How can you offer your absolute strongest skill for free to a busy executive in exchange for their mentorship?",
+            "Think of a 'quiet' networking move you can make that doesn't require going to a big, crowded event.",
+            "Who is someone in your industry you could invite for a 15-minute coffee chat or podcast interview to build a connection?",
+            "Combine your absolute best skill with your weirdest hobby. What strange but awesome project does this create?",
+            "Take two different things you study or know how to do well. How can you combine them into a single, unique project?",
+            "How can you team up with someone who has the exact opposite strengths and weaknesses as you? What would you build together?",
+            "Look at your biggest weakness or gap. What is a clever 'hack' or workaround to make it completely irrelevant?",
+            "Think of a bold, creative stunt that would make a company notice you, even if your CV isn't perfect yet.",
+            "What is an unconventional way to prove you are an expert in your field, without showing a degree or diploma?",
+            "You have exactly $0 budget. What is a creative way to launch your dream initiative for free?",
+        ];
+
+        const c8Categories = [
+            "⚡ THINK SMALL", "⚡ THINK SMALL", "⚡ THINK SMALL", "⚡ THINK SMALL", "⚡ THINK SMALL",
+            "🚀 THINK BIG", "🚀 THINK BIG", "🚀 THINK BIG", "🚀 THINK BIG", "🚀 THINK BIG",
+            "🤝 THINK PEOPLE", "🤝 THINK PEOPLE", "🤝 THINK PEOPLE", "🤝 THINK PEOPLE",
+            "🧩 THINK CREATIVE", "🧩 THINK CREATIVE", "🧩 THINK CREATIVE",
+            "💡 THINK DIFFERENTLY", "💡 THINK DIFFERENTLY", "💡 THINK DIFFERENTLY", "💡 THINK DIFFERENTLY",
+        ];
+
+        let c8PromptsActive = [...c8Prompts];
+        let c8CategoriesActive = [...c8Categories];
+
+        function shuffleC8() {
+            const combined = c8Prompts.map((p, i) => ({ p, c: c8Categories[i] }));
+            for (let i = combined.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [combined[i], combined[j]] = [combined[j], combined[i]];
+            }
+            c8PromptsActive = combined.map(x => x.p);
+            c8CategoriesActive = combined.map(x => x.c);
+        }
+        shuffleC8();
 
         const c8Hints = [
             "MORE IDEAS PER CARD = MORE XP. GO WILD.",
@@ -2423,6 +2476,37 @@
             "BORROWED IDEAS COUNT. STEAL LIKE AN ARTIST.",
         ];
 
+        function c8ShowCard(index) {
+            const waiting  = document.getElementById('c8-waiting');
+            const active   = document.getElementById('c8-active-card');
+            const numEl    = document.getElementById('c8-active-num');
+            const catEl    = document.getElementById('c8-active-cat');
+            const textEl   = document.getElementById('c8-active-text');
+            const counter  = document.getElementById('c8-card-counter');
+            const progress = document.getElementById('c8-progress-fill');
+            if (!active) return;
+            if (waiting) waiting.style.display = 'none';
+            active.style.transition = 'none';
+            active.style.opacity = '0';
+            active.style.display = 'flex';
+            if (numEl)    numEl.textContent   = 'PROMPT ' + String(index).padStart(2,'0') + ' / 21';
+            if (catEl)    catEl.textContent   = c8CategoriesActive[index - 1] || '';
+            if (textEl)   textEl.textContent  = c8PromptsActive[index - 1];
+            if (counter)  counter.textContent = String(index).padStart(2,'0') + ' / 21';
+            if (progress) progress.style.width = ((index / 21) * 100) + '%';
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                active.style.transition = 'opacity 0.5s ease';
+                active.style.opacity = '1';
+            }));
+            c8CurrentCard = index;
+        }
+
+        function c8NextCard() {
+            const next = c8CurrentCard < 1 ? 1 : c8CurrentCard + 1;
+            if (next > 21) return;
+            c8ShowCard(next);
+        }
+
         function c8CycleHint() {
             const el = document.getElementById('c8-hint');
             if (!el) return;
@@ -2430,42 +2514,29 @@
             setTimeout(() => {
                 c8HintIdx = (c8HintIdx + 1) % c8Hints.length;
                 el.textContent = c8Hints[c8HintIdx];
-                el.style.opacity = '0.55';
+                el.style.opacity = '0.65';
             }, 400);
         }
 
         function resetC8() {
             clearInterval(c8TimerInt); c8TimerInt = null;
-            clearInterval(c8HintInt); c8HintInt = null;
-            c8Running = false; c8TimeLeft = 480; c8Revealed = 0; c8HintIdx = 0;
-            const disp = document.getElementById('c8-timer');
-            const btn  = document.getElementById('c8-play-btn');
-            const prog = document.getElementById('c8-progress');
-            const cnt  = document.getElementById('c8-count');
-            const hint = document.getElementById('c8-hint');
-            if (disp) { disp.textContent = '08:00'; disp.style.color = 'var(--yellow)'; }
-            if (btn)  btn.innerHTML = '&#9654; PLAY';
-            if (prog) prog.style.width = '0%';
-            if (cnt)  cnt.textContent = '0 / 8';
-            if (hint) { hint.textContent = c8Hints[0]; hint.style.opacity = '0.55'; }
-            document.querySelectorAll('#slide-16 .c8-card').forEach(card => {
-                card.classList.remove('revealed');
-                card.querySelector('.c8-text').style.display = 'none';
-                card.querySelector('.c8-tap').style.display = '';
-            });
-            c8HintInt = setInterval(c8CycleHint, 5000);
-        }
-
-        function revealC8Card(el) {
-            if (el.classList.contains('revealed')) return;
-            el.classList.add('revealed');
-            el.querySelector('.c8-text').style.display = 'block';
-            el.querySelector('.c8-tap').style.display = 'none';
-            c8Revealed++;
-            const cnt  = document.getElementById('c8-count');
-            const prog = document.getElementById('c8-progress');
-            if (cnt)  cnt.textContent = c8Revealed + ' / 8';
-            if (prog) prog.style.width = (c8Revealed * 12.5) + '%';
+            clearInterval(c8HintInt);  c8HintInt  = null;
+            c8Running = false; c8TimeLeft = 360; c8CurrentCard = 0; c8HintIdx = 0;
+            const disp     = document.getElementById('c8-timer');
+            const btn      = document.getElementById('c8-play-btn');
+            const hint     = document.getElementById('c8-hint');
+            const waiting  = document.getElementById('c8-waiting');
+            const active   = document.getElementById('c8-active-card');
+            const counter  = document.getElementById('c8-card-counter');
+            const progress = document.getElementById('c8-progress-fill');
+            if (disp)     { disp.textContent = '06:00'; disp.style.color = 'var(--yellow)'; }
+            if (btn)      btn.innerHTML = '&#9654; PLAY';
+            if (hint)     { hint.textContent = ''; hint.style.opacity = '0'; }
+            if (waiting)  waiting.style.display = 'flex';
+            if (active)   { active.style.display = 'none'; active.style.opacity = '0'; }
+            if (counter)  counter.textContent = '— / 21';
+            if (progress) progress.style.width = '0%';
+            shuffleC8();
         }
 
         function launchC8Confetti() {
@@ -2499,6 +2570,13 @@
             } else {
                 c8Running = true;
                 if (btn) btn.innerHTML = '&#9646;&#9646; PAUSE';
+                // Show card 1 and start hints on first play
+                if (c8CurrentCard === 0) {
+                    c8ShowCard(1);
+                    const hint = document.getElementById('c8-hint');
+                    if (hint) { hint.textContent = c8Hints[0]; hint.style.opacity = '0.65'; }
+                    c8HintInt = setInterval(c8CycleHint, 5000);
+                }
                 c8TimerInt = setInterval(() => {
                     if (c8TimeLeft <= 0) {
                         clearInterval(c8TimerInt); c8TimerInt = null; c8Running = false;
@@ -2511,6 +2589,13 @@
                     const m = Math.floor(c8TimeLeft / 60);
                     const s = c8TimeLeft % 60;
                     if (disp) disp.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                    // Auto-advance: 21 cards over 360 seconds (~17s per card)
+                    // card 1 shown on PLAY, cards 2-21 auto-advance
+                    const elapsed = 360 - c8TimeLeft;
+                    if (elapsed > 0) {
+                        const expectedCard = Math.min(Math.floor(elapsed * 21 / 360) + 1, 21);
+                        if (expectedCard > c8CurrentCard) c8ShowCard(expectedCard);
+                    }
                 }, 1000);
             }
         }
