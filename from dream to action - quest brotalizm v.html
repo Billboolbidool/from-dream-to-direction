@@ -96,7 +96,7 @@
         }
         .slide.active { display: flex; }
 
-        /* Crazy 8 — Progress Rail (smooth bar) */
+        /* Crazy 8 - Progress Rail (smooth bar) */
         .c8-progress-track {
             height: 22px;
             border: 4px solid #000;
@@ -158,9 +158,37 @@
             from { opacity: 0; transform: translateY(22px); }
             to   { opacity: 1; transform: translateY(0); }
         }
+
+        /* Quest Roadmap - staggered card reveal */
+        @keyframes questCardIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .quest-card {
+            animation-duration: 0.7s;
+            animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+            animation-fill-mode: both;
+        }
+        #slide-2.active .quest-card { animation-name: questCardIn; }
+        @keyframes questFloat {
+            0%, 100% { transform: translateY(0px); }
+            50%       { transform: translateY(-5px); }
+        }
         @keyframes nbPulse {
             0%, 100% { transform: scale(1); }
             50%       { transform: scale(1.04); }
+        }
+        @keyframes cyanFlicker {
+            0%   { box-shadow: 0 0 8px var(--cyan), 0 0 20px var(--cyan); opacity: 1; transform: scale(1); }
+            7%   { box-shadow: 0 0 4px var(--cyan); opacity: 0.85; }
+            8%   { box-shadow: 0 0 18px var(--cyan), 0 0 40px var(--cyan); opacity: 1; }
+            45%  { box-shadow: 0 0 12px var(--cyan), 0 0 28px var(--cyan); opacity: 1; transform: scale(1); }
+            50%  { box-shadow: 0 0 18px var(--cyan), 0 0 44px var(--cyan); opacity: 1; transform: scale(1.03); }
+            55%  { box-shadow: 0 0 12px var(--cyan), 0 0 28px var(--cyan); opacity: 1; transform: scale(1); }
+            92%  { box-shadow: 0 0 8px var(--cyan), 0 0 20px var(--cyan); opacity: 1; }
+            93%  { box-shadow: 0 0 2px var(--cyan); opacity: 0.8; }
+            94%  { box-shadow: 0 0 18px var(--cyan), 0 0 40px var(--cyan); opacity: 1; }
+            100% { box-shadow: 0 0 8px var(--cyan), 0 0 20px var(--cyan); opacity: 1; transform: scale(1); }
         }
 
         /* Galia Shimron Profile Slide */
@@ -224,18 +252,18 @@
          - Persona Modal: Deep-dive data from uploaded files (Anya, Yoav, etc.) displayed on interaction.
          NO SVG used. NO Mermaid JS used. -->
 
-    <!-- HMU 13th IW: Cover layout — logo top-left + minimal bottom band (slide 0 only) -->
+    <!-- HMU 13th IW: Cover layout - logo top-left + minimal bottom band (slide 0 only) -->
     <div id="iw-cover">
         <img src="Chania 2026 -13.png" style="position:fixed;top:76px;left:16px;width:150px;height:auto;z-index:600;pointer-events:none;">
     </div>
 
-    <!-- HMU 13th IW: Content layout — thin side strips (slides 1+) -->
+    <!-- HMU 13th IW: Content layout - thin side strips (slides 1+) -->
     <div id="iw-content" style="display:none;">
         <div style="position:fixed;top:0;left:0;bottom:0;width:8px;background:#f39c81;z-index:500;pointer-events:none;"></div>
         <div style="position:fixed;top:0;right:0;bottom:0;width:8px;background:#793d57;z-index:500;pointer-events:none;"></div>
     </div>
 
-    <!-- HMU 13th IW: Footer bar — logo centered, nav buttons right, always visible -->
+    <!-- HMU 13th IW: Footer bar - logo centered, nav buttons right, always visible -->
     <div id="iw-footer" style="display:flex;position:fixed;bottom:0;left:0;right:0;height:72px;background:#fff;border-top:3px solid #000;z-index:1001;align-items:center;justify-content:space-between;padding:0 20px;">
         <div style="flex:1;"></div>
         <img id="iw-footer-logo" src="LOGO CHANIA 2026 -PNG-NO SPACE.png" style="height:52px;width:auto;pointer-events:none;">
@@ -256,7 +284,7 @@
         <div class="font-brutal text-sm" id="hudStatus">LVL 01 // INITIALIZING</div>
     </div>
 
-    <!-- SLIDE 1: SPEAKER PROFILE — Galia Shimron -->
+    <!-- SLIDE 1: SPEAKER PROFILE - Galia Shimron -->
     <div class="slide" id="slide-1" style="background:#fafaf8;overflow:hidden;padding:0;justify-content:flex-start;align-items:stretch;">
         <!-- Ambient gradient blobs -->
         <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 15% 60%,rgba(255,0,127,0.07) 0%,transparent 55%),radial-gradient(ellipse at 78% 18%,rgba(0,229,255,0.06) 0%,transparent 55%);pointer-events:none;z-index:0;"></div>
@@ -264,7 +292,7 @@
         <!-- Main split layout -->
         <div style="display:flex;width:100%;flex:1;min-height:0;padding-top:62px;padding-bottom:120px;position:relative;z-index:1;">
 
-            <!-- LEFT: Portrait (pre-flipped file — eyes face right toward text) -->
+            <!-- LEFT: Portrait (pre-flipped file - eyes face right toward text) -->
             <div id="gs-portrait-col" style="flex:0 0 44%;display:flex;align-items:flex-end;justify-content:center;padding:0 0 3.75rem 1.5rem;opacity:0;">
                 <img src="IMAGES FOR SELF PRESENTATION/GALIA SHIMRON - No background Flip..png"
                      alt="Galia Shimron"
@@ -330,7 +358,7 @@
             </div>
         </div>
 
-        <!-- LOGO MARQUEE — JS-driven with magnification lens effect -->
+        <!-- LOGO MARQUEE - JS-driven with magnification lens effect -->
         <div id="gs-marquee-wrap" style="position:absolute;bottom:72px;left:0;right:0;height:108px;overflow:hidden;opacity:0;background:rgba(250,250,248,0.97);backdrop-filter:blur(4px);border-top:1.5px solid rgba(0,0,0,0.07);">
             <div id="gs-marquee-inner" style="display:inline-flex;align-items:center;height:100%;white-space:nowrap;will-change:transform;">
                 <!-- Set 1 -->
@@ -346,7 +374,7 @@
                 <div class="gs-logo-item" style="flex-shrink:0;padding:0 30px;display:inline-flex;align-items:center;transform-origin:center;"><img src="IMAGES FOR SELF PRESENTATION/LOGO GALLERY 10.png" alt="" style="height:64px;width:auto;max-width:160px;object-fit:contain;"></div>
                 <div class="gs-logo-item" style="flex-shrink:0;padding:0 30px;display:inline-flex;align-items:center;transform-origin:center;"><img src="IMAGES FOR SELF PRESENTATION/LOGO GALLERY 11.png" alt="" style="height:64px;width:auto;max-width:160px;object-fit:contain;"></div>
                 <div class="gs-logo-item" style="flex-shrink:0;padding:0 30px;display:inline-flex;align-items:center;transform-origin:center;"><img src="IMAGES FOR SELF PRESENTATION/LOGO GALLERY 12.png" alt="" style="height:64px;width:auto;max-width:160px;object-fit:contain;"></div>
-                <!-- Set 2 — duplicate for seamless loop -->
+                <!-- Set 2 - duplicate for seamless loop -->
                 <div class="gs-logo-item" style="flex-shrink:0;padding:0 30px;display:inline-flex;align-items:center;transform-origin:center;"><img src="IMAGES FOR SELF PRESENTATION/LOGO GALLERY 1.png"  alt="" style="height:64px;width:auto;max-width:160px;object-fit:contain;"></div>
                 <div class="gs-logo-item" style="flex-shrink:0;padding:0 30px;display:inline-flex;align-items:center;transform-origin:center;"><img src="IMAGES FOR SELF PRESENTATION/LOGO GALERY 2.png"   alt="" style="height:64px;width:auto;max-width:160px;object-fit:contain;"></div>
                 <div class="gs-logo-item" style="flex-shrink:0;padding:0 30px;display:inline-flex;align-items:center;transform-origin:center;"><img src="IMAGES FOR SELF PRESENTATION/LOGO GALERY 3.png"   alt="" style="height:64px;width:auto;max-width:160px;object-fit:contain;"></div>
@@ -383,7 +411,7 @@
             <!-- Title -->
             <div class="mb-6">
                 <h2 class="font-brutal text-[6vw] leading-none" style="-webkit-text-stroke: 3px black; color: var(--pink);">THE GAME</h2>
-                <p class="font-bold text-base tracking-[0.3em] uppercase mt-2 opacity-60">Navigating your way in a VUCA world</p>
+                <p class="font-bold text-base tracking-[0.3em] uppercase mt-2 opacity-60">Navigating your way in a VUCA world<sup style="font-size:0.55em;vertical-align:super;letter-spacing:0;">*</sup></p>
             </div>
 
             <!-- Top disruption stickers -->
@@ -437,11 +465,16 @@
                 <div class="sticker text-xs" style="transform:rotate(-4deg)">🦠 Health Crises</div>
                 <div class="sticker text-xs" style="transform:rotate(3deg); background:var(--pink); color:white">⚡ Energy Transition</div>
             </div>
+
+            <!-- Footnote -->
+            <p style="margin-top:1.6rem;font-family:'Space Grotesk',sans-serif;font-size:0.65rem;color:#aaa;letter-spacing:0.04em;line-height:1.5;">
+                <sup>*</sup> VUCA concept: Bennis &amp; Nanus, <em>Leaders: The Strategies for Taking Charge</em> (1985); acronym coined by the U.S. Army War College, c.&thinsp;1991.
+            </p>
         </div>
     </div>
 
     <!-- SLIDE 2: YOUR MISSION -->
-    <div class="slide" id="slide-4">
+    <div class="slide" id="slide-5">
         <div class="max-w-5xl w-full">
 
             <!-- Title -->
@@ -484,7 +517,7 @@
                     <p class="font-brutal text-xl text-white italic leading-snug mb-7">
                         "A brand is what people think and feel when they hear your name."
                     </p>
-                    <p class="font-brutal text-sm tracking-widest uppercase" style="color: var(--cyan);">— Marty Neumeier</p>
+                    <p class="font-brutal text-sm tracking-widest uppercase" style="color: var(--cyan);">- Marty Neumeier</p>
                 </div>
 
             </div>
@@ -492,7 +525,7 @@
     </div>
 
     <!-- SLIDE 3: STRATEGY + TACTICS -->
-    <div class="slide" id="slide-5">
+    <div class="slide" id="slide-6">
         <div class="max-w-5xl w-full">
 
             <!-- Title -->
@@ -557,13 +590,13 @@
     </div>
 
     <!-- SLIDE 2: GEN Z SWOT -->
-    <div class="slide" id="slide-6">
+    <div class="slide" id="slide-4">
         <div class="max-w-5xl w-full">
             <!-- Title -->
             <div class="text-center mb-6">
                 <span class="font-brutal text-[1.1vw] tracking-[0.4em] opacity-40 block">YOU ARE</span>
                 <h2 class="font-brutal leading-none" style="font-size:4.5vw; color:var(--pink)">GEN Z.</h2>
-                <p class="font-bold text-xs tracking-[0.3em] uppercase mt-2 opacity-40">The most wired — and powerful — generation in history</p>
+                <p class="font-bold text-xs tracking-[0.3em] uppercase mt-2 opacity-40">The most wired - and powerful - generation in history</p>
             </div>
 
             <!-- 2x2 SWOT Grid -->
@@ -581,7 +614,7 @@
                     </div>
                     <ul class="space-y-3 text-sm font-bold text-gray-800">
                         <li>Most educated generation ever</li>
-                        <li>Digital natives — tech-fluent by default</li>
+                        <li>Digital natives - tech-fluent by default</li>
                         <li>Values-driven &amp; purpose-oriented</li>
                     </ul>
                 </div>
@@ -599,7 +632,7 @@
                     <ul class="space-y-3 text-sm font-bold text-gray-800">
                         <li>Fractured attention &amp; scroll addiction</li>
                         <li>Anxiety, burnout &amp; comparison culture</li>
-                        <li>Analysis paralysis — too many options</li>
+                        <li>Analysis paralysis - too many options</li>
                     </ul>
                 </div>
 
@@ -640,7 +673,7 @@
         </div>
     </div>
 
-    <!-- SLIDE: LFG — TRANSITION -->
+    <!-- SLIDE: LFG - TRANSITION -->
     <div class="slide" id="slide-7" style="background:#0a0a0a;">
         <div class="max-w-3xl w-full text-center" style="display:flex;flex-direction:column;align-items:center;gap:2.5rem;">
 
@@ -660,9 +693,9 @@
             </div>
 
             <!-- Pokémon quote card -->
-            <div style="border:4px solid var(--cyan);padding:1.4rem 2.5rem;background:transparent;">
-                <p style="font-size:1rem;font-weight:700;color:var(--cyan);font-style:italic;">"A world of dreams and adventures awaits!"</p>
-                <p class="font-brutal" style="font-size:0.52rem;letter-spacing:0.4em;color:var(--cyan);opacity:0.5;margin-top:0.6rem;">— PROFESSOR OAK · POKÉMON RED/BLUE, 1996</p>
+            <div style="border:4px solid var(--cyan);padding:1.4rem 2.5rem;background:transparent;animation:cyanFlicker 3.6s ease-in-out infinite;">
+                <p style="font-size:1.15rem;font-weight:700;color:var(--cyan);font-style:italic;text-shadow:0 0 10px var(--cyan);">"A world of dreams and adventures awaits!"</p>
+                <p class="font-brutal" style="font-size:0.52rem;letter-spacing:0.4em;color:var(--cyan);opacity:0.5;margin-top:0.6rem;">- PROFESSOR OAK · POKÉMON RED/BLUE, 1996</p>
             </div>
 
             <!-- Tagline -->
@@ -685,25 +718,25 @@
 
             <!-- Quest steps: top row -->
             <div class="grid grid-cols-4 gap-4 mb-4">
-                <div class="brutal-card p-5" style="border-top: 6px solid var(--pink);">
+                <div class="brutal-card p-5 quest-card" style="border-top: 6px solid var(--pink); animation-delay: 0.05s;">
                     <div class="font-brutal text-4xl leading-none mb-2" style="color:var(--pink);">01</div>
                     <div class="text-2xl mb-2">💭</div>
                     <p class="font-brutal text-xs tracking-wider">MIND DUMP</p>
                     <p class="text-[10px] font-bold opacity-40 mt-1">Empty the brain</p>
                 </div>
-                <div class="brutal-card p-5" style="border-top: 6px solid var(--yellow);">
+                <div class="brutal-card p-5 quest-card" style="border-top: 6px solid var(--yellow); animation-delay: 0.2s;">
                     <div class="font-brutal text-4xl leading-none mb-2" style="color:#a09000;">02</div>
                     <div class="text-2xl mb-2">🔭</div>
                     <p class="font-brutal text-xs tracking-wider">VISUALIZATION</p>
                     <p class="text-[10px] font-bold opacity-40 mt-1">See your future self</p>
                 </div>
-                <div class="brutal-card p-5" style="border-top: 6px solid var(--cyan);">
+                <div class="brutal-card p-5 quest-card" style="border-top: 6px solid var(--cyan); animation-delay: 0.35s;">
                     <div class="font-brutal text-4xl leading-none mb-2" style="color:#00b8cc;">03</div>
                     <div class="text-2xl mb-2">🕳️</div>
                     <p class="font-brutal text-xs tracking-wider">MY GAP</p>
                     <p class="text-[10px] font-bold opacity-40 mt-1">What's missing</p>
                 </div>
-                <div class="brutal-card p-5" style="border-top: 6px solid #000; background:#000;">
+                <div class="brutal-card p-5 quest-card" style="border-top: 6px solid #000; background:#000; animation-delay: 0.5s;">
                     <div class="font-brutal text-4xl leading-none mb-2 text-white">04</div>
                     <div class="text-2xl mb-2">🎒</div>
                     <p class="font-brutal text-xs tracking-wider text-white">MY RESOURCES</p>
@@ -714,31 +747,31 @@
             <!-- Flow divider -->
             <div class="flex items-center gap-4 mb-4 px-2">
                 <div style="flex:1; height:3px; background:#000;"></div>
-                <span class="font-brutal text-xs opacity-30 tracking-widest">THEN</span>
+                <span id="quest-then-label" class="font-brutal text-sm tracking-wider" style="min-width:20ch; text-align:center; display:inline-block; opacity:0;"></span>
                 <div style="flex:1; height:3px; background:#000;"></div>
             </div>
 
             <!-- Quest steps: bottom row -->
             <div class="grid grid-cols-4 gap-4">
-                <div class="brutal-card p-5" style="border-top: 6px solid var(--pink);">
+                <div class="brutal-card p-5 quest-card" style="border-top: 6px solid var(--pink); animation-delay: 0.7s;">
                     <div class="font-brutal text-4xl leading-none mb-2" style="color:var(--pink);">05</div>
                     <div class="text-2xl mb-2">💡</div>
-                    <p class="font-brutal text-xs tracking-wider">FRAMING — HMW</p>
+                    <p class="font-brutal text-xs tracking-wider">FRAMING - HMW</p>
                     <p class="text-[10px] font-bold opacity-40 mt-1">Ask the right question</p>
                 </div>
-                <div class="brutal-card p-5" style="border-top: 6px solid var(--yellow);">
+                <div class="brutal-card p-5 quest-card" style="border-top: 6px solid var(--yellow); animation-delay: 0.85s;">
                     <div class="font-brutal text-4xl leading-none mb-2" style="color:#a09000;">06</div>
                     <div class="text-2xl mb-2">⚡</div>
                     <p class="font-brutal text-xs tracking-wider">FIRE ROUND</p>
                     <p class="text-[10px] font-bold opacity-40 mt-1">Explode with ideas</p>
                 </div>
-                <div class="brutal-card p-5" style="border-top: 6px solid var(--cyan);">
+                <div class="brutal-card p-5 quest-card" style="border-top: 6px solid var(--cyan); animation-delay: 1.0s;">
                     <div class="font-brutal text-4xl leading-none mb-2" style="color:#00b8cc;">07</div>
                     <div class="text-2xl mb-2">🗺️</div>
                     <p class="font-brutal text-xs tracking-wider">THE MATRIX</p>
                     <p class="text-[10px] font-bold opacity-40 mt-1">Sort the loot</p>
                 </div>
-                <div class="brutal-card p-5" style="border-top: 6px solid #32CD32; box-shadow: 10px 10px 0 #32CD32;">
+                <div class="brutal-card p-5 quest-card" style="border-top: 6px solid #32CD32; box-shadow: 10px 10px 0 #32CD32; animation-delay: 1.15s;">
                     <div class="font-brutal text-4xl leading-none mb-2" style="color:#32CD32;">08</div>
                     <div class="text-2xl mb-2">🚀</div>
                     <p class="font-brutal text-xs tracking-wider" style="color:#32CD32;">NO BIGGIE</p>
@@ -748,7 +781,7 @@
 
             <!-- Tagline -->
             <div class="text-center mt-6">
-                <p class="font-bold text-xs opacity-40 uppercase tracking-widest">From clarity to action — in one focused session.</p>
+                <p class="font-bold text-xs opacity-40 uppercase tracking-widest">From clarity to action - in one focused session.</p>
             </div>
 
         </div>
@@ -758,7 +791,7 @@
     <div class="slide" id="slide-13">
         <div class="text-center mb-8">
             <h2 class="font-brutal text-4xl leading-none">CHOOSE YOUR PLAYER</h2>
-            <p class="font-bold text-sm tracking-[0.2em] uppercase mt-3 opacity-50">Four archetypes. Recognize yourself — then study the gaps.</p>
+            <p class="font-bold text-sm tracking-[0.2em] uppercase mt-3 opacity-50">Four archetypes. Recognize yourself - then study the gaps.</p>
         </div>
         <div class="grid grid-cols-4 gap-5 w-full max-w-5xl">
             <!-- ANYA -->
@@ -792,7 +825,7 @@
                         <span style="font-size:0.95rem;">🇮🇱</span>
                     </div>
                     <p style="font-size:0.58rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;opacity:0.4;">Digital Media</p>
-                    <p style="font-size:0.65rem;font-weight:600;font-style:italic;opacity:0.55;margin-top:8px;line-height:1.4;">"I'm everywhere — but nowhere at once."</p>
+                    <p style="font-size:0.65rem;font-weight:600;font-style:italic;opacity:0.55;margin-top:8px;line-height:1.4;">"I'm everywhere - but nowhere at once."</p>
                 </div>
             </div>
             <!-- SOFIA -->
@@ -881,7 +914,7 @@
                     <!-- Prompt -->
                     <div class="brutal-card p-7" style="background:var(--cyan)">
                         <p class="text-lg font-bold leading-relaxed">
-                            <strong>Imagine 7 years after graduation — you made it.</strong><br>
+                            <strong>Imagine 7 years after graduation - you made it.</strong><br>
                             You're a highly sought-after Talent. Reverse-engineer your success and write down what it looks like.
                         </p>
                     </div>
@@ -917,7 +950,7 @@
                     <!-- Quote -->
                     <div class="brutal-card p-7 flex flex-col justify-between" style="flex:1;">
                         <p class="text-base italic leading-relaxed">"Success is liking yourself, liking what you do, and liking how you do it."</p>
-                        <p class="font-brutal text-xs mt-4" style="color:var(--pink);">— MAYA ANGELOU</p>
+                        <p class="font-brutal text-xs mt-4" style="color:var(--pink);">- MAYA ANGELOU</p>
                     </div>
                 </div>
             </div>
@@ -999,7 +1032,7 @@
                             <p class="font-brutal text-xs mb-3" style="color:var(--pink);letter-spacing:2px;">BUILD YOUR MAP →</p>
                             <p class="font-bold leading-relaxed" style="font-size:0.95rem;">Look at the answers you just wrote. Let your mind wander associatively. What images come to mind?</p>
                         </div>
-                        <p class="font-brutal text-xs mt-4" style="color:var(--cyan);">— DRAW IT. SKETCH IT. CONNECT IT.</p>
+                        <p class="font-brutal text-xs mt-4" style="color:var(--cyan);">- DRAW IT. SKETCH IT. CONNECT IT.</p>
                     </div>
                 </div>
             </div>
@@ -1026,7 +1059,7 @@
                     <div class="brutal-card p-7 flex-1" style="background:var(--black);">
                         <p class="font-brutal text-xs mb-4" style="color:var(--cyan);letter-spacing:2px;">YOUR MISSION →</p>
                         <p class="text-white font-bold leading-relaxed" style="font-size:0.95rem;">
-                            Translate your Association Map into an AI prompt. Use ChatGPT, Midjourney, or any AI image generator to create a visual collage of your <span style="color:var(--yellow);">Victory Picture</span> — the Talent you have become.
+                            Translate your Association Map into an AI prompt. Use ChatGPT, Midjourney, or any AI image generator to create a visual collage of your <span style="color:var(--yellow);">Victory Picture</span> - the Talent you have become.
                         </p>
                         <div class="mt-5 p-4" style="border-left:4px solid var(--pink);">
                             <p class="font-brutal text-xs mb-2" style="color:var(--pink);">💡 PRO TIP</p>
@@ -1054,7 +1087,7 @@
                             <div style="width:12px;height:12px;border-radius:50%;background:#ff5f57;border:2px solid #000;"></div>
                             <div style="width:12px;height:12px;border-radius:50%;background:#febc2e;border:2px solid #000;"></div>
                             <div style="width:12px;height:12px;border-radius:50%;background:#28c840;border:2px solid #000;"></div>
-                            <span class="font-brutal text-xs ml-3" style="color:#888;letter-spacing:2px;">AI PROMPT TEMPLATE — FILL IN THE BLANKS</span>
+                            <span class="font-brutal text-xs ml-3" style="color:#888;letter-spacing:2px;">AI PROMPT TEMPLATE - FILL IN THE BLANKS</span>
                         </div>
 
                         <!-- Prompt body -->
@@ -1084,7 +1117,7 @@
         </div>
     </div>
 
-    <!-- SLIDE 11: INTERMISSION — COFFEE BREAK -->
+    <!-- SLIDE 11: INTERMISSION - COFFEE BREAK -->
     <div class="slide" id="slide-11">
         <div class="max-w-4xl w-full flex flex-col items-center" style="gap:1.5rem;">
 
@@ -1097,7 +1130,7 @@
                     Show your AI Victory Pictures to the person next to you. Compare futures.
                 </p>
                 <p class="font-bold mt-2" style="color:var(--yellow); font-size:0.85rem;">
-                    Back in 15 — we're turning visions into plans.
+                    Back in 15 - we're turning visions into plans.
                 </p>
             </div>
 
@@ -1117,7 +1150,7 @@
         </div>
     </div>
 
-    <!-- SLIDE 12: YOUR REALITY CHECK — PERSONAL EXERCISE -->
+    <!-- SLIDE 12: YOUR REALITY CHECK - PERSONAL EXERCISE -->
     <div class="slide" id="slide-14">
         <div class="w-full max-w-6xl flex flex-col" style="gap:1.25rem;">
 
@@ -1260,7 +1293,7 @@
 
                         <!-- Note inside the card -->
                         <div class="mt-5 pt-4" style="border-top:3px dashed rgba(0,0,0,0.2);">
-                            <p class="font-bold" style="font-size:0.8rem;line-height:1.5;">&#128161; You can write more than one HMW question — explore different combinations of gaps and resources!</p>
+                            <p class="font-bold" style="font-size:0.8rem;line-height:1.5;">&#128161; You can write more than one HMW question - explore different combinations of gaps and resources!</p>
                         </div>
                     </div>
 
@@ -1280,7 +1313,7 @@
         </div>
     </div>
 
-    <!-- SLIDE 14: HMW IN ACTION — CHARACTER EXAMPLES -->
+    <!-- SLIDE 14: HMW IN ACTION - CHARACTER EXAMPLES -->
     <div class="slide" id="slide-16">
         <div class="text-center mb-8">
             <h2 class="font-brutal text-4xl leading-none">HMW <span style="color:var(--cyan);">IN ACTION</span></h2>
@@ -1318,7 +1351,7 @@
                         <span style="font-size:0.95rem;">🇮🇱</span>
                     </div>
                     <p style="font-size:0.58rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;opacity:0.4;">Digital Media</p>
-                    <p style="font-size:0.65rem;font-weight:600;font-style:italic;opacity:0.55;margin-top:8px;line-height:1.4;">"I'm everywhere — but nowhere at once."</p>
+                    <p style="font-size:0.65rem;font-weight:600;font-style:italic;opacity:0.55;margin-top:8px;line-height:1.4;">"I'm everywhere - but nowhere at once."</p>
                 </div>
             </div>
             <!-- SOFIA -->
@@ -1367,10 +1400,10 @@
             <div class="w-full flex justify-between items-end flex-shrink-0" style="gap:1rem;">
                 <div>
                     <h2 class="font-brutal leading-none" style="font-size:2.2rem; color:#000;">LEVEL 4: SPEED RUN</h2>
-                    <p class="font-brutal" style="font-size:0.9rem; color:var(--pink); letter-spacing:0.05em;">FIRE ROUND — 1 HMW · 21 PROMPTS · 6 MINUTES · GO FOR 36 IDEAS</p>
+                    <p class="font-brutal" style="font-size:0.9rem; color:var(--pink); letter-spacing:0.05em;">FIRE ROUND - 1 HMW · 21 PROMPTS · 6 MINUTES · GO FOR 36 IDEAS</p>
                 </div>
                 <div style="display:flex; align-items:center; gap:0.6rem; flex-shrink:0;">
-                    <span id="c8-card-counter" class="font-brutal" style="font-size:0.85rem; color:#000; letter-spacing:0.12em; white-space:nowrap;">— / 21</span>
+                    <span id="c8-card-counter" class="font-brutal" style="font-size:0.85rem; color:#000; letter-spacing:0.12em; white-space:nowrap;">- / 21</span>
                     <div id="c8-timer" class="font-brutal" style="font-size:2.6rem; background:#000; color:var(--yellow); border:4px solid #000; padding:0.3rem 0.9rem; box-shadow:6px 6px 0 var(--pink); letter-spacing:0.05em;">06:00</div>
                     <button id="c8-play-btn" onclick="toggleC8Timer()" class="font-brutal" style="font-size:0.85rem; background:var(--pink); color:#fff; border:4px solid #000; padding:0.55rem 1rem; box-shadow:5px 5px 0 #000; cursor:pointer; white-space:nowrap;">&#9654; PLAY</button>
                     <button onclick="c8NextCard()" class="font-brutal" style="font-size:0.85rem; background:#fff; color:#000; border:4px solid #000; padding:0.55rem 1rem; box-shadow:5px 5px 0 #000; cursor:pointer; white-space:nowrap;">NEXT →</button>
@@ -1414,7 +1447,7 @@
         <div style="display:flex;flex-direction:column;width:100%;max-width:1200px;height:calc(100vh - 13rem);gap:0.6rem;">
 
             <!-- Title -->
-            <h2 class="font-brutal" style="font-size:1.55rem;letter-spacing:0.05em;text-align:center;flex-shrink:0;">LEVEL 5: IMPACT / FEASIBILITY — PASSION MATRIX</h2>
+            <h2 class="font-brutal" style="font-size:1.55rem;letter-spacing:0.05em;text-align:center;flex-shrink:0;">LEVEL 5: IMPACT / FEASIBILITY - PASSION MATRIX</h2>
 
             <!-- Matrix row: Y-label + grid (flex:1 fills all remaining height) -->
             <div style="display:flex;gap:0.4rem;flex:1;min-height:0;">
@@ -1427,47 +1460,47 @@
                 <!-- Matrix grid (position:relative for idea overlays) -->
                 <div style="flex:1;position:relative;border:4px solid black;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;">
 
-                    <!-- Q1: top-left — STRATEGIC PROJECTS (High Impact, Low Feasibility) -->
+                    <!-- Q1: top-left - STRATEGIC PROJECTS (High Impact, Low Feasibility) -->
                     <div style="border-right:2px solid #555;border-bottom:2px solid #555;background:#FFE4F2;padding:1.1rem 1.2rem;position:relative;">
                         <span class="font-brutal" style="font-size:0.48rem;opacity:0.28;position:absolute;top:0.45rem;left:0.7rem;letter-spacing:0.07em;">HIGH IMPACT · LOW FEASIBILITY</span>
                         <p class="font-brutal" style="font-size:1.05rem;margin-top:1.6rem;line-height:1.2;">STRATEGIC<br>PROJECTS</p>
                         <p style="font-size:0.7rem;font-weight:900;color:var(--pink);margin-top:0.35rem;">→ PLAN CAREFULLY</p>
                     </div>
 
-                    <!-- Q2: top-right — LOW HANGING FRUIT (High Impact, High Feasibility) -->
+                    <!-- Q2: top-right - LOW HANGING FRUIT (High Impact, High Feasibility) -->
                     <div style="border-bottom:2px solid #555;background:#D1FAE5;padding:1.1rem 1.2rem;position:relative;">
                         <span class="font-brutal" style="font-size:0.48rem;opacity:0.28;position:absolute;top:0.45rem;left:0.7rem;letter-spacing:0.07em;">HIGH IMPACT · HIGH FEASIBILITY</span>
                         <p class="font-brutal" style="font-size:1.05rem;margin-top:1.6rem;line-height:1.2;">LOW HANGING<br>FRUIT</p>
                         <p style="font-size:0.7rem;font-weight:900;color:#059669;margin-top:0.35rem;">✓ DO FIRST!</p>
                     </div>
 
-                    <!-- Q3: bottom-left — TRAPS (Low Impact, Low Feasibility) -->
+                    <!-- Q3: bottom-left - TRAPS (Low Impact, Low Feasibility) -->
                     <div style="border-right:2px solid #555;background:#FFE5E5;padding:1.1rem 1.2rem;position:relative;">
                         <p class="font-brutal" style="font-size:1.05rem;margin-top:1.6rem;line-height:1.2;">TRAPS</p>
                         <p style="font-size:0.7rem;font-weight:900;color:#EF4444;margin-top:0.35rem;">✗ AVOID</p>
                         <span class="font-brutal" style="font-size:0.48rem;opacity:0.28;position:absolute;bottom:0.45rem;left:0.7rem;letter-spacing:0.07em;">LOW IMPACT · LOW FEASIBILITY</span>
                     </div>
 
-                    <!-- Q4: bottom-right — FILL-INS (Low Impact, High Feasibility) -->
+                    <!-- Q4: bottom-right - FILL-INS (Low Impact, High Feasibility) -->
                     <div style="background:#F0F0F0;padding:1.1rem 1.2rem;position:relative;">
                         <p class="font-brutal" style="font-size:1.05rem;margin-top:1.6rem;line-height:1.2;">FILL-INS</p>
                         <p style="font-size:0.7rem;font-weight:900;color:#9CA3AF;margin-top:0.35rem;">IF TIME PERMITS</p>
                         <span class="font-brutal" style="font-size:0.48rem;opacity:0.28;position:absolute;bottom:0.45rem;left:0.7rem;letter-spacing:0.07em;">LOW IMPACT · HIGH FEASIBILITY</span>
                     </div>
 
-                    <!-- IDEA A: LOW HANGING FRUIT (top-right Q) — medium passion circle -->
+                    <!-- IDEA A: LOW HANGING FRUIT (top-right Q) - medium passion circle -->
                     <div style="position:absolute;top:28%;left:72%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;">
                         <div id="pcircle-A" style="position:absolute;top:50%;left:50%;width:90px;height:90px;border:2.5px dashed #059669;border-radius:50%;background:rgba(5,150,105,0.08);transform:translate(-50%,-50%) scale(0);opacity:0;transition:none;pointer-events:none;"></div>
                         <div style="position:relative;z-index:2;background:white;border:2px solid black;padding:0.22rem 0.55rem;font-size:0.6rem;font-weight:900;text-transform:uppercase;white-space:nowrap;box-shadow:2px 2px 0 black;">Email Mentor</div>
                     </div>
 
-                    <!-- IDEA B: STRATEGIC PROJECTS (top-left Q) — large passion circle -->
+                    <!-- IDEA B: STRATEGIC PROJECTS (top-left Q) - large passion circle -->
                     <div style="position:absolute;top:30%;left:28%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;">
                         <div id="pcircle-B" style="position:absolute;top:50%;left:50%;width:155px;height:155px;border:2.5px dashed var(--pink);border-radius:50%;background:rgba(255,0,127,0.06);transform:translate(-50%,-50%) scale(0);opacity:0;transition:none;pointer-events:none;"></div>
                         <div style="position:relative;z-index:2;background:white;border:2px solid black;padding:0.22rem 0.55rem;font-size:0.6rem;font-weight:900;text-transform:uppercase;white-space:nowrap;box-shadow:2px 2px 0 black;">Build Portfolio</div>
                     </div>
 
-                    <!-- IDEA C: FILL-INS (bottom-right Q) — small passion circle -->
+                    <!-- IDEA C: FILL-INS (bottom-right Q) - small passion circle -->
                     <div style="position:absolute;top:73%;left:72%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;">
                         <div id="pcircle-C" style="position:absolute;top:50%;left:50%;width:50px;height:50px;border:2.5px dashed #9CA3AF;border-radius:50%;background:rgba(156,163,175,0.1);transform:translate(-50%,-50%) scale(0);opacity:0;transition:none;pointer-events:none;"></div>
                         <div style="position:relative;z-index:2;background:white;border:2px solid black;padding:0.22rem 0.55rem;font-size:0.6rem;font-weight:900;text-transform:uppercase;white-space:nowrap;box-shadow:2px 2px 0 black;">Update CV</div>
@@ -1477,7 +1510,7 @@
 
             <!-- X-axis label -->
             <div style="display:flex;padding-left:1.9rem;flex-shrink:0;">
-                <div class="font-brutal" style="flex:1;text-align:center;font-size:0.62rem;letter-spacing:0.18em;border-top:3px solid black;padding-top:0.28rem;opacity:0.7;">LOW FEASIBILITY ←———————————————————→ HIGH FEASIBILITY</div>
+                <div class="font-brutal" style="flex:1;text-align:center;font-size:0.62rem;letter-spacing:0.18em;border-top:3px solid black;padding-top:0.28rem;opacity:0.7;">LOW FEASIBILITY ←-------------------→ HIGH FEASIBILITY</div>
             </div>
 
             <!-- Bottom control strip -->
@@ -1637,7 +1670,7 @@
         </div>
     </div>
 
-    <!-- SLIDE: FINAL — QUEST COMPLETE -->
+    <!-- SLIDE: FINAL - QUEST COMPLETE -->
     <div class="slide" id="slide-21" style="background:#0a0a0a;">
         <div class="max-w-6xl w-full" style="display:grid;grid-template-columns:3fr 2fr;gap:3.5rem;align-items:center;">
 
@@ -1664,15 +1697,15 @@
                     You showed up. You dug in.<br>Now go build something.
                 </p>
 
-                <!-- Quote — big and prominent -->
+                <!-- Quote - big and prominent -->
                 <div style="border-left:4px solid var(--cyan);padding-left:1.5rem;">
                     <p style="font-size:1.75rem;font-weight:700;color:var(--cyan);font-style:italic;line-height:1.25;">"May the odds be ever in your favor."</p>
-                    <p class="font-brutal" style="font-size:0.5rem;letter-spacing:0.38em;color:var(--cyan);opacity:0.4;margin-top:0.7rem;">— THE HUNGER GAMES</p>
+                    <p class="font-brutal" style="font-size:0.5rem;letter-spacing:0.38em;color:var(--cyan);opacity:0.4;margin-top:0.7rem;">- THE HUNGER GAMES</p>
                 </div>
 
             </div>
 
-            <!-- Right: Contact card — subtle -->
+            <!-- Right: Contact card - subtle -->
             <div style="background:#fff;border:4px solid #fff;box-shadow:8px 8px 0 var(--pink);padding:1.75rem 1.5rem;display:flex;flex-direction:column;gap:1.1rem;">
 
                 <div>
@@ -1729,6 +1762,7 @@
 
         function goToSlide(index) {
             if (index < 0 || index >= totalSlides) return;
+            if (currentSlide === 2) stopQuestAnimations();
             if (currentSlide === 1) resetGaliaProfile();
             if (currentSlide === 8) resetMindDump();
             if (currentSlide === 9) resetAssocMap();
@@ -1746,13 +1780,14 @@
             const xp = (currentSlide / (totalSlides - 1)) * 100;
             document.getElementById('xpFill').style.width = `${xp}%`;
             
-            const titles = ["START", "PROFILE", "QUEST", "THE GAME", "MISSION", "STRATEGY", "GEN Z", "LFG", "PURGE", "MAP", "VISION", "BREAK", "REALITY", "PLAYERS", "YOURS", "MAGIC", "HMW EX", "SPEED-RUN", "SORTING", "NO-BIGGIE", "SHRINK IT", "WIN"];
+            const titles = ["START", "PROFILE", "QUEST", "THE GAME", "GEN Z", "MISSION", "STRATEGY", "LFG", "PURGE", "MAP", "VISION", "BREAK", "REALITY", "PLAYERS", "YOURS", "MAGIC", "HMW EX", "SPEED-RUN", "SORTING", "NO-BIGGIE", "SHRINK IT", "WIN"];
             document.getElementById('hudStatus').innerText = `LVL ${String(currentSlide + 1).padStart(2, '0')} // ${titles[currentSlide]}`;
 
             // Buttons
             document.getElementById('prevBtn').style.display = currentSlide === 0 ? 'none' : 'block';
             document.getElementById('nextBtn').style.display = currentSlide === totalSlides - 1 ? 'none' : 'block';
 
+            if (index === 2) startQuestAnimations();
             if (index === 1) startGaliaProfile();
             if (index === 8) startMdRotation();
             if (index === 9) startAssocMap();
@@ -1785,8 +1820,8 @@
                     title: "The Ambitious & Pragmatic Manager",
                     field: "International Hospitality Mgmt", country: "Croatia · Univ. of Rijeka",
                     headerBg: "#FF007F", headerText: "#fff",
-                    quote: "Degree alone isn't enough — I need to speak the language of business results.",
-                    aspires: "I am leading international product launches, turning cross-cultural skills into business results, and mentoring my team with absolute confidence.",
+                    quote: "Degree alone isn't enough - I need to speak the language of business results.",
+                    aspires: "leading international product launches, turning cross-cultural skills into business results, and mentoring my team with absolute confidence.",
                     gaps: [
                         { category: "Connections / Networking", description: "I have no executive network or corporate sponsors in my target industry" },
                         { category: "Knowledge", description: "I have zero formal corporate experience to translate to employers" },
@@ -1804,8 +1839,8 @@
                     title: "The Life Hacker & Creative Technologist",
                     field: "Interactive Digital Media", country: "Israel · Holon Institute of Technology",
                     headerBg: "#00E5FF", headerText: "#000",
-                    quote: "I'm everywhere — tech, art, community — but nowhere at once.",
-                    aspires: "I've built a profitable portfolio career as a Creative Technologist, combining AI and video to launch viral products entirely on my own terms.",
+                    quote: "I'm everywhere - tech, art, community - but nowhere at once.",
+                    aspires: "running a profitable portfolio career as a Creative Technologist, combining AI and video to launch viral products entirely on my own terms.",
                     gaps: [
                         { category: "Mindset", description: "My extreme FOMO makes me get bored and jump ship before finishing" },
                         { category: "Time", description: "My scattered focus prevents me from completing long-term projects" },
@@ -1823,8 +1858,8 @@
                     title: "The Quiet Leader & Analytical Engineer",
                     field: "Data Science & AI", country: "Germany · Hochschule Mittweida",
                     headerBg: "#F7F22C", headerText: "#000",
-                    quote: "I write the code everyone relies on — but no one knows my name.",
-                    aspires: "I am a confident Tech Lead architecting complex systems, proving I can drive strategy and mentor engineers through quiet, active leadership.",
+                    quote: "I write the code everyone relies on - but no one knows my name.",
+                    aspires: "a confident Tech Lead architecting complex systems, proving I can drive strategy and mentor engineers through quiet, active leadership.",
                     gaps: [
                         { category: "Mindset", description: "I have a paralyzing fear of presentations and networking events" },
                         { category: "Skills / Abilities", description: "I'm extremely uncomfortable with conflict resolution and self-promotion" },
@@ -1834,7 +1869,7 @@
                         { category: "Skills / Abilities", description: "I have extraordinary abstract thinking and bug-finding capabilities" },
                         { category: "Knowledge", description: "I have deep, systematic engineering and coding expertise" },
                         { category: "Mindset", description: "I have immense loyalty to my team and outstanding active listening skills" },
-                        { category: "Time", description: "I have a protected 2-hour campus break each week — focused, distraction-free time I use for deep skill building" }
+                        { category: "Time", description: "I have a protected 2-hour campus break each week - focused, distraction-free time I use for deep skill building" }
                     ]
                 },
                 luis: {
@@ -1843,8 +1878,8 @@
                     title: "The Practical Social Idealist",
                     field: "Environmental Psychology", country: "Argentina · UBA",
                     headerBg: "#32CD32", headerText: "#000",
-                    quote: "I want to change the world — but I can't pay the rent.",
-                    aspires: "I am leading global impact initiatives, bridging social idealism with corporate financial power to create sustainable change without burning out.",
+                    quote: "I want to change the world - but I can't pay the rent.",
+                    aspires: "leading global impact initiatives, bridging social idealism with corporate financial power to create sustainable change without burning out.",
                     gaps: [
                         { category: "Money", description: "I have constant financial anxiety and no knowledge of how to secure funding" },
                         { category: "Connections / Networking", description: "I'm completely disconnected from business executives and investors" },
@@ -1860,37 +1895,43 @@
 
             const divColor = personas.headerText === '#fff' ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.2)';
             c.innerHTML = `
-                <div style="display:flex;max-height:92vh;">
+                <div style="display:flex;max-height:92vh;min-height:480px;">
 
                     <!-- LEFT: Character image + identity -->
-                    <div style="width:35%;display:flex;flex-direction:column;background:${personas.headerBg};color:${personas.headerText};overflow:hidden;flex-shrink:0;">
-                        <div style="flex:1;display:flex;align-items:flex-end;justify-content:center;background:${personas.imageBg};overflow:hidden;">
-                            <img src="${personas.image}" style="max-height:320px;width:auto;max-width:100%;object-fit:contain;object-position:bottom;" alt="${personas.name}">
+                    <div style="width:38%;display:flex;flex-direction:column;background:${personas.headerBg};color:${personas.headerText};overflow:hidden;flex-shrink:0;">
+
+                        <!-- Image zone: fixed height so identity gets real space -->
+                        <div style="height:240px;flex-shrink:0;display:flex;align-items:flex-end;justify-content:center;background:${personas.imageBg};overflow:hidden;">
+                            <img src="${personas.image}" style="max-height:230px;width:auto;max-width:100%;object-fit:contain;object-position:bottom;" alt="${personas.name}">
                         </div>
-                        <div style="padding:1.25rem 1.5rem;border-top:3px solid ${divColor};text-align:center;">
-                            <div style="font-size:1.5rem;margin-bottom:0.3rem;">${personas.flag}</div>
-                            <h2 style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;text-transform:uppercase;line-height:1.1;margin:0 0 0.25rem;">${personas.name}</h2>
-                            <p style="font-weight:700;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;opacity:0.7;margin-bottom:0.35rem;">${personas.title}</p>
-                            <p style="font-weight:700;font-size:0.55rem;text-transform:uppercase;letter-spacing:0.08em;opacity:0.5;">${personas.field}<br>${personas.country}</p>
+
+                        <!-- Identity zone: fills remaining height, vertically centered -->
+                        <div style="flex:1;padding:1.25rem 1.5rem;display:flex;flex-direction:column;justify-content:center;gap:0.6rem;border-top:3px solid ${divColor};">
+                            <div style="font-size:1.4rem;">${personas.flag}</div>
+                            <div>
+                                <h2 style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;text-transform:uppercase;line-height:1.1;margin:0 0 0.2rem;">${personas.name}</h2>
+                                <p style="font-weight:700;font-size:0.58rem;text-transform:uppercase;letter-spacing:0.12em;opacity:0.65;margin:0 0 0.12rem;">${personas.title}</p>
+                                <p style="font-weight:600;font-size:0.52rem;text-transform:uppercase;letter-spacing:0.08em;opacity:0.45;margin:0;">${personas.field} · ${personas.country}</p>
+                            </div>
+                            <!-- Quote: real visual weight, not an afterthought -->
+                            <blockquote style="font-weight:700;font-style:italic;font-size:0.88rem;line-height:1.55;border-left:3px solid ${divColor};padding-left:0.85rem;margin:0;">"${personas.quote}"</blockquote>
                         </div>
                     </div>
 
-                    <!-- RIGHT: Content -->
-                    <div style="flex:1;padding:2rem 2rem 2rem 2.25rem;overflow-y:auto;display:flex;flex-direction:column;gap:1.25rem;">
+                    <!-- RIGHT: Content - 3-zone flex column -->
+                    <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
 
-                        <!-- Quote -->
-                        <blockquote style="font-weight:700;font-style:italic;font-size:1rem;line-height:1.55;border-left:4px solid black;padding-left:1rem;margin:0;opacity:0.6;">"${personas.quote}"</blockquote>
-
-                        <!-- Aspires To -->
-                        <div>
-                            <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.58rem;text-transform:uppercase;letter-spacing:0.2em;opacity:0.35;margin-bottom:0.4rem;">🎯 Aspires To</p>
-                            <p style="font-weight:700;font-size:0.875rem;line-height:1.55;">${personas.aspires}</p>
+                        <!-- Zone 1: Aspires To -->
+                        <div style="padding:1.75rem 2rem 1.25rem 2.25rem;flex-shrink:0;">
+                            <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.55rem;text-transform:uppercase;letter-spacing:0.2em;opacity:0.35;margin-bottom:0.5rem;">🎯 Aspires To</p>
+                            <p style="font-weight:700;font-size:0.875rem;line-height:1.6;margin:0;"><span style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;background:#F7F22C;color:#000;padding:0.05em 0.3em;border:2px solid #000;margin-right:0.2em;">7</span> years from now I am ${personas.aspires}</p>
                         </div>
 
-                        <div style="border-top:2px solid rgba(0,0,0,0.1);"></div>
+                        <!-- Divider -->
+                        <div style="border-top:2px solid rgba(0,0,0,0.1);margin:0 2rem 0 2.25rem;flex-shrink:0;"></div>
 
-                        <!-- Gaps + Resources side by side -->
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+                        <!-- Zone 2: Gaps + Resources - fills remaining space, content anchored top -->
+                        <div style="flex:1;padding:1.25rem 2rem 1.75rem 2.25rem;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-content:start;">
                             <div>
                                 <p style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.58rem;text-transform:uppercase;letter-spacing:0.2em;opacity:0.35;margin-bottom:0.75rem;">📉 Key Gaps</p>
                                 <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.7rem;">
@@ -1922,8 +1963,8 @@
                     field: "International Hospitality Mgmt",
                     headerBg: "#FF007F", headerText: "#fff",
                     labelColor: "#FF007F", titleColor: "#FF007F",
-                    quote: "Degree alone isn't enough — I need to speak the language of business results.",
-                    aspires: "Leading international product launches, turning cross-cultural skills into business results.",
+                    quote: "Degree alone isn't enough - I need to speak the language of business results.",
+                    aspires: "leading international product launches, turning cross-cultural skills into business results.",
                     hmw: [
                         { q: "How might we use multilingual skills and logistical expertise to build an executive network, despite having no corporate track record?", resource: "Multilingual skills + logistics mastery", gap: "Zero corporate track record" },
                         { q: "How might we turn extreme self-discipline into a visible confidence signal, despite imposter syndrome in high-stakes rooms?", resource: "Self-discipline + results-first mindset", gap: "Imposter syndrome" }
@@ -1936,8 +1977,8 @@
                     field: "Interactive Digital Media",
                     headerBg: "#00E5FF", headerText: "#000",
                     labelColor: "#00E5FF", titleColor: "#009db3",
-                    quote: "I'm everywhere — tech, art, community — but nowhere at once.",
-                    aspires: "A profitable portfolio career as a Creative Technologist, launching viral products on my own terms.",
+                    quote: "I'm everywhere - tech, art, community - but nowhere at once.",
+                    aspires: "running a profitable portfolio career as a Creative Technologist, launching viral products on my own terms.",
                     hmw: [
                         { q: "How might we use AI mastery and video storytelling to ship a profitable product, despite scattered focus killing project completion?", resource: "AI tools + video editing + trend intuition", gap: "Scattered focus / FOMO" },
                         { q: "How might we leverage deep knowledge of digital communities to attract premium clients, despite lacking stable long-term relationships?", resource: "Deep digital trend knowledge", gap: "No premium client network" }
@@ -1950,8 +1991,8 @@
                     field: "Data Science & AI",
                     headerBg: "#F7F22C", headerText: "#000",
                     labelColor: "#F7F22C", titleColor: "#8a8500",
-                    quote: "I write the code everyone relies on — but no one knows my name.",
-                    aspires: "A confident Tech Lead architecting complex systems through quiet, active leadership.",
+                    quote: "I write the code everyone relies on - but no one knows my name.",
+                    aspires: "a confident Tech Lead architecting complex systems through quiet, active leadership.",
                     hmw: [
                         { q: "How might we use analytical genius and deep team loyalty to grow into a Tech Lead role, despite a paralyzing fear of self-promotion?", resource: "Analytical skills + team loyalty + active listening", gap: "Fear of presentations & self-promotion" },
                         { q: "How might we build visible leadership presence using deep engineering expertise, despite having no female role models in quiet tech leadership?", resource: "Systematic engineering expertise", gap: "No role models for quiet leadership" }
@@ -1964,8 +2005,8 @@
                     field: "Environmental Psychology",
                     headerBg: "#32CD32", headerText: "#000",
                     labelColor: "#32CD32", titleColor: "#1a7a1a",
-                    quote: "I want to change the world — but I can't pay the rent.",
-                    aspires: "Leading global impact initiatives, bridging social idealism with corporate financial power.",
+                    quote: "I want to change the world - but I can't pay the rent.",
+                    aspires: "leading global impact initiatives, bridging social idealism with corporate financial power.",
                     hmw: [
                         { q: "How might we use storytelling power and high EQ to unlock funding, despite having zero connections to business executives or investors?", resource: "Storytelling + high EQ + grassroots mobilization", gap: "No connections to investors" },
                         { q: "How might we translate a burning drive for social impact into daily action steps, despite financial anxiety blocking long-term thinking?", resource: "Deep empathy + passion for impact", gap: "Financial anxiety + no funding knowledge" }
@@ -1979,24 +2020,24 @@
 
                     <!-- LEFT: Character image + identity -->
                     <div style="width:30%;display:flex;flex-direction:column;background:${data.headerBg};color:${data.headerText};overflow:hidden;flex-shrink:0;">
-                        <div style="flex:1;display:flex;align-items:flex-end;justify-content:center;background:${data.imageBg};overflow:hidden;">
-                            <img src="${data.image}" style="max-height:280px;width:auto;max-width:100%;object-fit:contain;object-position:bottom;" alt="${data.name}">
+                        <div style="flex:1;display:flex;align-items:flex-end;justify-content:center;background:${data.imageBg};overflow:hidden;padding-bottom:1rem;">
+                            <img src="${data.image}" style="max-height:380px;width:auto;max-width:100%;object-fit:contain;object-position:bottom;" alt="${data.name}">
                         </div>
-                        <div style="padding:1.25rem 1.5rem;border-top:3px solid ${divColor};">
+                        <div style="padding:1.5rem 1.5rem 2rem;border-top:3px solid ${divColor};">
                             <div style="font-size:1.4rem;margin-bottom:0.3rem;">${data.flag}</div>
                             <h2 style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;text-transform:uppercase;line-height:1.1;margin:0 0 0.25rem;">${data.name}</h2>
                             <p style="font-weight:700;font-size:0.58rem;text-transform:uppercase;letter-spacing:0.15em;opacity:0.7;margin-bottom:0.25rem;">${data.title}</p>
                             <p style="font-weight:700;font-size:0.55rem;text-transform:uppercase;letter-spacing:0.08em;opacity:0.5;">${data.field}</p>
+                            <blockquote style="font-weight:700;font-style:italic;font-size:0.82rem;line-height:1.5;border-left:3px solid ${divColor};padding-left:0.75rem;margin:0.75rem 0 0;opacity:0.8;text-align:left;">"${data.quote}"</blockquote>
                         </div>
                     </div>
 
                     <!-- RIGHT: HMW focus -->
                     <div style="flex:1;padding:2rem 2.5rem;overflow-y:auto;display:flex;flex-direction:column;gap:1.5rem;background:#fff;">
 
-                        <!-- Quote + aspiration as context -->
+                        <!-- Aspiration as context -->
                         <div>
-                            <blockquote style="font-weight:700;font-style:italic;font-size:0.95rem;line-height:1.55;border-left:4px solid ${data.headerBg};padding-left:1rem;margin:0 0 0.6rem;opacity:0.6;">"${data.quote}"</blockquote>
-                            <p style="font-size:0.78rem;font-weight:600;color:#666;">🎯 <em>${data.aspires}</em></p>
+                            <p style="font-weight:700;font-size:0.875rem;line-height:1.6;margin:0;">🎯 <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;background:#F7F22C;color:#000;padding:0.05em 0.3em;border:2px solid #000;margin-right:0.2em;">7</span> years from now I am <em>${data.aspires}</em></p>
                         </div>
 
                         <div style="border-top:3px solid #000;"></div>
@@ -2036,7 +2077,7 @@
         const mdQuestions = [
             "What does your typical workday look like?",
             "What core abilities and skills are you expressing?",
-            "Who do you work with — and how do they complement you?",
+            "Who do you work with - and how do they complement you?",
             "What kind of projects are you working on?",
             "What agenda or mission are you advancing?",
             "What kind of person have you grown to be?"
@@ -2470,7 +2511,7 @@
             "WRITE FAST. THINK LATER.",
             "ONE CARD CAN HAVE 5 ANSWERS. DO IT.",
             "THE WEIRDER THE IDEA, THE BETTER.",
-            "USE ChatGPT, CLAUDE, WHATEVER — JUST GO.",
+            "USE ChatGPT, CLAUDE, WHATEVER - JUST GO.",
             "PERFECTIONISM IS THE ENEMY. KEEP MOVING.",
             "FILL EVERY CARD. EVERY. SINGLE. ONE.",
             "BORROWED IDEAS COUNT. STEAL LIKE AN ARTIST.",
@@ -2534,7 +2575,7 @@
             if (hint)     { hint.textContent = ''; hint.style.opacity = '0'; }
             if (waiting)  waiting.style.display = 'flex';
             if (active)   { active.style.display = 'none'; active.style.opacity = '0'; }
-            if (counter)  counter.textContent = '— / 21';
+            if (counter)  counter.textContent = '- / 21';
             if (progress) progress.style.width = '0%';
             shuffleC8();
         }
@@ -2621,9 +2662,9 @@
                         el.style.transform = 'translate(-50%,-50%) scale(1)';
                     }, delay);
                 }
-                pop('pcircle-C', 300);   // small — low passion (Fill-In)
-                pop('pcircle-A', 1050);  // medium — mid passion (Low Hanging Fruit)
-                pop('pcircle-B', 1900);  // large — high passion (Strategic Project)
+                pop('pcircle-C', 300);   // small - low passion (Fill-In)
+                pop('pcircle-A', 1050);  // medium - mid passion (Low Hanging Fruit)
+                pop('pcircle-B', 1900);  // large - high passion (Strategic Project)
             }));
         }
 
@@ -2701,7 +2742,7 @@
             if (line2) { setTimeout(() => { line2.style.animation = 'nbFadeUp 0.5s ease forwards'; }, 900); }
             if (cta)   { setTimeout(() => { cta.style.animation   = 'nbFadeUp 0.5s ease forwards'; }, 1200); }
 
-            // Massive confetti burst — 3 waves
+            // Massive confetti burst - 3 waves
             const colors = ['#FF007F','#F7F22C','#00E5FF','#fff','#FF007F','#F7F22C','#00E5FF','#000'];
             const sizes  = [8, 10, 12, 14, 16, 20, 24];
             const totalPieces = 260;
@@ -2758,9 +2799,9 @@
 
         // ── COFFEE BREAK ─────────────────────────────────────────────
         const breakQuotes = [
-            { text: "A vision without a plan is just a dream.", author: "— JOEL A. BARKER" },
-            { text: "A plan is nothing. Planning is everything.", author: "— DWIGHT D. EISENHOWER" },
-            { text: "You are your own biggest asset.", author: "— WARREN BUFFETT" }
+            { text: "A vision without a plan is just a dream.", author: "- JOEL A. BARKER" },
+            { text: "A plan is nothing. Planning is everything.", author: "- DWIGHT D. EISENHOWER" },
+            { text: "You are your own biggest asset.", author: "- WARREN BUFFETT" }
         ];
         let breakQIdx = 0, breakQuoteInt = null, breakTimerInt = null, breakTimeLeft = 900, breakRunning = false;
 
@@ -2837,6 +2878,73 @@
                     if (d) d.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
                 }, 1000);
             }
+        }
+        // ─────────────────────────────────────────────────────────────
+
+        // ── Quest Roadmap: float + cycling label ─────────────────────
+        const questPhrases = [
+            { text: 'CREATIVE CONFIDENCE', color: '#FF007F' },
+            { text: 'DESIGN THINKING',     color: '#007acc' },
+            { text: 'BUSINESS STRATEGY',   color: '#111111' }
+        ];
+        let questThenIdx = 0, questLoopTimeout = null, questThenInt = null;
+
+        function startQuestAnimations() {
+            const cards = document.querySelectorAll('#slide-2 .quest-card');
+            // Clear any previous inline animations so questCardIn replays via CSS
+            cards.forEach(c => { c.style.animation = ''; c.style.transform = ''; });
+
+            // Init cycling label
+            questThenIdx = 0;
+            const el = document.getElementById('quest-then-label');
+            if (el) {
+                el.style.transition = 'none';
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(8px)';
+                el.textContent = questPhrases[0].text;
+                el.style.color = questPhrases[0].color;
+                setTimeout(() => {
+                    el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, 80);
+            }
+            if (questThenInt) clearInterval(questThenInt);
+            questThenInt = setInterval(() => {
+                const el = document.getElementById('quest-then-label');
+                if (!el) return;
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(-8px)';
+                setTimeout(() => {
+                    questThenIdx = (questThenIdx + 1) % questPhrases.length;
+                    const p = questPhrases[questThenIdx];
+                    el.textContent = p.text;
+                    el.style.color = p.color;
+                    el.style.transition = 'none';
+                    el.style.transform = 'translateY(8px)';
+                    el.offsetHeight; // force reflow
+                    el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, 420);
+            }, 2800);
+
+            // Gentle float on cards after initial reveal settles (~2s)
+            if (questLoopTimeout) clearTimeout(questLoopTimeout);
+            questLoopTimeout = setTimeout(() => {
+                cards.forEach((card, i) => {
+                    card.style.animation = `questFloat 4s ease-in-out ${(i % 4) * 0.4}s infinite`;
+                });
+            }, 2000);
+        }
+
+        function stopQuestAnimations() {
+            if (questLoopTimeout) { clearTimeout(questLoopTimeout); questLoopTimeout = null; }
+            if (questThenInt) { clearInterval(questThenInt); questThenInt = null; }
+            const cards = document.querySelectorAll('#slide-2 .quest-card');
+            cards.forEach(c => { c.style.animation = ''; c.style.transform = ''; });
+            const el = document.getElementById('quest-then-label');
+            if (el) { el.style.opacity = '0'; el.textContent = ''; }
         }
         // ─────────────────────────────────────────────────────────────
 
