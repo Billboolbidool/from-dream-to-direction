@@ -245,6 +245,77 @@
         }
         .mm-line.mm-draw { stroke-dashoffset: 0; }
 
+        /* ── MOBILE RESPONSIVE (max 768px) ──────────────────────────────
+           PURE ADDITION — only @media queries below.
+           Desktop layout is 100% untouched.
+        ──────────────────────────────────────────────────────────── */
+        @media (max-width: 768px) {
+
+            /* --- HUD top bar: compact --- */
+            .fixed.top-0 { padding: 0.4rem 0.75rem !important; }
+            .xp-bar { width: 80px !important; height: 11px !important; }
+            #hudStatus { font-size: 0.48rem !important; }
+            .sticker { padding: 0.25rem 0.55rem !important; font-size: 0.7rem !important; }
+
+            /* --- Footer / nav: compact --- */
+            #iw-footer { height: 54px !important; padding: 0 10px !important; }
+            #iw-footer-logo { height: 30px !important; }
+            .brutal-btn { padding: 0.35rem 0.8rem !important; font-size: 0.6rem !important; box-shadow: 4px 4px 0px var(--black) !important; }
+
+            /* --- Side strips: hide on mobile (no value at small width) --- */
+            #iw-content > div { display: none !important; }
+
+            /* --- Chania logo: smaller --- */
+            #iw-cover img { width: 75px !important; top: 52px !important; }
+
+            /* --- Slides: allow scrolling, reduce vertical padding --- */
+            .slide {
+                padding: 3.5rem 0.85rem 3.75rem !important;
+                overflow-y: auto !important;
+                justify-content: flex-start !important;
+                align-items: center !important;
+            }
+            /* Cover stays vertically centered */
+            #slide-0 { justify-content: center !important; }
+            /* Speaker profile has its own internal padding — restore 0 */
+            #slide-1 { padding: 0 !important; }
+
+            /* --- Speaker profile slide: hide portrait, reduce side padding --- */
+            #gs-portrait-col { display: none !important; }
+            #slide-1 [style*="padding:2rem 4rem"] { padding: 1.25rem 1rem !important; }
+            #slide-1 [style*="padding-bottom:120px"] { padding-bottom: 60px !important; }
+            #gs-marquee-wrap { height: 60px !important; bottom: 54px !important; }
+            #gs-marquee-inner img { height: 36px !important; }
+
+            /* --- Tailwind grid collapses --- */
+            /* 2-col → 1 col (stacks mission, strategy, gaps/resources, etc.) */
+            .grid-cols-2  { grid-template-columns: 1fr !important; }
+            /* 4-col → 2 col (player cards, quest steps stay readable) */
+            .grid-cols-4  { grid-template-columns: repeat(2, 1fr) !important; }
+            /* 5-col complex panels → 1 col (each panel stacks) */
+            .grid-cols-5  { grid-template-columns: 1fr !important; }
+
+            /* --- SWOT: restore 2×2 grid (it's a visual matrix — 1-col kills it) --- */
+            #slide-4 .grid-cols-2 { grid-template-columns: 1fr 1fr !important; }
+            #slide-4 .brutal-card { padding: 0.75rem !important; }
+            #slide-4 .font-brutal.text-5xl { font-size: 2rem !important; }
+
+            /* --- VUCA cards: allow wrap (have fixed 160px widths) --- */
+            #slide-3 .flex.justify-center.gap-5 { flex-wrap: wrap !important; gap: 0.6rem !important; }
+
+            /* --- Impact matrix: remove fixed viewport height so content fits --- */
+            #slide-20 > div { height: auto !important; min-height: 420px; }
+            #slide-20 [style*="grid-template-columns:1fr 1fr"] { min-height: 300px; }
+
+            /* --- Persona modal: near-fullscreen --- */
+            #modal > div { max-width: 94vw !important; max-height: 88vh !important; }
+            #modal [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+
+            /* --- Brutal font size scale-down for dense slides --- */
+            .font-brutal.text-5xl { font-size: 1.75rem !important; }
+            .font-brutal.text-4xl { font-size: 1.4rem !important; }
+        }
+
         /* ── PRINT / PDF ─────────────────────────────────────────────
            Ctrl+P in Chrome → Save as PDF → Landscape, No margins,
            Background graphics ON  →  each slide = one page
