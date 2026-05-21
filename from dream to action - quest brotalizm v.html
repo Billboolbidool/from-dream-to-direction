@@ -209,24 +209,73 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* Association Map */
-        @keyframes amPopIn {
-            0%   { opacity: 0; transform: scale(0) rotate(-8deg); }
-            75%  { transform: scale(1.1) rotate(2deg); opacity: 1; }
-            100% { opacity: 1; transform: scale(1) rotate(0deg); }
-        }
-        @keyframes amFloat {
-            0%, 100% { transform: scale(1) translateY(0px); }
-            50%       { transform: scale(1) translateY(-9px); }
-        }
-        .am-bubble {
+        /* Association Map — Mind Map */
+        @keyframes mmFloat1 { 0%,100%{transform:translateY(0)}    50%{transform:translateY(-7px)} }
+        @keyframes mmFloat2 { 0%,100%{transform:translateY(-5px)} 50%{transform:translateY(5px)}  }
+        @keyframes mmFloat3 { 0%,100%{transform:translateY(0)}    50%{transform:translateY(8px)}  }
+        @keyframes mmFloat4 { 0%,100%{transform:translateY(-4px)} 50%{transform:translateY(4px)}  }
+        @keyframes mmFloat5 { 0%,100%{transform:translateY(-6px)} 50%{transform:translateY(0)}    }
+
+        .mm-pos  { position:absolute; transform:translate(-50%,-50%); }
+        .mm-float-1 { animation: mmFloat1 3s ease-in-out infinite; }
+        .mm-float-2 { animation: mmFloat2 3s ease-in-out infinite; }
+        .mm-float-3 { animation: mmFloat3 3s ease-in-out infinite; }
+        .mm-float-4 { animation: mmFloat4 3s ease-in-out infinite; }
+        .mm-float-5 { animation: mmFloat5 3s ease-in-out infinite; }
+
+        .mm-node {
+            border-radius: 50%;
+            border: 4px solid #000;
+            box-shadow: 6px 6px 0 #000;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center;
+            padding: 0.75rem;
             opacity: 0;
             transform: scale(0);
+            transition: opacity 0.4s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .am-bubble.am-visible {
-            animation:
-                amPopIn 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
-                amFloat 3s ease-in-out 0.55s infinite;
+        .mm-node.mm-visible { opacity: 1; transform: scale(1); }
+        .mm-node-leaf { border-width: 3px; box-shadow: 4px 4px 0 #000; padding: 0.4rem; }
+        .mm-leaf-abstract { border-style: dashed; box-shadow: none; }
+
+        .mm-line {
+            stroke: #000; fill: none;
+            stroke-dasharray: 600; stroke-dashoffset: 600;
+            transition: stroke-dashoffset 0.55s ease;
+        }
+        .mm-line.mm-draw { stroke-dashoffset: 0; }
+
+        /* ── PRINT / PDF ─────────────────────────────────────────────
+           Ctrl+P in Chrome → Save as PDF → Landscape, No margins,
+           Background graphics ON  →  each slide = one page
+        ──────────────────────────────────────────────────────────── */
+        @media print {
+            /* Show ALL slides, each on its own page */
+            .slide {
+                position: relative !important;
+                display: flex !important;
+                width: 100% !important;
+                height: 100vh !important;
+                break-after: page;
+                page-break-after: always;
+                overflow: hidden !important;
+            }
+            /* Last slide: no trailing blank page */
+            .slide:last-of-type {
+                break-after: avoid;
+                page-break-after: avoid;
+            }
+            /* Hide interactive chrome */
+            #iw-footer,
+            [style*="position:fixed"],
+            [style*="position: fixed"] {
+                display: none !important;
+            }
+            /* Remove body scroll constraints */
+            body, html {
+                overflow: visible !important;
+                height: auto !important;
+            }
         }
     </style>
 </head>
@@ -788,7 +837,7 @@
     </div>
 
     <!-- SLIDE 6: PERSONA SELECTION -->
-    <div class="slide" id="slide-13">
+    <div class="slide" id="slide-14">
         <div class="text-center mb-8">
             <h2 class="font-brutal text-4xl leading-none">CHOOSE YOUR PLAYER</h2>
             <p class="font-bold text-sm tracking-[0.2em] uppercase mt-3 opacity-50">Four archetypes. Recognize yourself - then study the gaps.</p>
@@ -867,7 +916,7 @@
     </div>
 
     <!-- SLIDE 7: REALITY CHECK - GAPS & RESOURCES -->
-    <div class="slide" id="slide-12">
+    <div class="slide" id="slide-13">
         <h2 class="font-brutal text-5xl mb-12" style="margin-top:3rem;">LEVEL 2: THE REALITY CHECK</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-5xl">
             <!-- Gaps -->
@@ -902,7 +951,7 @@
             <!-- Header -->
             <div class="flex items-center gap-4">
                 <h2 class="font-brutal text-5xl" style="color:var(--pink)">LEVEL 1: MIND DUMP</h2>
-                <span class="sticker" style="font-size:0.7rem;transform:rotate(2deg);white-space:nowrap;">5 MIN EXERCISE</span>
+                <span class="sticker" style="font-size:0.7rem;transform:rotate(2deg);white-space:nowrap;">12 MIN EXERCISE</span>
             </div>
 
             <!-- Body: 2 cols -->
@@ -943,7 +992,7 @@
                     <!-- Timer -->
                     <div class="brutal-card p-8 text-center flex flex-col items-center" style="background:var(--yellow);gap:1rem;">
                         <p class="font-brutal text-xs tracking-widest">COUNTDOWN</p>
-                        <div id="md-timer-display" class="font-brutal" style="font-size:4.5rem;line-height:1;">05:00</div>
+                        <div id="md-timer-display" class="font-brutal" style="font-size:4.5rem;line-height:1;">12:00</div>
                         <button class="brutal-btn" id="md-timer-btn" onclick="toggleMindDumpTimer()">&#9654; START</button>
                     </div>
 
@@ -964,7 +1013,7 @@
             <!-- Header -->
             <div class="flex items-center gap-4 flex-shrink-0">
                 <h2 class="font-brutal text-4xl" style="color:var(--cyan)">LVL 2: MIND WANDERING</h2>
-                <span class="sticker" style="font-size:0.7rem;transform:rotate(-2deg);white-space:nowrap;background:var(--cyan);">3 MIN EXERCISE</span>
+                <span class="sticker" style="font-size:0.7rem;transform:rotate(-2deg);white-space:nowrap;background:var(--cyan);">6 MIN EXERCISE</span>
             </div>
 
             <!-- Body: mind map + right panel -->
@@ -974,44 +1023,189 @@
                 <div class="col-span-3 relative" id="am-map-container"
                      style="background:#0a0a0a; border:4px solid #000; box-shadow:10px 10px 0px #000; overflow:hidden;">
 
-                    <!-- Central prompt -->
-                    <div class="brutal-card text-center"
-                         style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:210px;background:var(--pink);z-index:3;padding:1.25rem;">
-                        <p class="font-brutal text-white" style="font-size:0.72rem;letter-spacing:0.5px;line-height:1.4;">LOOK AT YOUR MIND DUMP &amp; LET YOUR MIND WANDER...</p>
-                    </div>
+                    <!-- SVG connection lines -->
+                    <svg style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Center → Q lines -->
+                        <line class="mm-line mm-line-q" x1="50%" y1="50%" x2="19%" y2="20%" stroke-width="3"/>
+                        <line class="mm-line mm-line-q" x1="50%" y1="50%" x2="80%" y2="20%" stroke-width="3"/>
+                        <line class="mm-line mm-line-q" x1="50%" y1="50%" x2="14%" y2="49%" stroke-width="3"/>
+                        <line class="mm-line mm-line-q" x1="50%" y1="50%" x2="85%" y2="49%" stroke-width="3"/>
+                        <line class="mm-line mm-line-q" x1="50%" y1="50%" x2="50%" y2="80%" stroke-width="3"/>
+                        <!-- Q1 → leaves -->
+                        <line class="mm-line mm-line-leaf" x1="19%" y1="20%" x2="8%"  y2="10%" stroke-width="2"/>
+                        <line class="mm-line mm-line-leaf" x1="19%" y1="20%" x2="29%" y2="10%" stroke-width="2"/>
+                        <line class="mm-line mm-line-leaf" x1="19%" y1="20%" x2="30%" y2="33%" stroke-width="2"/>
+                        <!-- Q2 → leaves -->
+                        <line class="mm-line mm-line-leaf" x1="80%" y1="20%" x2="70%" y2="10%" stroke-width="2"/>
+                        <line class="mm-line mm-line-leaf" x1="80%" y1="20%" x2="91%" y2="10%" stroke-width="2"/>
+                        <line class="mm-line mm-line-leaf" x1="80%" y1="20%" x2="91%" y2="31%" stroke-width="2"/>
+                        <!-- Q3 → leaves -->
+                        <line class="mm-line mm-line-leaf" x1="14%" y1="49%" x2="7%"  y2="35%" stroke-width="2"/>
+                        <line class="mm-line mm-line-leaf" x1="14%" y1="49%" x2="7%"  y2="63%" stroke-width="2"/>
+                        <!-- Q4 → leaves -->
+                        <line class="mm-line mm-line-leaf" x1="85%" y1="49%" x2="91%" y2="35%" stroke-width="2"/>
+                        <line class="mm-line mm-line-leaf" x1="85%" y1="49%" x2="91%" y2="63%" stroke-width="2"/>
+                        <line class="mm-line mm-line-leaf" x1="85%" y1="49%" x2="70%" y2="40%" stroke-width="2"/>
+                        <!-- Q5 → leaves -->
+                        <line class="mm-line mm-line-leaf" x1="50%" y1="80%" x2="33%" y2="87%" stroke-width="2"/>
+                        <line class="mm-line mm-line-leaf" x1="50%" y1="80%" x2="67%" y2="87%" stroke-width="2"/>
+                    </svg>
 
-                    <!-- Bubble 1 – top left -->
-                    <div style="position:absolute;top:7%;left:4%;">
-                        <div class="am-bubble brutal-card p-4" style="width:165px;background:var(--yellow);">
-                            <p class="font-bold leading-tight" style="font-size:0.85rem;">What colors &amp; shapes do you see?</p>
+                    <!-- CENTER -->
+                    <div class="mm-pos" style="left:50%;top:50%;z-index:3;">
+                        <div class="mm-float-3" style="animation-duration:3.5s;animation-delay:-1s;">
+                            <div class="mm-node mm-node-center" style="background:var(--pink);width:148px;height:148px;">
+                                <p class="font-brutal text-white" style="font-size:0.6rem;letter-spacing:0.5px;line-height:1.6;">LET YOUR<br>MIND<br>WANDER</p>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Bubble 2 – top right -->
-                    <div style="position:absolute;top:7%;right:4%;">
-                        <div class="am-bubble brutal-card p-4" style="width:165px;background:var(--cyan);">
-                            <p class="font-bold leading-tight" style="font-size:0.85rem;">Where are you located?</p>
+                    <!-- Q1: Colors & Shapes — YELLOW — top-left -->
+                    <div class="mm-pos" style="left:19%;top:20%;z-index:2;">
+                        <div class="mm-float-1" style="animation-duration:3.2s;animation-delay:-0.5s;">
+                            <div class="mm-node mm-node-q" style="background:var(--yellow);width:114px;height:114px;">
+                                <p class="font-bold" style="font-size:0.67rem;line-height:1.35;">What colors &amp; shapes do you see?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- L1a concrete -->
+                    <div class="mm-pos" style="left:8%;top:10%;z-index:2;">
+                        <div class="mm-float-2" style="animation-duration:2.8s;animation-delay:-1.5s;">
+                            <div class="mm-node mm-node-leaf" style="background:#fff;width:70px;height:70px;">
+                                <p class="font-bold" style="font-size:0.56rem;line-height:1.3;">"bold + geometric"</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- L1b abstract -->
+                    <div class="mm-pos" style="left:29%;top:10%;z-index:2;">
+                        <div class="mm-float-5" style="animation-duration:3.8s;animation-delay:-2s;">
+                            <div class="mm-node mm-node-leaf mm-leaf-abstract" style="background:var(--yellow);width:70px;height:70px;">
+                                <p class="font-bold" style="font-size:0.62rem;font-style:italic;">texture</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- L1c concrete NEW -->
+                    <div class="mm-pos" style="left:30%;top:33%;z-index:2;">
+                        <div class="mm-float-1" style="animation-duration:2.6s;animation-delay:-3.2s;">
+                            <div class="mm-node mm-node-leaf" style="background:#fff;width:70px;height:70px;">
+                                <p class="font-bold" style="font-size:0.56rem;line-height:1.3;">"sharp contrast"</p>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Bubble 3 – mid left -->
-                    <div style="position:absolute;top:39%;left:2%;">
-                        <div class="am-bubble brutal-card p-4" style="width:175px;background:#fff;">
-                            <p class="font-bold leading-tight" style="font-size:0.85rem;">Who is there with you?</p>
+                    <!-- Q2: Where are you — CYAN — top-right -->
+                    <div class="mm-pos" style="left:80%;top:20%;z-index:2;">
+                        <div class="mm-float-4" style="animation-duration:3.6s;animation-delay:-0.8s;">
+                            <div class="mm-node mm-node-q" style="background:var(--cyan);width:114px;height:114px;">
+                                <p class="font-bold" style="font-size:0.67rem;line-height:1.35;">Where are you?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- L2a abstract -->
+                    <div class="mm-pos" style="left:70%;top:10%;z-index:2;">
+                        <div class="mm-float-1" style="animation-duration:2.9s;animation-delay:-3s;">
+                            <div class="mm-node mm-node-leaf mm-leaf-abstract" style="background:var(--cyan);width:70px;height:70px;">
+                                <p class="font-bold" style="font-size:0.62rem;font-style:italic;">place</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- L2b concrete -->
+                    <div class="mm-pos" style="left:91%;top:10%;z-index:2;">
+                        <div class="mm-float-3" style="animation-duration:3.1s;animation-delay:-1.2s;">
+                            <div class="mm-node mm-node-leaf" style="background:#fff;width:70px;height:70px;">
+                                <p class="font-bold" style="font-size:0.54rem;line-height:1.3;">"rooftop in a city"</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- L2c concrete NEW -->
+                    <div class="mm-pos" style="left:91%;top:31%;z-index:2;">
+                        <div class="mm-float-2" style="animation-duration:3.5s;animation-delay:-0.6s;">
+                            <div class="mm-node mm-node-leaf" style="background:#fff;width:70px;height:70px;">
+                                <p class="font-bold" style="font-size:0.57rem;line-height:1.3;">"golden hour"</p>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Bubble 4 – mid right -->
-                    <div style="position:absolute;top:39%;right:2%;">
-                        <div class="am-bubble brutal-card p-4" style="width:185px;background:var(--pink);">
-                            <p class="font-bold leading-tight text-white" style="font-size:0.8rem;">What is the ultimate symbol of your &#x27;Talent&#x27; status?</p>
+                    <!-- Q3: Who is there — WHITE — mid-left -->
+                    <div class="mm-pos" style="left:14%;top:49%;z-index:2;">
+                        <div class="mm-float-2" style="animation-duration:4s;animation-delay:-2.5s;">
+                            <div class="mm-node mm-node-q" style="background:#fff;width:114px;height:114px;">
+                                <p class="font-bold" style="font-size:0.67rem;line-height:1.35;">Who is there with you?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- L3a concrete -->
+                    <div class="mm-pos" style="left:7%;top:35%;z-index:2;">
+                        <div class="mm-float-4" style="animation-duration:3.3s;animation-delay:-0.3s;">
+                            <div class="mm-node mm-node-leaf" style="background:#fff;width:70px;height:70px;">
+                                <p class="font-bold" style="font-size:0.58rem;line-height:1.3;">"a mentor"</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- L3b abstract -->
+                    <div class="mm-pos" style="left:7%;top:63%;z-index:2;">
+                        <div class="mm-float-1" style="animation-duration:3.7s;animation-delay:-1.8s;">
+                            <div class="mm-node mm-node-leaf mm-leaf-abstract" style="background:#fff;width:70px;height:70px;">
+                                <p class="font-bold" style="font-size:0.62rem;font-style:italic;">presence</p>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Bubble 5 – bottom center -->
-                    <div style="position:absolute;bottom:7%;left:50%;transform:translateX(-50%);">
-                        <div class="am-bubble brutal-card p-4" style="width:180px;background:#fff;">
-                            <p class="font-bold leading-tight" style="font-size:0.85rem;">What does success look like?</p>
+                    <!-- Q4: Talent symbol — PINK — mid-right -->
+                    <div class="mm-pos" style="left:85%;top:49%;z-index:2;">
+                        <div class="mm-float-5" style="animation-duration:3.4s;animation-delay:-4s;">
+                            <div class="mm-node mm-node-q" style="background:var(--pink);width:114px;height:114px;">
+                                <p class="font-bold text-white" style="font-size:0.65rem;line-height:1.35;">Your talent symbol?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- L4a abstract -->
+                    <div class="mm-pos" style="left:91%;top:35%;z-index:2;">
+                        <div class="mm-float-2" style="animation-duration:2.7s;animation-delay:-0.7s;">
+                            <div class="mm-node mm-node-leaf mm-leaf-abstract" style="background:var(--pink);width:70px;height:70px;">
+                                <p class="font-bold text-white" style="font-size:0.62rem;font-style:italic;">object</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- L4b concrete -->
+                    <div class="mm-pos" style="left:91%;top:63%;z-index:2;">
+                        <div class="mm-float-3" style="animation-duration:3.9s;animation-delay:-2.2s;">
+                            <div class="mm-node mm-node-leaf" style="background:#fff;width:70px;height:70px;">
+                                <p class="font-bold" style="font-size:0.54rem;line-height:1.3;">"a signed book"</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- L4c concrete NEW -->
+                    <div class="mm-pos" style="left:70%;top:40%;z-index:2;">
+                        <div class="mm-float-4" style="animation-duration:3.2s;animation-delay:-1.4s;">
+                            <div class="mm-node mm-node-leaf" style="background:#fff;width:70px;height:70px;">
+                                <p class="font-bold" style="font-size:0.57rem;line-height:1.3;">"proud moment"</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q5: Success — WHITE — bottom-center -->
+                    <div class="mm-pos" style="left:50%;top:80%;z-index:2;">
+                        <div class="mm-float-4" style="animation-duration:3.0s;animation-delay:-3.5s;">
+                            <div class="mm-node mm-node-q" style="background:#fff;width:114px;height:114px;">
+                                <p class="font-bold" style="font-size:0.67rem;line-height:1.35;">What does success feel like?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- L5a abstract -->
+                    <div class="mm-pos" style="left:33%;top:87%;z-index:2;">
+                        <div class="mm-float-5" style="animation-duration:3.6s;animation-delay:-1s;">
+                            <div class="mm-node mm-node-leaf mm-leaf-abstract" style="background:#fff;width:70px;height:70px;">
+                                <p class="font-bold" style="font-size:0.62rem;font-style:italic;">sensation</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- L5b concrete -->
+                    <div class="mm-pos" style="left:67%;top:87%;z-index:2;">
+                        <div class="mm-float-1" style="animation-duration:2.6s;animation-delay:-4.5s;">
+                            <div class="mm-node mm-node-leaf" style="background:#fff;width:70px;height:70px;">
+                                <p class="font-bold" style="font-size:0.54rem;line-height:1.3;">"calm &amp; electric"</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1022,7 +1216,7 @@
                     <!-- Timer -->
                     <div class="brutal-card p-8 text-center flex flex-col items-center" style="background:var(--yellow);gap:1rem;">
                         <p class="font-brutal text-xs tracking-widest">COUNTDOWN</p>
-                        <div id="am-timer-display" class="font-brutal" style="font-size:4.5rem;line-height:1;">03:00</div>
+                        <div id="am-timer-display" class="font-brutal" style="font-size:4.5rem;line-height:1;">06:00</div>
                         <button class="brutal-btn" id="am-timer-btn" onclick="toggleAssocTimer()">&#9654; PLAY</button>
                     </div>
 
@@ -1046,7 +1240,7 @@
             <!-- Header -->
             <div class="flex items-center gap-4 flex-shrink-0">
                 <h2 class="font-brutal text-4xl" style="color:var(--pink);">YOUR VICTORY PICTURE</h2>
-                <span class="sticker" style="font-size:0.7rem;transform:rotate(2deg);white-space:nowrap;background:var(--pink);color:white;">7 MIN EXERCISE</span>
+                <span class="sticker" style="font-size:0.7rem;transform:rotate(2deg);white-space:nowrap;background:var(--pink);color:white;">20 MIN EXERCISE</span>
             </div>
 
             <!-- Body: 2 cols -->
@@ -1070,7 +1264,7 @@
                     <!-- Timer -->
                     <div class="brutal-card p-4 text-center flex flex-col items-center flex-shrink-0" style="background:var(--yellow);gap:0.4rem;">
                         <p class="font-brutal text-xs tracking-widest">COUNTDOWN</p>
-                        <div id="ai-timer-display" class="font-brutal" style="font-size:2.5rem;line-height:1;">07:00</div>
+                        <div id="ai-timer-display" class="font-brutal" style="font-size:2.5rem;line-height:1;">20:00</div>
                         <div class="flex gap-2">
                             <button class="brutal-btn" id="ai-timer-btn" onclick="toggleAiVisionTimer()">&#9654; START</button>
                             <button class="brutal-btn" id="ai-restart-btn" onclick="resetAiVision()" style="background:#fff;">&#8635; RESET</button>
@@ -1117,8 +1311,39 @@
         </div>
     </div>
 
-    <!-- SLIDE 11: INTERMISSION - COFFEE BREAK -->
+    <!-- SLIDE 11: TURN & SHARE -->
     <div class="slide" id="slide-11">
+        <div class="w-full max-w-4xl flex flex-col items-center" style="gap:2rem;">
+
+            <!-- Header -->
+            <div class="flex items-center gap-4">
+                <h2 class="font-brutal text-5xl" style="color:var(--cyan);">TURN &amp; SHARE</h2>
+                <span class="sticker" style="font-size:0.7rem;transform:rotate(-2deg);white-space:nowrap;background:var(--cyan);color:#000;">4 MIN SHARE</span>
+            </div>
+
+            <!-- Prompt card -->
+            <div class="brutal-card p-10 w-full text-center" style="background:var(--black);">
+                <p class="font-brutal text-2xl text-white mb-4">TURN TO THE PERSON NEXT TO YOU</p>
+                <p class="font-bold text-white" style="font-size:1rem;line-height:1.7;opacity:0.75;">Share what you feel comfortable sharing from your Victory Picture.<br>What do you see yourself doing? Who&apos;s there? How does it feel?</p>
+            </div>
+
+            <!-- Rule + timer row -->
+            <div class="grid grid-cols-2 w-full" style="gap:1.5rem;">
+                <div class="brutal-card p-7 flex flex-col justify-center" style="background:var(--yellow);">
+                    <p class="font-brutal text-xs mb-3" style="letter-spacing:2px;">THE ONLY RULE →</p>
+                    <p class="font-bold" style="font-size:1rem;line-height:1.6;">You decide what to share.<br><span style="opacity:0.55;">~2 minutes each.</span></p>
+                </div>
+                <div class="brutal-card p-7 text-center flex flex-col items-center" style="background:var(--pink);gap:0.8rem;">
+                    <p class="font-brutal text-xs text-white tracking-widest">COUNTDOWN</p>
+                    <div id="share-timer-display" class="font-brutal text-white" style="font-size:4rem;line-height:1;">04:00</div>
+                    <button class="brutal-btn" id="share-timer-btn" onclick="toggleShareTimer()" style="background:#fff;color:#000;">&#9654; START</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 12: INTERMISSION - COFFEE BREAK -->
+    <div class="slide" id="slide-12">
         <div class="max-w-4xl w-full flex flex-col items-center" style="gap:1.5rem;">
 
             <!-- Title sticker -->
@@ -1151,14 +1376,14 @@
     </div>
 
     <!-- SLIDE 12: YOUR REALITY CHECK - PERSONAL EXERCISE -->
-    <div class="slide" id="slide-14">
+    <div class="slide" id="slide-15">
         <div class="w-full max-w-6xl flex flex-col" style="gap:1.25rem;">
 
             <!-- Header -->
             <div class="flex-shrink-0">
                 <h2 class="font-brutal text-5xl mb-4" style="color:var(--pink)">YOUR REALITY CHECK</h2>
                 <div class="flex items-center gap-3 flex-wrap mb-3">
-                    <span class="sticker" style="font-size:0.7rem;transform:rotate(-2deg);white-space:nowrap;background:var(--pink);color:white;">7 MIN EXERCISE</span>
+                    <span class="sticker" style="font-size:0.7rem;transform:rotate(-2deg);white-space:nowrap;background:var(--pink);color:white;">10 MIN EXERCISE</span>
                     <span class="sticker" style="font-size:0.65rem;transform:rotate(1deg);white-space:nowrap;background:var(--black);color:var(--cyan);">&#8592; USE THE ARCHETYPES AS YOUR MIRROR</span>
                 </div>
                 <p class="font-bold text-sm" style="opacity:0.5;">Same framework as the archetypes &mdash; now map <em>your own</em> gaps &amp; resources. Write. Don&rsquo;t filter.</p>
@@ -1200,7 +1425,7 @@
                     <!-- Timer -->
                     <div class="brutal-card p-6 text-center flex flex-col items-center justify-center" style="background:var(--yellow);gap:0.75rem;flex:1;">
                         <p class="font-brutal text-[11px] tracking-widest opacity-60">COUNTDOWN</p>
-                        <div id="rc-timer-display" class="font-brutal" style="font-size:2.4rem;line-height:1;letter-spacing:0.04em;">07:00</div>
+                        <div id="rc-timer-display" class="font-brutal" style="font-size:2.4rem;line-height:1;letter-spacing:0.04em;">10:00</div>
                         <button class="brutal-btn" id="rc-timer-btn" onclick="toggleRealityTimer()" style="padding:0.6rem 1.25rem;font-size:0.8rem;">&#9654; START</button>
                         <button onclick="resetReality()" style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.65rem;text-transform:uppercase;background:none;border:none;cursor:pointer;opacity:0.45;letter-spacing:0.1em;">&#8635; RESET</button>
                     </div>
@@ -1243,38 +1468,45 @@
         </div>
     </div>
 
-    <!-- SLIDE 13: LEVEL 3 - THE MAGIC HMW FORMULA -->
-    <div class="slide" id="slide-15" style="justify-content:flex-start;">
+    <!-- SLIDE 13: LEVEL 3 - THE MAGIC HMW FORMULA (THEORY) -->
+    <div class="slide" id="slide-16" style="justify-content:flex-start;">
         <div class="w-full max-w-6xl flex flex-col" style="gap:1.25rem; height:calc(100vh - 13rem);">
 
-            <!-- Header: compact one-line -->
+            <!-- Header -->
             <div class="flex items-center gap-4 flex-shrink-0">
                 <div>
                     <h2 class="font-brutal" style="font-size:1.75rem;line-height:1.1;color:var(--cyan);">LEVEL 3: THE MAGIC PROMPT</h2>
                     <p class="font-brutal" style="font-size:1.1rem;line-height:1.2;color:var(--pink);">HOW MIGHT WE (HMW)</p>
                 </div>
-                <span class="sticker" style="font-size:0.7rem;transform:rotate(2deg);white-space:nowrap;background:var(--cyan);color:black;flex-shrink:0;">7 MIN EXERCISE</span>
             </div>
 
-            <!-- Body: 2 columns -->
+            <!-- Body: 2 columns — left: explanation + WE note, right: formula -->
             <div class="grid grid-cols-5 flex-1 min-h-0" style="gap:1.25rem;">
 
-                <!-- Left: explanation + formula + note -->
-                <div class="col-span-3 flex flex-col" style="gap:1rem;">
+                <!-- Left: what is it + WE note -->
+                <div class="col-span-2 flex flex-col" style="gap:1rem;">
 
-                    <!-- Explanation -->
-                    <div class="brutal-card p-5 flex-shrink-0" style="background:var(--black);">
+                    <div class="brutal-card p-6 flex-shrink-0" style="background:var(--black);">
                         <p class="font-brutal text-xs mb-2 tracking-widest" style="color:var(--cyan);">WHAT IS IT? &#8594;</p>
                         <p class="font-bold text-white leading-relaxed" style="font-size:0.9rem;">
                             The 'How Might We' method turns your mapped gaps and resources into an actionable challenge, framing the problem for creative ideation.
                         </p>
                     </div>
 
-                    <!-- Formula + Note combined -->
+                    <div class="brutal-card p-6 flex-1" style="background:var(--black);">
+                        <p class="font-brutal text-xs mb-3 tracking-widest" style="color:var(--pink);">WHY "WE" NOT "I"? &#8594;</p>
+                        <p class="font-bold text-white leading-relaxed" style="font-size:0.9rem;opacity:0.85;">
+                            Because no one closes their gaps alone. Every breakthrough needs a collaborator, a mentor, or someone you haven't met yet. Asking "we" keeps the door open.
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Right: formula (wider, takes most space) -->
+                <div class="col-span-3 flex flex-col">
                     <div class="brutal-card flex-1 flex flex-col" style="background:var(--yellow);padding:1.75rem 2.25rem;">
                         <div class="sticker mb-5" style="font-size:0.7rem;">THE FORMULA</div>
 
-                        <!-- Structured rows with breathing room -->
                         <div class="flex flex-col flex-1 justify-center" style="gap:1.4rem;">
                             <div class="flex items-center gap-3">
                                 <span class="font-brutal" style="font-size:1.05rem;white-space:nowrap;">HOW MIGHT WE ACHIEVE</span>
@@ -1291,21 +1523,9 @@
                             </div>
                         </div>
 
-                        <!-- Note inside the card -->
                         <div class="mt-5 pt-4" style="border-top:3px dashed rgba(0,0,0,0.2);">
-                            <p class="font-bold" style="font-size:0.8rem;line-height:1.5;">&#128161; You can write more than one HMW question - explore different combinations of gaps and resources!</p>
+                            <p class="font-bold" style="font-size:0.8rem;line-height:1.5;">&#128161; You can write more than one HMW question — explore different combinations!</p>
                         </div>
-                    </div>
-
-                </div>
-
-                <!-- Right: timer -->
-                <div class="col-span-2 flex flex-col">
-                    <div class="brutal-card flex-1 flex flex-col items-center justify-center" style="background:var(--yellow);gap:1rem;">
-                        <p class="font-brutal text-xs tracking-widest opacity-60">COUNTDOWN</p>
-                        <div id="hmw-timer-display" class="font-brutal" style="font-size:4.5rem;line-height:1;letter-spacing:-2px;">07:00</div>
-                        <button class="brutal-btn" id="hmw-timer-btn" onclick="toggleHmwTimer()">&#9654; PLAY</button>
-                        <button onclick="resetHmw()" style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.65rem;text-transform:uppercase;background:none;border:none;cursor:pointer;opacity:0.45;letter-spacing:0.1em;">&#8635; RESET</button>
                     </div>
                 </div>
 
@@ -1314,7 +1534,7 @@
     </div>
 
     <!-- SLIDE 14: HMW IN ACTION - CHARACTER EXAMPLES -->
-    <div class="slide" id="slide-16">
+    <div class="slide" id="slide-17">
         <div class="text-center mb-8">
             <h2 class="font-brutal text-4xl leading-none">HMW <span style="color:var(--cyan);">IN ACTION</span></h2>
             <p class="font-bold text-sm tracking-[0.2em] uppercase mt-3 opacity-50">Click a player to see their How Might We questions.</p>
@@ -1392,19 +1612,65 @@
         <p class="mt-8 text-sm italic opacity-40 font-bold">Click any player to explore their HMW questions.</p>
     </div>
 
-    <!-- SLIDE 15: LEVEL 4 - CRAZY 8 (INTERACTIVE) -->
-    <div class="slide" id="slide-17" style="background: var(--yellow);">
+    <!-- SLIDE 18: HMW EXERCISE -->
+    <div class="slide" id="slide-18">
+        <div class="w-full max-w-5xl flex flex-col" style="gap:2rem; height:calc(100vh - 13rem);">
+
+            <!-- Header -->
+            <div class="flex items-center gap-4 flex-shrink-0">
+                <h2 class="font-brutal text-4xl" style="color:var(--cyan);">WRITE YOUR HMW</h2>
+                <span class="sticker" style="font-size:0.7rem;transform:rotate(2deg);white-space:nowrap;background:var(--cyan);color:#000;">10 MIN EXERCISE</span>
+            </div>
+
+            <!-- 2 cols: formula reminder + timer -->
+            <div class="grid grid-cols-2 flex-1 min-h-0" style="gap:1.5rem;">
+
+                <!-- Formula reminder -->
+                <div class="brutal-card p-8 flex flex-col justify-center" style="background:var(--yellow);">
+                    <p class="font-brutal text-xs mb-5" style="letter-spacing:2px;">THE FORMULA &#8594;</p>
+                    <div class="flex flex-col" style="gap:1.1rem;">
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <span class="font-brutal" style="font-size:0.95rem;white-space:nowrap;">HOW MIGHT WE ACHIEVE</span>
+                            <span style="background:white;padding:5px 14px;border:3px solid black;font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;white-space:nowrap;">[GOAL X]</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="font-brutal" style="font-size:0.95rem;white-space:nowrap;">USING</span>
+                            <span style="background:white;padding:5px 14px;border:3px solid black;font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;white-space:nowrap;">[RESOURCES Y]</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="font-brutal" style="font-size:0.95rem;white-space:nowrap;">DESPITE</span>
+                            <span style="background:white;padding:5px 14px;border:3px solid black;font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;white-space:nowrap;">[GAPS Z]</span>
+                            <span class="font-brutal" style="font-size:0.95rem;">?</span>
+                        </div>
+                    </div>
+                    <p class="font-bold mt-6 text-xs" style="opacity:0.55;line-height:1.5;">Write more than one — try different combos of your gaps and resources.</p>
+                </div>
+
+                <!-- Timer -->
+                <div class="brutal-card flex flex-col items-center justify-center" style="background:var(--yellow);gap:1rem;">
+                    <p class="font-brutal text-xs tracking-widest opacity-60">COUNTDOWN</p>
+                    <div id="hmw-timer-display" class="font-brutal" style="font-size:4.5rem;line-height:1;letter-spacing:-2px;">10:00</div>
+                    <button class="brutal-btn" id="hmw-timer-btn" onclick="toggleHmwTimer()">&#9654; PLAY</button>
+                    <button onclick="resetHmw()" style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.65rem;text-transform:uppercase;background:none;border:none;cursor:pointer;opacity:0.45;letter-spacing:0.1em;">&#8635; RESET</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 19: LEVEL 4 - CRAZY 8 (INTERACTIVE) -->
+    <div class="slide" id="slide-19" style="background: var(--yellow);">
         <div class="w-full flex flex-col" style="max-width:960px; gap:0.8rem; height:calc(100vh - 12rem);">
 
             <!-- TOP ROW: Title + Counter + Timer + Buttons -->
             <div class="w-full flex justify-between items-end flex-shrink-0" style="gap:1rem;">
                 <div>
                     <h2 class="font-brutal leading-none" style="font-size:2.2rem; color:#000;">LEVEL 4: SPEED RUN</h2>
-                    <p class="font-brutal" style="font-size:0.9rem; color:var(--pink); letter-spacing:0.05em;">FIRE ROUND - 1 HMW · 21 PROMPTS · 6 MINUTES · GO FOR 36 IDEAS</p>
+                    <p class="font-brutal" style="font-size:0.9rem; color:var(--pink); letter-spacing:0.05em;">FIRE ROUND - 1 HMW · 21 PROMPTS · 8 MINUTES · GO FOR 36 IDEAS</p>
                 </div>
                 <div style="display:flex; align-items:center; gap:0.6rem; flex-shrink:0;">
                     <span id="c8-card-counter" class="font-brutal" style="font-size:0.85rem; color:#000; letter-spacing:0.12em; white-space:nowrap;">- / 21</span>
-                    <div id="c8-timer" class="font-brutal" style="font-size:2.6rem; background:#000; color:var(--yellow); border:4px solid #000; padding:0.3rem 0.9rem; box-shadow:6px 6px 0 var(--pink); letter-spacing:0.05em;">06:00</div>
+                    <div id="c8-timer" class="font-brutal" style="font-size:2.6rem; background:#000; color:var(--yellow); border:4px solid #000; padding:0.3rem 0.9rem; box-shadow:6px 6px 0 var(--pink); letter-spacing:0.05em;">08:00</div>
                     <button id="c8-play-btn" onclick="toggleC8Timer()" class="font-brutal" style="font-size:0.85rem; background:var(--pink); color:#fff; border:4px solid #000; padding:0.55rem 1rem; box-shadow:5px 5px 0 #000; cursor:pointer; white-space:nowrap;">&#9654; PLAY</button>
                     <button onclick="c8NextCard()" class="font-brutal" style="font-size:0.85rem; background:#fff; color:#000; border:4px solid #000; padding:0.55rem 1rem; box-shadow:5px 5px 0 #000; cursor:pointer; white-space:nowrap;">NEXT →</button>
                     <button onclick="resetC8()" class="font-brutal" style="font-size:0.85rem; background:#fff; color:#000; border:4px solid #000; padding:0.55rem 0.8rem; box-shadow:5px 5px 0 #000; cursor:pointer;">&#8635;</button>
@@ -1443,7 +1709,7 @@
     </div>
 
     <!-- SLIDE 16: LEVEL 5 - IMPACT / FEASIBILITY + PASSION MATRIX -->
-    <div class="slide" id="slide-18">
+    <div class="slide" id="slide-20">
         <div style="display:flex;flex-direction:column;width:100%;max-width:1200px;height:calc(100vh - 13rem);gap:0.6rem;">
 
             <!-- Title -->
@@ -1532,7 +1798,7 @@
                 <!-- Timer -->
                 <div class="brutal-card" style="flex:0 0 175px;padding:0.65rem 0.9rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.35rem;">
                     <p class="font-brutal" style="font-size:0.55rem;letter-spacing:0.15em;opacity:0.4;">SORTING TIME</p>
-                    <div id="matrix-timer-display" class="font-brutal" style="font-size:2.1rem;letter-spacing:0.08em;line-height:1;">03:00</div>
+                    <div id="matrix-timer-display" class="font-brutal" style="font-size:2.1rem;letter-spacing:0.08em;line-height:1;">07:00</div>
                     <button id="matrix-timer-btn" onclick="toggleMatrixTimer()" class="brutal-btn" style="font-size:0.6rem;padding:0.3rem 1rem;background:var(--cyan);">▶ PLAY</button>
                 </div>
             </div>
@@ -1540,7 +1806,7 @@
     </div>
 
     <!-- SLIDE 17: LEVEL 6 - NO-BIGGIE CONCEPT -->
-    <div class="slide" id="slide-19">
+    <div class="slide" id="slide-21">
         <div class="max-w-4xl w-full flex flex-col items-center" style="gap:0.9rem;max-height:calc(100vh - 14rem);justify-content:center;">
 
             <!-- Level badge + title -->
@@ -1572,7 +1838,7 @@
     </div>
 
     <!-- SLIDE 18: LEVEL 6 - NO-BIGGIE BREAKDOWN -->
-    <div class="slide" id="slide-20">
+    <div class="slide" id="slide-22">
         <div class="max-w-5xl w-full flex flex-col" style="gap:1.1rem;height:calc(100vh - 13rem);justify-content:center;">
 
             <!-- Title -->
@@ -1658,7 +1924,7 @@
                 <div style="flex:0 0 auto;background:var(--yellow);border-left:4px solid black;padding:0.75rem 1.25rem;display:flex;align-items:center;gap:1rem;">
                     <div>
                         <p class="font-brutal" style="font-size:0.45rem;letter-spacing:0.22em;opacity:0.5;">ACTION TIME</p>
-                        <div id="nb-timer-display" class="font-brutal" style="font-size:2rem;letter-spacing:0.08em;line-height:1;">03:00</div>
+                        <div id="nb-timer-display" class="font-brutal" style="font-size:2rem;letter-spacing:0.08em;line-height:1;">10:00</div>
                     </div>
                     <div style="display:flex;flex-direction:column;gap:0.35rem;">
                         <button id="nb-timer-play" onclick="toggleNBTimer()" class="brutal-btn" style="font-size:0.58rem;padding:0.28rem 0.9rem;background:var(--pink);">&#9654; PLAY</button>
@@ -1671,7 +1937,7 @@
     </div>
 
     <!-- SLIDE: FINAL - QUEST COMPLETE -->
-    <div class="slide" id="slide-21" style="background:#0a0a0a;">
+    <div class="slide" id="slide-23" style="background:#0a0a0a;">
         <div class="max-w-6xl w-full" style="display:grid;grid-template-columns:3fr 2fr;gap:3.5rem;align-items:center;">
 
             <!-- Left: Victory -->
@@ -1698,8 +1964,8 @@
                 </p>
 
                 <!-- Quote - big and prominent -->
-                <div style="border-left:4px solid var(--cyan);padding-left:1.5rem;">
-                    <p style="font-size:1.75rem;font-weight:700;color:var(--cyan);font-style:italic;line-height:1.25;">"May the odds be ever in your favor."</p>
+                <div style="border:4px solid var(--cyan);padding:1.4rem 2rem;background:transparent;animation:cyanFlicker 3.6s ease-in-out infinite;">
+                    <p style="font-size:1.75rem;font-weight:700;color:var(--cyan);font-style:italic;line-height:1.25;text-shadow:0 0 10px var(--cyan);">"May the odds be ever in your favor."</p>
                     <p class="font-brutal" style="font-size:0.5rem;letter-spacing:0.38em;color:var(--cyan);opacity:0.4;margin-top:0.7rem;">- THE HUNGER GAMES</p>
                 </div>
 
@@ -1755,7 +2021,7 @@
 
     <script>
         let currentSlide = 0;
-        const totalSlides = 22;
+        const totalSlides = 24;
 
         function nextSlide() { goToSlide(currentSlide + 1); }
         function prevSlide() { goToSlide(currentSlide - 1); }
@@ -1767,11 +2033,13 @@
             if (currentSlide === 8) resetMindDump();
             if (currentSlide === 9) resetAssocMap();
             if (currentSlide === 10) resetAiVision();
-            if (currentSlide === 11) resetBreak();
-            if (currentSlide === 14) resetReality();
-            if (currentSlide === 17) resetC8();
-            if (currentSlide === 18) resetMatrixState();
-            if (currentSlide === 20) { resetNBTimer(); dismissNBCelebration(); }
+            if (currentSlide === 11) resetShareTimer();
+            if (currentSlide === 12) resetBreak();
+            if (currentSlide === 15) resetReality();
+            if (currentSlide === 18) resetHmw();
+            if (currentSlide === 19) resetC8();
+            if (currentSlide === 20) resetMatrixState();
+            if (currentSlide === 22) { resetNBTimer(); dismissNBCelebration(); }
             document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
             document.getElementById(`slide-${index}`).classList.add('active');
             currentSlide = index;
@@ -1780,7 +2048,7 @@
             const xp = (currentSlide / (totalSlides - 1)) * 100;
             document.getElementById('xpFill').style.width = `${xp}%`;
             
-            const titles = ["START", "PROFILE", "QUEST", "THE GAME", "GEN Z", "MISSION", "STRATEGY", "LFG", "PURGE", "MAP", "VISION", "BREAK", "REALITY", "PLAYERS", "YOURS", "MAGIC", "HMW EX", "SPEED-RUN", "SORTING", "NO-BIGGIE", "SHRINK IT", "WIN"];
+            const titles = ["START", "PROFILE", "QUEST", "THE GAME", "GEN Z", "MISSION", "STRATEGY", "LFG", "PURGE", "MAP", "VISION", "SHARE", "BREAK", "REALITY", "PLAYERS", "YOURS", "MAGIC", "HMW EX", "WRITE", "SPEED-RUN", "SORTING", "NO-BIGGIE", "SHRINK IT", "WIN"];
             document.getElementById('hudStatus').innerText = `LVL ${String(currentSlide + 1).padStart(2, '0')} // ${titles[currentSlide]}`;
 
             // Buttons
@@ -1791,9 +2059,9 @@
             if (index === 1) startGaliaProfile();
             if (index === 8) startMdRotation();
             if (index === 9) startAssocMap();
-            if (index === 11) startBreakQuotes();
-            if (index === 17) { clearInterval(c8HintInt); c8HintInt = setInterval(c8CycleHint, 5000); }
-            if (index === 18) resetMatrixState();
+            if (index === 12) startBreakQuotes();
+            if (index === 19) { clearInterval(c8HintInt); c8HintInt = setInterval(c8CycleHint, 5000); }
+            if (index === 20) resetMatrixState();
 
             // IW template: cover layout on slide 0, content layout + footer on all others
             document.getElementById('iw-cover').style.display = index === 0 ? 'block' : 'none';
@@ -2082,7 +2350,7 @@
             "What agenda or mission are you advancing?",
             "What kind of person have you grown to be?"
         ];
-        let mdQIdx = 0, mdRotateInt = null, mdTimerInt = null, mdTimeLeft = 300, mdRunning = false;
+        let mdQIdx = 0, mdRotateInt = null, mdTimerInt = null, mdTimeLeft = 720, mdRunning = false;
 
         function mdSetDots(active) {
             for (let i = 0; i < 6; i++) {
@@ -2257,11 +2525,11 @@
         function resetMindDump() {
             clearInterval(mdRotateInt); mdRotateInt = null;
             clearInterval(mdTimerInt);  mdTimerInt = null;
-            mdRunning = false; mdTimeLeft = 300; mdQIdx = 0;
+            mdRunning = false; mdTimeLeft = 720; mdQIdx = 0;
             const disp = document.getElementById('md-timer-display');
             const btn  = document.getElementById('md-timer-btn');
             const el   = document.getElementById('md-question-el');
-            if (disp) disp.textContent = '05:00';
+            if (disp) disp.textContent = '12:00';
             if (btn)  btn.textContent  = '▶ START';
             if (el)   { el.textContent = ''; el.className = ''; }
             mdSetDots(0);
@@ -2294,27 +2562,41 @@
             }
         }
         // ── ASSOCIATION MAP ────────────────────────────────────────────
-        let amTimerInt = null, amRunning = false, amTimeLeft = 180;
+        let amTimerInt = null, amRunning = false, amTimeLeft = 360;
 
         function startAssocMap() {
-            const bubbles = document.querySelectorAll('#slide-9 .am-bubble');
-            bubbles.forEach(b => {
-                b.classList.remove('am-visible');
-                void b.offsetWidth; // force reflow to restart animation
-            });
-            bubbles.forEach((b, i) => {
-                setTimeout(() => b.classList.add('am-visible'), i * 800);
-            });
+            const slide = document.getElementById('slide-9');
+            // Reset all to hidden
+            slide.querySelectorAll('.mm-node').forEach(n => { n.classList.remove('mm-visible'); void n.offsetWidth; });
+            slide.querySelectorAll('.mm-line').forEach(l => { l.classList.remove('mm-draw'); void l.offsetWidth; });
+
+            // 1. Center node pops in
+            setTimeout(() => slide.querySelector('.mm-node-center').classList.add('mm-visible'), 100);
+
+            // 2. Lines to Q nodes draw, then Q nodes bloom (staggered 350ms each)
+            const qLines = slide.querySelectorAll('.mm-line-q');
+            const qNodes = slide.querySelectorAll('.mm-node-q');
+            qLines.forEach((l, i) => setTimeout(() => l.classList.add('mm-draw'), 500 + i * 350));
+            qNodes.forEach((n, i) => setTimeout(() => n.classList.add('mm-visible'), 850 + i * 350));
+
+            // 3. Leaf lines draw, then leaf nodes bloom
+            const leafStart = 500 + 5 * 350 + 300; // after all Q reveals settle
+            const leafLines = slide.querySelectorAll('.mm-line-leaf');
+            const leafNodes = slide.querySelectorAll('.mm-node-leaf');
+            leafLines.forEach((l, i) => setTimeout(() => l.classList.add('mm-draw'), leafStart + i * 150));
+            leafNodes.forEach((n, i) => setTimeout(() => n.classList.add('mm-visible'), leafStart + 300 + i * 150));
         }
 
         function resetAssocMap() {
             clearInterval(amTimerInt); amTimerInt = null;
-            amRunning = false; amTimeLeft = 180;
+            amRunning = false; amTimeLeft = 360;
             const disp = document.getElementById('am-timer-display');
             const btn  = document.getElementById('am-timer-btn');
-            if (disp) disp.textContent = '03:00';
+            if (disp) disp.textContent = '06:00';
             if (btn)  btn.textContent  = '▶ PLAY';
-            document.querySelectorAll('#slide-9 .am-bubble').forEach(b => b.classList.remove('am-visible'));
+            const slide = document.getElementById('slide-9');
+            slide.querySelectorAll('.mm-node').forEach(n => n.classList.remove('mm-visible'));
+            slide.querySelectorAll('.mm-line').forEach(l => l.classList.remove('mm-draw'));
         }
 
         function toggleAssocTimer() {
@@ -2343,14 +2625,14 @@
             }
         }
         // ── REALITY CHECK TIMER ─────────────────────────────────────────
-        let rcTimerInt = null, rcRunning = false, rcTimeLeft = 420;
+        let rcTimerInt = null, rcRunning = false, rcTimeLeft = 600;
 
         function resetReality() {
             clearInterval(rcTimerInt); rcTimerInt = null;
-            rcRunning = false; rcTimeLeft = 420;
+            rcRunning = false; rcTimeLeft = 600;
             const disp = document.getElementById('rc-timer-display');
             const btn  = document.getElementById('rc-timer-btn');
-            if (disp) disp.textContent = '07:00';
+            if (disp) disp.textContent = '10:00';
             if (btn)  btn.innerHTML = '&#9654; START';
         }
 
@@ -2380,14 +2662,14 @@
             }
         }
                 // ── AI VISION TIMER ─────────────────────────────────────────────
-        let aiTimerInt = null, aiRunning = false, aiTimeLeft = 420;
+        let aiTimerInt = null, aiRunning = false, aiTimeLeft = 1200;
 
         function resetAiVision() {
             clearInterval(aiTimerInt); aiTimerInt = null;
-            aiRunning = false; aiTimeLeft = 420;
+            aiRunning = false; aiTimeLeft = 1200;
             const disp = document.getElementById('ai-timer-display');
             const btn  = document.getElementById('ai-timer-btn');
-            if (disp) disp.textContent = '07:00';
+            if (disp) disp.textContent = '20:00';
             if (btn)  { btn.innerHTML = '&#9654; START'; }
         }
 
@@ -2416,15 +2698,52 @@
                 }, 1000);
             }
         }
+        // ── SHARE TIMER ──────────────────────────────────────────────
+        let shareTimerInt = null, shareRunning = false, shareTimeLeft = 240;
+
+        function resetShareTimer() {
+            clearInterval(shareTimerInt); shareTimerInt = null;
+            shareRunning = false; shareTimeLeft = 240;
+            const disp = document.getElementById('share-timer-display');
+            const btn  = document.getElementById('share-timer-btn');
+            if (disp) disp.textContent = '04:00';
+            if (btn)  btn.textContent  = '▶ START';
+        }
+
+        function toggleShareTimer() {
+            const btn  = document.getElementById('share-timer-btn');
+            const disp = document.getElementById('share-timer-display');
+            if (shareRunning) {
+                clearInterval(shareTimerInt); shareTimerInt = null; shareRunning = false;
+                if (btn) btn.textContent = '▶ START';
+            } else {
+                if (shareTimeLeft <= 0) { shareTimeLeft = 240; if (disp) disp.textContent = '04:00'; }
+                shareRunning = true;
+                if (btn) btn.textContent = '⏸ PAUSE';
+                shareTimerInt = setInterval(() => {
+                    if (shareTimeLeft <= 0) {
+                        clearInterval(shareTimerInt); shareTimerInt = null; shareRunning = false;
+                        if (btn) btn.textContent = '✓ DONE!';
+                        if (disp) disp.textContent = '00:00';
+                        return;
+                    }
+                    shareTimeLeft--;
+                    const m = Math.floor(shareTimeLeft / 60);
+                    const s = shareTimeLeft % 60;
+                    if (disp) disp.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                }, 1000);
+            }
+        }
+
         // ── HMW TIMER ────────────────────────────────────────────────
-        let hmwTimerInt = null, hmwRunning = false, hmwTimeLeft = 420;
+        let hmwTimerInt = null, hmwRunning = false, hmwTimeLeft = 600;
 
         function resetHmw() {
             clearInterval(hmwTimerInt); hmwTimerInt = null;
-            hmwRunning = false; hmwTimeLeft = 420;
+            hmwRunning = false; hmwTimeLeft = 600;
             const disp = document.getElementById('hmw-timer-display');
             const btn  = document.getElementById('hmw-timer-btn');
-            if (disp) disp.textContent = '07:00';
+            if (disp) disp.textContent = '10:00';
             if (btn)  btn.innerHTML = '&#9654; PLAY';
         }
 
@@ -2454,7 +2773,7 @@
             }
         }
         // ── CRAZY 8 TIMER & REVEAL ───────────────────────────────────
-        let c8TimerInt = null, c8Running = false, c8TimeLeft = 360;
+        let c8TimerInt = null, c8Running = false, c8TimeLeft = 480;
         let c8CurrentCard = 0, c8HintInt = null, c8HintIdx = 0;
 
         const c8Prompts = [
@@ -2515,6 +2834,7 @@
             "PERFECTIONISM IS THE ENEMY. KEEP MOVING.",
             "FILL EVERY CARD. EVERY. SINGLE. ONE.",
             "BORROWED IDEAS COUNT. STEAL LIKE AN ARTIST.",
+            "WRITE COMPLETE IDEAS — NOT JUST WORDS. A FULL SENTENCE BEATS A KEYWORD EVERY TIME.",
         ];
 
         function c8ShowCard(index) {
@@ -2562,7 +2882,7 @@
         function resetC8() {
             clearInterval(c8TimerInt); c8TimerInt = null;
             clearInterval(c8HintInt);  c8HintInt  = null;
-            c8Running = false; c8TimeLeft = 360; c8CurrentCard = 0; c8HintIdx = 0;
+            c8Running = false; c8TimeLeft = 480; c8CurrentCard = 0; c8HintIdx = 0;
             const disp     = document.getElementById('c8-timer');
             const btn      = document.getElementById('c8-play-btn');
             const hint     = document.getElementById('c8-hint');
@@ -2570,7 +2890,7 @@
             const active   = document.getElementById('c8-active-card');
             const counter  = document.getElementById('c8-card-counter');
             const progress = document.getElementById('c8-progress-fill');
-            if (disp)     { disp.textContent = '06:00'; disp.style.color = 'var(--yellow)'; }
+            if (disp)     { disp.textContent = '08:00'; disp.style.color = 'var(--yellow)'; }
             if (btn)      btn.innerHTML = '&#9654; PLAY';
             if (hint)     { hint.textContent = ''; hint.style.opacity = '0'; }
             if (waiting)  waiting.style.display = 'flex';
@@ -2630,11 +2950,11 @@
                     const m = Math.floor(c8TimeLeft / 60);
                     const s = c8TimeLeft % 60;
                     if (disp) disp.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-                    // Auto-advance: 21 cards over 360 seconds (~17s per card)
+                    // Auto-advance: 21 cards over 480 seconds (~23s per card)
                     // card 1 shown on PLAY, cards 2-21 auto-advance
-                    const elapsed = 360 - c8TimeLeft;
+                    const elapsed = 480 - c8TimeLeft;
                     if (elapsed > 0) {
-                        const expectedCard = Math.min(Math.floor(elapsed * 21 / 360) + 1, 21);
+                        const expectedCard = Math.min(Math.floor(elapsed * 21 / 480) + 1, 21);
                         if (expectedCard > c8CurrentCard) c8ShowCard(expectedCard);
                     }
                 }, 1000);
@@ -2643,7 +2963,7 @@
         // ────────────────────────────────────────────────────────────
 
         // ── IMPACT & PASSION MATRIX ──────────────────────────────────
-        let matrixTimerInt = null, matrixTimeLeft = 180, matrixRunning = false;
+        let matrixTimerInt = null, matrixTimeLeft = 420, matrixRunning = false;
 
         function animatePassionCircles() {
             // Reset circles (invisible + collapsed)
@@ -2674,7 +2994,7 @@
                 const btn = document.getElementById('matrix-timer-btn');
                 if (btn) btn.textContent = '▶ PLAY';
             } else {
-                if (matrixTimeLeft <= 0) matrixTimeLeft = 180;
+                if (matrixTimeLeft <= 0) matrixTimeLeft = 420;
                 matrixRunning = true;
                 const btn = document.getElementById('matrix-timer-btn');
                 if (btn) btn.textContent = '⏸ PAUSE';
@@ -2694,7 +3014,7 @@
         }
 
         // ── NO-BIGGIE TIMER ──────────────────────────────────────────
-        let nbTimerInt = null, nbTimeLeft = 180, nbRunning = false;
+        let nbTimerInt = null, nbTimeLeft = 600, nbRunning = false;
 
         function toggleNBTimer() {
             const btn = document.getElementById('nb-timer-play');
@@ -2702,7 +3022,7 @@
                 clearInterval(nbTimerInt); nbRunning = false;
                 if (btn) btn.innerHTML = '&#9654; RESUME';
             } else {
-                if (nbTimeLeft <= 0) nbTimeLeft = 180;
+                if (nbTimeLeft <= 0) nbTimeLeft = 600;
                 nbRunning = true;
                 if (btn) btn.innerHTML = '&#9646;&#9646; PAUSE';
                 nbTimerInt = setInterval(() => {
@@ -2721,9 +3041,9 @@
         }
 
         function resetNBTimer() {
-            clearInterval(nbTimerInt); nbTimerInt = null; nbRunning = false; nbTimeLeft = 180;
+            clearInterval(nbTimerInt); nbTimerInt = null; nbRunning = false; nbTimeLeft = 600;
             const d = document.getElementById('nb-timer-display');
-            if (d) { d.textContent = '03:00'; d.style.color = ''; }
+            if (d) { d.textContent = '10:00'; d.style.color = ''; }
             const b = document.getElementById('nb-timer-play');
             if (b) { b.innerHTML = '&#9654; PLAY'; b.style.background = 'var(--pink)'; }
         }
@@ -2786,9 +3106,9 @@
         // ────────────────────────────────────────────────────────────
 
         function resetMatrixState() {
-            clearInterval(matrixTimerInt); matrixTimerInt = null; matrixRunning = false; matrixTimeLeft = 180;
+            clearInterval(matrixTimerInt); matrixTimerInt = null; matrixRunning = false; matrixTimeLeft = 420;
             const d = document.getElementById('matrix-timer-display');
-            if (d) d.textContent = '03:00';
+            if (d) d.textContent = '07:00';
             const b = document.getElementById('matrix-timer-btn');
             if (b) b.textContent = '▶ PLAY';
             ['pcircle-A','pcircle-B','pcircle-C'].forEach(id => {
