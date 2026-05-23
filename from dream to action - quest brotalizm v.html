@@ -133,7 +133,7 @@
             backdrop-filter: blur(5px);
         }
 
-        /* Mind Dump */
+        /* Best Self */
         @keyframes mdFadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
         @keyframes mdFadeOut { from { opacity:1; transform:translateY(0); } to { opacity:0; transform:translateY(-8px); } }
         .md-fade-in { animation: mdFadeIn 0.6s ease forwards; }
@@ -358,7 +358,7 @@
          - Slide 0: Cover.
          - Slide 1: Mission Context (VUCA).
          - Slide 2: Persona Classes (Interactive Selection).
-         - Slide 3: Level 1 - Mind Dump (Inventory Flush).
+         - Slide 3: Level 1 - Best Self (Inventory Flush).
          - Slide 4: Level 2 - Gaps & Resources (Reality Map).
          - Slide 5: Level 3 - The Magic HMW Formula (Problem Framing).
          - Slide 6: Level 4 - Speed Run (Crazy 8).
@@ -841,7 +841,7 @@
                 <div class="brutal-card p-5 quest-card" style="border-top: 6px solid var(--pink); animation-delay: 0.05s;">
                     <div class="font-brutal text-4xl leading-none mb-2" style="color:var(--pink);">01</div>
                     <div class="text-2xl mb-2">💭</div>
-                    <p class="font-brutal text-xs tracking-wider">MIND DUMP</p>
+                    <p class="font-brutal text-xs tracking-wider">BEST SELF</p>
                     <p class="text-[10px] font-bold opacity-40 mt-1">Empty the brain</p>
                 </div>
                 <div class="brutal-card p-5 quest-card" style="border-top: 6px solid var(--yellow); animation-delay: 0.2s;">
@@ -910,8 +910,7 @@
     <!-- SLIDE 6: PERSONA SELECTION -->
     <div class="slide" id="slide-14">
         <div class="text-center mb-8">
-            <h2 class="font-brutal text-4xl leading-none">CHOOSE YOUR PLAYER</h2>
-            <p class="font-bold text-sm tracking-[0.2em] uppercase mt-3 opacity-50">Four archetypes. Recognize yourself - then study the gaps.</p>
+            <h2 class="font-brutal text-4xl leading-none">MEET THE PLAYERS</h2>
         </div>
         <div class="grid grid-cols-4 gap-5 w-full max-w-5xl">
             <!-- ANYA -->
@@ -1015,13 +1014,13 @@
         </div>
     </div>
 
-    <!-- SLIDE 8: LEVEL 1 - MIND DUMP -->
+    <!-- SLIDE 8: LEVEL 1 - BEST SELF -->
     <div class="slide" id="slide-8">
         <div class="w-full max-w-6xl flex flex-col" style="gap:1.25rem;">
 
             <!-- Header -->
             <div class="flex items-center gap-4">
-                <h2 class="font-brutal text-5xl" style="color:var(--pink)">LEVEL 1: MIND DUMP</h2>
+                <h2 class="font-brutal text-5xl" style="color:var(--pink)">LEVEL 1: BEST SELF</h2>
                 <span class="sticker" style="font-size:0.7rem;transform:rotate(2deg);white-space:nowrap;">12 MIN EXERCISE</span>
             </div>
 
@@ -1335,7 +1334,7 @@
                     <!-- Timer -->
                     <div class="brutal-card p-4 text-center flex flex-col items-center flex-shrink-0" style="background:var(--yellow);gap:0.4rem;">
                         <p class="font-brutal text-xs tracking-widest">COUNTDOWN</p>
-                        <div id="ai-timer-display" class="font-brutal" style="font-size:2.5rem;line-height:1;">20:00</div>
+                        <div id="ai-timer-display" class="font-brutal" style="font-size:2.5rem;line-height:1;">18:00</div>
                         <div class="flex gap-2">
                             <button class="brutal-btn" id="ai-timer-btn" onclick="toggleAiVisionTimer()">&#9654; START</button>
                             <button class="brutal-btn" id="ai-restart-btn" onclick="resetAiVision()" style="background:#fff;">&#8635; RESET</button>
@@ -1402,11 +1401,11 @@
             <div class="grid grid-cols-2 w-full" style="gap:1.5rem;">
                 <div class="brutal-card p-7 flex flex-col justify-center" style="background:var(--yellow);">
                     <p class="font-brutal text-xs mb-3" style="letter-spacing:2px;">THE ONLY RULE →</p>
-                    <p class="font-bold" style="font-size:1rem;line-height:1.6;">You decide what to share.<br><span style="opacity:0.55;">~2 minutes each.</span></p>
+                    <p class="font-bold" style="font-size:1rem;line-height:1.6;">You decide what to share.<br><span style="opacity:0.55;">~3 minutes each.</span></p>
                 </div>
                 <div class="brutal-card p-7 text-center flex flex-col items-center" style="background:var(--pink);gap:0.8rem;">
                     <p class="font-brutal text-xs text-white tracking-widest">COUNTDOWN</p>
-                    <div id="share-timer-display" class="font-brutal text-white" style="font-size:4rem;line-height:1;">04:00</div>
+                    <div id="share-timer-display" class="font-brutal text-white" style="font-size:4rem;line-height:1;">06:00</div>
                     <button class="brutal-btn" id="share-timer-btn" onclick="toggleShareTimer()" style="background:#fff;color:#000;">&#9654; START</button>
                 </div>
             </div>
@@ -1496,7 +1495,7 @@
                     <!-- Timer -->
                     <div class="brutal-card p-6 text-center flex flex-col items-center justify-center" style="background:var(--yellow);gap:0.75rem;flex:1;">
                         <p class="font-brutal text-[11px] tracking-widest opacity-60">COUNTDOWN</p>
-                        <div id="rc-timer-display" class="font-brutal" style="font-size:2.4rem;line-height:1;letter-spacing:0.04em;">10:00</div>
+                        <div id="rc-timer-display" class="font-brutal" style="font-size:2.4rem;line-height:1;letter-spacing:0.04em;">08:00</div>
                         <button class="brutal-btn" id="rc-timer-btn" onclick="toggleRealityTimer()" style="padding:0.6rem 1.25rem;font-size:0.8rem;">&#9654; START</button>
                         <button onclick="resetReality()" style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.65rem;text-transform:uppercase;background:none;border:none;cursor:pointer;opacity:0.45;letter-spacing:0.1em;">&#8635; RESET</button>
                     </div>
@@ -1720,7 +1719,7 @@
                 <!-- Timer -->
                 <div class="brutal-card flex flex-col items-center justify-center" style="background:var(--yellow);gap:1rem;">
                     <p class="font-brutal text-xs tracking-widest opacity-60">COUNTDOWN</p>
-                    <div id="hmw-timer-display" class="font-brutal" style="font-size:4.5rem;line-height:1;letter-spacing:-2px;">10:00</div>
+                    <div id="hmw-timer-display" class="font-brutal" style="font-size:4.5rem;line-height:1;letter-spacing:-2px;">08:00</div>
                     <button class="brutal-btn" id="hmw-timer-btn" onclick="toggleHmwTimer()">&#9654; PLAY</button>
                     <button onclick="resetHmw()" style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.65rem;text-transform:uppercase;background:none;border:none;cursor:pointer;opacity:0.45;letter-spacing:0.1em;">&#8635; RESET</button>
                 </div>
@@ -1995,7 +1994,7 @@
                 <div style="flex:0 0 auto;background:var(--yellow);border-left:4px solid black;padding:0.75rem 1.25rem;display:flex;align-items:center;gap:1rem;">
                     <div>
                         <p class="font-brutal" style="font-size:0.45rem;letter-spacing:0.22em;opacity:0.5;">ACTION TIME</p>
-                        <div id="nb-timer-display" class="font-brutal" style="font-size:2rem;letter-spacing:0.08em;line-height:1;">10:00</div>
+                        <div id="nb-timer-display" class="font-brutal" style="font-size:2rem;letter-spacing:0.08em;line-height:1;">08:00</div>
                     </div>
                     <div style="display:flex;flex-direction:column;gap:0.35rem;">
                         <button id="nb-timer-play" onclick="toggleNBTimer()" class="brutal-btn" style="font-size:0.58rem;padding:0.28rem 0.9rem;background:var(--pink);">&#9654; PLAY</button>
@@ -2007,8 +2006,48 @@
         </div>
     </div>
 
+    <!-- SLIDE: LOOT DROP - TAKEAWAYS -->
+    <div class="slide" id="slide-23">
+        <div class="w-full max-w-4xl flex flex-col items-center" style="gap:2rem;">
+
+            <!-- Header -->
+            <div class="text-center">
+                <div class="sticker" style="background:var(--yellow);display:inline-block;margin-bottom:1rem;">BEFORE YOU GO</div>
+                <h2 class="font-brutal" style="font-size:clamp(2.2rem,5vw,3.8rem);line-height:0.88;">LOOT DROP</h2>
+                <p style="font-size:0.85rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;opacity:0.45;margin-top:0.5rem;">What are you taking from today's quest?</p>
+            </div>
+
+            <!-- 3 pick cards -->
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;width:100%;">
+
+                <div class="brutal-card" style="padding:1.75rem 1.5rem;text-align:center;">
+                    <div style="font-size:2rem;margin-bottom:0.75rem;">🎯</div>
+                    <h3 class="font-brutal" style="font-size:0.95rem;margin-bottom:0.6rem;">AN EXERCISE</h3>
+                    <p style="font-size:0.8rem;line-height:1.55;opacity:0.65;">Which exercise will you actually try when you get home?</p>
+                </div>
+
+                <div class="brutal-card" style="background:var(--pink);padding:1.75rem 1.5rem;text-align:center;">
+                    <div style="font-size:2rem;margin-bottom:0.75rem;">💡</div>
+                    <h3 class="font-brutal" style="font-size:0.95rem;margin-bottom:0.6rem;color:#fff;">AN INSIGHT</h3>
+                    <p style="font-size:0.8rem;line-height:1.55;color:#fff;opacity:0.88;">What shifted in how you see your future or yourself?</p>
+                </div>
+
+                <div class="brutal-card" style="background:var(--cyan);padding:1.75rem 1.5rem;text-align:center;">
+                    <div style="font-size:2rem;margin-bottom:0.75rem;">⚡</div>
+                    <h3 class="font-brutal" style="font-size:0.95rem;margin-bottom:0.6rem;">AN ACTION</h3>
+                    <p style="font-size:0.8rem;line-height:1.55;opacity:0.65;">What's the first move you'll make in the next 48 hours?</p>
+                </div>
+
+            </div>
+
+            <!-- Invitation -->
+            <p style="font-size:0.92rem;font-weight:700;line-height:1.7;text-align:center;max-width:34rem;opacity:0.65;">If something landed for you today, an exercise, a shift, a next step, I'd love to hear it. No pressure, just an open floor.</p>
+
+        </div>
+    </div>
+
     <!-- SLIDE: FINAL - QUEST COMPLETE -->
-    <div class="slide" id="slide-23" style="background:#0a0a0a;">
+    <div class="slide" id="slide-24" style="background:#0a0a0a;">
         <div class="max-w-6xl w-full" style="display:grid;grid-template-columns:3fr 2fr;gap:3.5rem;align-items:center;">
 
             <!-- Left: Victory -->
@@ -2092,7 +2131,7 @@
 
     <script>
         let currentSlide = 0;
-        const totalSlides = 24;
+        const totalSlides = 25;
 
         function nextSlide() { goToSlide(currentSlide + 1); }
         function prevSlide() { goToSlide(currentSlide - 1); }
@@ -2119,7 +2158,7 @@
             const xp = (currentSlide / (totalSlides - 1)) * 100;
             document.getElementById('xpFill').style.width = `${xp}%`;
             
-            const titles = ["START", "PROFILE", "QUEST", "THE GAME", "GEN Z", "MISSION", "STRATEGY", "LFG", "PURGE", "MAP", "VISION", "SHARE", "BREAK", "REALITY", "PLAYERS", "YOURS", "MAGIC", "HMW EX", "WRITE", "SPEED-RUN", "SORTING", "NO-BIGGIE", "SHRINK IT", "WIN"];
+            const titles = ["START", "PROFILE", "QUEST", "THE GAME", "GEN Z", "MISSION", "STRATEGY", "LFG", "BEST SELF", "MAP", "VISION", "SHARE", "BREAK", "REALITY", "PLAYERS", "YOURS", "MAGIC", "HMW EX", "WRITE", "SPEED-RUN", "SORTING", "NO-BIGGIE", "SHRINK IT", "LOOT DROP", "WIN"];
             document.getElementById('hudStatus').innerText = `LVL ${String(currentSlide + 1).padStart(2, '0')} // ${titles[currentSlide]}`;
 
             // Buttons
@@ -2412,7 +2451,7 @@
             m.classList.remove('hidden');
         }
 
-        // ── MIND DUMP ──────────────────────────────────────────────
+        // ── BEST SELF ──────────────────────────────────────────────
         const mdQuestions = [
             "What does your typical workday look like?",
             "What core abilities and skills are you expressing?",
@@ -2696,14 +2735,14 @@
             }
         }
         // ── REALITY CHECK TIMER ─────────────────────────────────────────
-        let rcTimerInt = null, rcRunning = false, rcTimeLeft = 600;
+        let rcTimerInt = null, rcRunning = false, rcTimeLeft = 480;
 
         function resetReality() {
             clearInterval(rcTimerInt); rcTimerInt = null;
-            rcRunning = false; rcTimeLeft = 600;
+            rcRunning = false; rcTimeLeft = 480;
             const disp = document.getElementById('rc-timer-display');
             const btn  = document.getElementById('rc-timer-btn');
-            if (disp) disp.textContent = '10:00';
+            if (disp) disp.textContent = '08:00';
             if (btn)  btn.innerHTML = '&#9654; START';
         }
 
@@ -2733,14 +2772,14 @@
             }
         }
                 // ── AI VISION TIMER ─────────────────────────────────────────────
-        let aiTimerInt = null, aiRunning = false, aiTimeLeft = 1200;
+        let aiTimerInt = null, aiRunning = false, aiTimeLeft = 1080;
 
         function resetAiVision() {
             clearInterval(aiTimerInt); aiTimerInt = null;
-            aiRunning = false; aiTimeLeft = 1200;
+            aiRunning = false; aiTimeLeft = 1080;
             const disp = document.getElementById('ai-timer-display');
             const btn  = document.getElementById('ai-timer-btn');
-            if (disp) disp.textContent = '20:00';
+            if (disp) disp.textContent = '18:00';
             if (btn)  { btn.innerHTML = '&#9654; START'; }
         }
 
@@ -2770,14 +2809,14 @@
             }
         }
         // ── SHARE TIMER ──────────────────────────────────────────────
-        let shareTimerInt = null, shareRunning = false, shareTimeLeft = 240;
+        let shareTimerInt = null, shareRunning = false, shareTimeLeft = 360;
 
         function resetShareTimer() {
             clearInterval(shareTimerInt); shareTimerInt = null;
-            shareRunning = false; shareTimeLeft = 240;
+            shareRunning = false; shareTimeLeft = 360;
             const disp = document.getElementById('share-timer-display');
             const btn  = document.getElementById('share-timer-btn');
-            if (disp) disp.textContent = '04:00';
+            if (disp) disp.textContent = '06:00';
             if (btn)  btn.textContent  = '▶ START';
         }
 
@@ -2788,7 +2827,7 @@
                 clearInterval(shareTimerInt); shareTimerInt = null; shareRunning = false;
                 if (btn) btn.textContent = '▶ START';
             } else {
-                if (shareTimeLeft <= 0) { shareTimeLeft = 240; if (disp) disp.textContent = '04:00'; }
+                if (shareTimeLeft <= 0) { shareTimeLeft = 360; if (disp) disp.textContent = '06:00'; }
                 shareRunning = true;
                 if (btn) btn.textContent = '⏸ PAUSE';
                 shareTimerInt = setInterval(() => {
@@ -2807,14 +2846,14 @@
         }
 
         // ── HMW TIMER ────────────────────────────────────────────────
-        let hmwTimerInt = null, hmwRunning = false, hmwTimeLeft = 600;
+        let hmwTimerInt = null, hmwRunning = false, hmwTimeLeft = 480;
 
         function resetHmw() {
             clearInterval(hmwTimerInt); hmwTimerInt = null;
-            hmwRunning = false; hmwTimeLeft = 600;
+            hmwRunning = false; hmwTimeLeft = 480;
             const disp = document.getElementById('hmw-timer-display');
             const btn  = document.getElementById('hmw-timer-btn');
-            if (disp) disp.textContent = '10:00';
+            if (disp) disp.textContent = '08:00';
             if (btn)  btn.innerHTML = '&#9654; PLAY';
         }
 
@@ -3085,7 +3124,7 @@
         }
 
         // ── NO-BIGGIE TIMER ──────────────────────────────────────────
-        let nbTimerInt = null, nbTimeLeft = 600, nbRunning = false;
+        let nbTimerInt = null, nbTimeLeft = 480, nbRunning = false;
 
         function toggleNBTimer() {
             const btn = document.getElementById('nb-timer-play');
@@ -3093,7 +3132,7 @@
                 clearInterval(nbTimerInt); nbRunning = false;
                 if (btn) btn.innerHTML = '&#9654; RESUME';
             } else {
-                if (nbTimeLeft <= 0) nbTimeLeft = 600;
+                if (nbTimeLeft <= 0) nbTimeLeft = 480;
                 nbRunning = true;
                 if (btn) btn.innerHTML = '&#9646;&#9646; PAUSE';
                 nbTimerInt = setInterval(() => {
@@ -3112,9 +3151,9 @@
         }
 
         function resetNBTimer() {
-            clearInterval(nbTimerInt); nbTimerInt = null; nbRunning = false; nbTimeLeft = 600;
+            clearInterval(nbTimerInt); nbTimerInt = null; nbRunning = false; nbTimeLeft = 480;
             const d = document.getElementById('nb-timer-display');
-            if (d) { d.textContent = '10:00'; d.style.color = ''; }
+            if (d) { d.textContent = '08:00'; d.style.color = ''; }
             const b = document.getElementById('nb-timer-play');
             if (b) { b.innerHTML = '&#9654; PLAY'; b.style.background = 'var(--pink)'; }
         }
@@ -3274,9 +3313,11 @@
 
         // ── Quest Roadmap: float + cycling label ─────────────────────
         const questPhrases = [
+            { text: 'POSITIVE PSYCHOLOGY', color: '#00E5FF' },
             { text: 'CREATIVE CONFIDENCE', color: '#FF007F' },
             { text: 'DESIGN THINKING',     color: '#007acc' },
-            { text: 'BUSINESS STRATEGY',   color: '#111111' }
+            { text: 'BUSINESS STRATEGY',   color: '#111111' },
+            { text: "IT'S YOU VS YOU",     color: '#00C853' }
         ];
         let questThenIdx = 0, questLoopTimeout = null, questThenInt = null;
 
